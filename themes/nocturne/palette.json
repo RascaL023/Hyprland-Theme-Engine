@@ -27,7 +27,7 @@
 
       "extra": {
         "accent": {
-          "primary": "$pl.color4",
+          "primary": "$pl.color5",
           "secondary": "#b380ff"
         },
 

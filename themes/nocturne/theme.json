@@ -1,9 +1,15 @@
 {
   "theme": "nocturne",
 
-  "domain": {
-    "css": {},
-    "terminal": {}
+  "tools": {
+    "cava": {
+      "gradients": [
+        "$ex.surface0",
+        "$ex.surface1",
+        "$ex.surface2",
+        "$ex.overlay0",
+        "$ex.overlay1"
+      ]
+    }
   }
-
 }

@@ -9,7 +9,6 @@ type ResolvedPalette struct {
 
 	PrimaryAccent string
 	SecondaryAccent string
-	TeritaryAccent string
 
 	PrimaryText string
 	SecondaryText string

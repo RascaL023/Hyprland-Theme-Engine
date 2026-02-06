@@ -24,8 +24,8 @@ error() {
 
 
 # Path
-BINARY="./cmd/bin/gtr"
-SRC="./cmd/gtr"
+BINARY="./cmd/bin/theme-engine"
+SRC="./cmd/theme-engine"
 
 # Args
 mode=$1
