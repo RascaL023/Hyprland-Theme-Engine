@@ -1,0 +1,28 @@
+{
+    "checksum": "0fac360a52c7ad3a56f2b92088923421",
+    "wallpaper": "/home/rascal/Pictures/Wallpaper/Junji Ito.jpg",
+    "alpha": "100",
+    "special": {
+        "background": "#0a0a0a",
+        "foreground": "#c1c1c1",
+        "cursor": "#c1c1c1"
+    },
+    "colors": {
+        "color0": "#0a0a0a",
+        "color1": "#717171",
+        "color2": "#8E6C77",
+        "color3": "#7D7F80",
+        "color4": "#7F8081",
+        "color5": "#8E8E8E",
+        "color6": "#9FA0A0",
+        "color7": "#c1c1c1",
+        "color8": "#5F5F5F",
+        "color9": "#A2A2A2",
+        "color10": "#B59FA6",
+        "color11": "#AAABAC",
+        "color12": "#ABACAD",
+        "color13": "#B5B5B5",
+        "color14": "#C0C1C1",
+        "color15": "#D6D6D6"
+    }
+}

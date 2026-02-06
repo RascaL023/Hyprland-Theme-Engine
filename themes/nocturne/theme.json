@@ -1,0 +1,9 @@
+{
+  "theme": "nocturne",
+
+  "domain": {
+    "css": {},
+    "terminal": {}
+  }
+
+}

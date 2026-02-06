@@ -1,0 +1,28 @@
+{
+    "checksum": "f5a57a7e0e2280388b4ac1b88e2f24a9",
+    "wallpaper": "/home/rascal/Pictures/Wallpaper/Eye at you.png",
+    "alpha": "100",
+    "special": {
+        "background": "#000000",
+        "foreground": "#bfbfbf",
+        "cursor": "#bfbfbf"
+    },
+    "colors": {
+      "color0": "#120d1a",
+      "color1": "#1a1226",
+      "color2": "#221933",
+      "color3": "#33294d",
+      "color4": "#443966",
+      "color5": "#594d80",
+      "color6": "#6e5f99",
+      "color7": "#8575ad",
+      "color8": "#9c8cc2",
+      "color9": "#b3a3d6",
+      "color10": "#cbbde6",
+      "color11": "#e0d6f7",
+      "color12": "#b380ff",
+      "color13": "#c299ff",
+      "color14": "#e0d6f7",
+      "color15": "#ffffff"
+    }
+}

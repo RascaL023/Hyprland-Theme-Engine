@@ -1,0 +1,122 @@
+{
+  "palettes": {
+    "dark": {
+      "foreground": "#E0D6F7",
+      "background": "#000000",
+      "cursor": "#B1A6CE",
+
+      "colors": [
+        "#120D1A",
+        "#A863D0",
+        "#33294D",
+        "#6C4BA0",
+        "#5E3FCF",
+        "#C299FF",
+        "#8877B5",
+        "#E0D6F7",
+
+        "#64616A",
+        "#C699E0",
+        "#7A738B",
+        "#9F8AC1",
+        "#9681B4",
+        "#D7BCFF",
+        "#B1A6CE",
+        "#EAE4F9"
+      ],
+
+      "extra": {
+        "accent": {
+          "primary": "#c299ff",
+          "secondary": "#b380ff"
+        },
+
+        "text": {
+          "primary": "#e0d6f7",
+          "secondary": "#cbbde6",
+          "teritary": "#b3a3d6"
+        },
+
+        "overlay": [
+          "#6e5f99",
+          "#8575ad",
+          "#9c8cc2"
+        ],
+
+        "surface": [
+          "#33294d",
+          "#443966",
+          "#594d80"
+        ],
+
+        "base": "#221933",
+        "mantle": "#1a1226",
+        "crust": "#120d1a",
+
+        "warning": "#ff80ff",
+        "critical": "#cc33ff",
+        "charging": "#aa66ff"
+      }
+    },
+
+    "light": {
+      "foreground": "#2A1F3D",
+      "background": "#F6F2FB",
+      "cursor": "#6C4BA0",
+
+      "colors": [
+        "#2A1F3D",
+        "#7A4BC7",
+        "#5A4A78",
+        "#8C7AB0",
+        "#6C4BA0",
+        "#9F8AC1",
+        "#7E6CA8",
+        "#E0D6F7",
+
+        "#4A3B66",
+        "#A863D0",
+        "#6C5A8F",
+        "#B6A6D6",
+        "#8A6FD1",
+        "#C299FF",
+        "#9C8BC7",
+        "#FFFFFF"
+      ],
+
+      "extra": {
+        "accent": {
+          "primary": "#c299ff",
+          "secondary": "#b380ff"
+        },
+
+        "text": {
+          "primary": "#e0d6f7",
+          "secondary": "#cbbde6",
+          "teritary": "#b3a3d6"
+        },
+
+        "overlay": [
+          "#6e5f99",
+          "#8575ad",
+          "#9c8cc2"
+        ],
+
+        "surface": [
+          "#33294d",
+          "#443966",
+          "#594d80"
+        ],
+
+        "base": "#221933",
+        "mantle": "#1a1226",
+        "crust": "#120d1a",
+
+        "warning": "#ff80ff",
+        "critical": "#cc33ff",
+        "charging": "#aa66ff"
+      }
+    }
+  }
+}
+
