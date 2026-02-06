@@ -7,31 +7,40 @@ type ResolvedPalette struct {
 
 	Colors     []string
 
-	Extra struct {
-		Accent struct {
-			Primary string
-			Secondary string
-			Teritary string
-		}
+	PrimaryAccent string
+	SecondaryAccent string
+	TeritaryAccent string
 
-		Text struct {
-			Primary string
-			Secondary string
-			Teritary string
-		}
+	PrimaryText string
+	SecondaryText string
+	TeritaryText string
 
-		Overlay []string
-		Surface []string
+	PrimaryOverlay string
+	SecondaryOverlay string
+	TeritaryOverlay string
 
-		Base string
-		Mantle string
-		Crust string
+	PrimarySurface string
+	SecondarySurface string
+	TeritarySurface string
 
-		Warning string
-		Critical string
-		Charging string 
-	}	
+	Base string
+	Mantle string
+	Crust string
+
+	Warning string
+	Critical string
+	Charging string 
 
 	Flat map[string]string
+}
+
+
+type ResolvedPaletteVars struct {
+    P *ResolvedPalette
+}
+
+func (r ResolvedPaletteVars) Get(k string) (string, bool) {
+    v, ok := r.P.Flat[k]
+    return v, ok
 }
 

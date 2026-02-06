@@ -27,12 +27,12 @@
 
       "extra": {
         "accent": {
-          "primary": "#c299ff",
+          "primary": "$pl.color4",
           "secondary": "#b380ff"
         },
 
         "text": {
-          "primary": "#e0d6f7",
+          "primary": "$th.foreground",
           "secondary": "#cbbde6",
           "teritary": "#b3a3d6"
         },
@@ -51,7 +51,7 @@
 
         "base": "#221933",
         "mantle": "#1a1226",
-        "crust": "#120d1a",
+        "crust": "$pl.color0",
 
         "warning": "#ff80ff",
         "critical": "#cc33ff",

@@ -1,32 +1,20 @@
 package resolver
 
-import "theme-engine/internal/core/context"
+import "theme-engine/internal/core/themes/vars"
 
-func ResolveVar(s string, ctx *context.Context) string {
+func ResolveVar(s string, sources ...vars.VarSource) string {
 	if len(s) < 4 || s[0] != '$' {
-		return s
+		return s;
 	}
 
-	switch s[1] {
-	case 't': // $th.
-		if s[2] == 'h' && s[3] == '.' {
-			return ctx.Palette.Flat[s[4:]];
+	key := s[4:] // asumsi $th.xxx
+
+	for _, src := range sources {
+		if v, ok := src.Get(key); ok {
+			return v;
 		}
 	}
 
-	return s
+	return s;
 }
-
-func ResolveVars(arr []string, ctx *context.Context) []string {
-    if len(arr) == 0 {
-        return arr
-    }
-
-    out := make([]string, len(arr))
-    for i, v := range arr {
-        out[i] = ResolveVar(v, ctx)
-    }
-    return out
-}
-
 
