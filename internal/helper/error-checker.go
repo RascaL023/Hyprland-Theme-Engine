@@ -1,10 +1,13 @@
 package helper
 
-import "fmt"
+import (
+	"os"
+	"theme-engine/internal/core/log"
+)
 
-func CheckErr(err error, msg string) {
+func CheckErr(err error, code int, msg string, args ...any) {
 	if err != nil {
-		fmt.Println(msg);
-		panic(err);
+		log.Error(msg + ": %v", append(args, err)...);
+		os.Exit(code);
 	}
 }

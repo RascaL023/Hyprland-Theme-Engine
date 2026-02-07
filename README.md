@@ -28,5 +28,5 @@ Render JSON-based theme definition into multiple tools configuration using SSOT 
 - Documentation & examples
 - SSOT color
 
-#### Pending        : Logger and notification
-#### Last Progress  : Adding Foot
+#### Pending        : Add next tool
+#### Last Progress  : Adding logger and notification

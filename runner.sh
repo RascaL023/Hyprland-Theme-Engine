@@ -17,10 +17,7 @@ log() {
   [[ $QUIET -eq 0 ]] && echo "$@"
 }
 
-error() {
-  echo "Error: $@" >&2
-  notify-send -t 3000 "Error!" "$@"
-}
+mkdir -p "./cmd/bin"
 
 
 # Path
@@ -31,7 +28,19 @@ SRC="./cmd/theme-engine"
 mode=$1
 opt=$2
 
-mkdir -p "./cmd/bin"
+
+
+notify_error() {
+  case "$1" in
+    1) notify-send -u critical "Theme Engine" "Script call error" ;;
+    2) notify-send -u critical "Theme Engine" "Fail to load resource" ;;
+    3) notify-send -u critical "Theme Engine" "I/O error" ;;
+    4) notify-send -u critical "Theme Engine" "Config / parse error" ;;
+    5) notify-send -u critical "Theme Engine" "Resolve error" ;;
+    6) notify-send -u critical "Theme Engine" "Render error" ;;
+    *) notify-send -u critical "Theme Engine" "Unknown error ($1)" ;;
+  esac
+}
 
 usage() {
   log "Usage: $0 [mode] [theme|waybar]"
@@ -42,35 +51,62 @@ usage() {
   log "  build-run -> Build and run binary"
   log "  clean     -> Delete binary"
 
-  error "script error ecounter!"
-  exit 1
+  notify_error 1
 }
 
 if [ $# -eq 0 ]; then
   usage
+  exit 1
 fi
+
+run() {
+  "$@"
+  code=$?
+
+  if [[ $code -eq 0 ]]; then
+    [[ $QUIET -eq 0 ]] && notify-send -t 2000 "Theme" "Success Rendering"
+  else
+    notify_error "$code"
+  fi
+
+  return $code
+}
+
+
+exitCode=0
 
 case "$mode" in
   run-bin)
     log "[❯] Running.."
-    "$BINARY" "$opt"
+    run "$BINARY" "$opt"
+    exitCode=$?
     log "[❯] Done."
-    ;;  
+    ;; 
   run-raw)
     log "[❯] Running.."
-    go run "$SRC" "$opt"
+    run go run "$SRC" "$opt"
+    exitCode=$?
     log "[❯] Done."
-    ;;  
+    ;;
   build-bin)
     log "[❯] Building..."
-    go build -o "$BINARY" "$SRC"
+    go build -o "$BINARY" "$SRC" || {
+      notify-send -u critical "Build failed"
+      exitCode=2
+    }
+
     log "[❯] Done."
-    ;;  
+    ;;
   build-run)
     log "[❯] Building..."
-    go build -o "$BINARY" "$SRC"
+    go build -o "$BINARY" "$SRC"|| {
+      notify-send -u critical "Build failed"
+      exit 2
+    }
+ 
     log "[❯] Running binary"
-    "./$BINARY" "$opt"
+    run "$BINARY" "$opt"
+    exitCode=$?
     log "[❯] Done."
     ;;
   clean)
@@ -84,5 +120,5 @@ case "$mode" in
     ;;
 esac
 
-exit 0
+exit $exitCode
 
