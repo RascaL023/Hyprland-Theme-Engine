@@ -32,7 +32,7 @@
         },
 
         "text": {
-          "primary": "$th.foreground",
+          "primary": "$pl.foreground",
           "secondary": "#cbbde6",
           "teritary": "#b3a3d6"
         },

@@ -14,6 +14,7 @@ Render JSON-based theme definition into multiple tools configuration using SSOT 
 ### Supported Tools:
 - Foot
 - Cava
+- GTK-CSS
 
 ### Planned Tools:
 - Waybar
@@ -28,4 +29,4 @@ Render JSON-based theme definition into multiple tools configuration using SSOT 
 - SSOT color
 
 #### Pending        : Logger and notification
-#### Last Progress  : Refactoring for waybar
+#### Last Progress  : Adding Foot

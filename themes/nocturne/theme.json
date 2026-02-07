@@ -1,5 +1,12 @@
 {
-  "theme": "nocturne",
+  "theme": {
+    "name": "nocturne",
+    "fonts": {
+      "primary": "FiraCode Nerd Font",
+      "secondary": "Maple Mono Nerd Font",
+      "size": 11.5
+    }
+  },
 
   "tools": {
     "cava": {
@@ -10,6 +17,15 @@
         "$pl.extra.primaryoverlay",
         "$pl.extra.secondaryoverlay"
       ]
+    },
+
+    "foot": {
+      "fontSize": 11.5,
+      "opacity": 0.85,
+      "padding": {
+        "x": 16,
+        "y": 10
+      }
     }
   }
 }
