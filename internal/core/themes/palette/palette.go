@@ -35,11 +35,11 @@ type ResolvedPalette struct {
 
 
 type ResolvedPaletteVars struct {
-    P *ResolvedPalette
+  P *ResolvedPalette
 }
 
 func (r ResolvedPaletteVars) Get(k string) (string, bool) {
-    v, ok := r.P.Flat[k]
-    return v, ok
+	v, ok := r.P.Flat[k]
+	return v, ok
 }
 

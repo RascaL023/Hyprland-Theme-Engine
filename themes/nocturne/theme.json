@@ -4,11 +4,11 @@
   "tools": {
     "cava": {
       "gradients": [
-        "$ex.surface0",
-        "$ex.surface1",
-        "$ex.surface2",
-        "$ex.overlay0",
-        "$ex.overlay1"
+        "$pl.extra.primarysurface",
+        "$pl.extra.secondarysurface",
+        "$pl.extra.teritarysurface",
+        "$pl.extra.primaryoverlay",
+        "$pl.extra.secondaryoverlay"
       ]
     }
   }
