@@ -11,3 +11,8 @@ func CheckErr(err error, code int, msg string, args ...any) {
 		os.Exit(code);
 	}
 }
+
+func ExitWrapper(code int, msg string, args ...any) {
+	log.Error(msg, args...);
+	os.Exit(code);
+}

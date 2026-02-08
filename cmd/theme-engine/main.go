@@ -5,13 +5,11 @@ import (
 	"path/filepath"
 
 	"theme-engine/internal/core/context"
-	"theme-engine/internal/core/log"
 	"theme-engine/internal/core/themes/palette"
 	"theme-engine/internal/core/themes/state"
 	"theme-engine/internal/core/themes/theme"
 	"theme-engine/internal/helper"
 	"theme-engine/internal/loader"
-	"theme-engine/internal/processor"
 )
 
 
@@ -26,6 +24,8 @@ const (
 )
 
 func main() {
+	option := os.Args[1];
+
 	// ============================= RESOURCE INPUT =============================
 
 	assetsMap := os.ExpandEnv("$MYENV/map");
@@ -52,30 +52,14 @@ func main() {
 		Theme: rawTheme,
 	}
 
-	// ============================= RUN ALL =============================
-
-	var parsed any = nil;
-	var errParse error = nil;
-
-	for name, path := range apps {
-		processor, ok := processor.GetProcessor(name);
-		if !ok {
-			log.Warn("Unknown tool %s", name);
-			continue;
-		}
-
-		raw, hasConfig := rawTheme.Tools[name];
-		if hasConfig {
-			parsed, errParse = processor.Parse(raw);
-			helper.CheckErr(errParse, ExitParseFail, "Error on parsing %s", name);
-		}
-
-		resolved, err := processor.Resolve(parsed, &ctx);
-		helper.CheckErr(err, ExitResolve, "Error on resolving %s", name);
-
-		helper.CheckErr(processor.Render(path.TemplatePath, path.OutputPath, resolved), ExitRender, "Error on rendering", name);
-		log.Info("Success rendering %s", name);
+	switch option {
+		case "": runAll(apps, rawTheme, ctx);
+		default:
+			app, ok := apps[option]; 
+			if !ok {
+				helper.ExitWrapper(ExitGeneral, "Unknown option %s", option);
+			}
+			
+			runSpecific(option, app, rawTheme, ctx);
 	}
-
-	// ============================= RUN ALL =============================
 }

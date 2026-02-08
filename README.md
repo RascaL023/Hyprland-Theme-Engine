@@ -10,6 +10,7 @@ Render JSON-based theme definition into multiple tools configuration using SSOT 
 - Custom input and output path
 - Deterministic output (same input → same config)
 - Minimal runtime dependency
+- CLI log and notification
 
 ### Supported Tools:
 - Foot
@@ -29,4 +30,4 @@ Render JSON-based theme definition into multiple tools configuration using SSOT 
 - SSOT color
 
 #### Pending        : Add next tool
-#### Last Progress  : Adding logger and notification
+#### Last Progress  : Adding feature to run only specific tool
