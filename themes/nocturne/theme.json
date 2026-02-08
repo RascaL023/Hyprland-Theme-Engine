@@ -26,6 +26,38 @@
         "x": 16,
         "y": 10
       }
+    },
+
+    "kitty": {
+      "cursorShape": "beam",
+      "opacity": 0.7,
+      "fontSize": 11.5,
+
+      "tab": {
+        "active": {
+          "foreground": "$pl.extra.secondarytext",
+          "background": "$pl.extra.primarysurface"
+        },
+        "inactive": {
+          "foreground": "$pl.extra.secondarysurface",
+          "background": "$pl.extra.secondarytext"
+        },
+
+        "bar": "powerline",
+        "style": "slanted"
+      },
+
+      "window": {
+        "border": {
+          "active": "$pl.extra.primaryaccent",
+          "inactive": "$pl.extra.mantle",
+
+          "width": 1
+        },
+
+        "margin": 5,
+        "padding": 8
+      }
     }
   }
 }

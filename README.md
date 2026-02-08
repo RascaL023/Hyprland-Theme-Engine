@@ -16,10 +16,9 @@ Render JSON-based theme definition into multiple tools configuration using SSOT 
 - Foot
 - Cava
 - GTK-CSS
+- Kitty
 
 ### Planned Tools:
-- Waybar
-- Kitty
 - Wlogout
 
 ### Future Plans:
@@ -30,4 +29,4 @@ Render JSON-based theme definition into multiple tools configuration using SSOT 
 - SSOT color
 
 #### Pending        : Add next tool
-#### Last Progress  : Adding feature to run only specific tool
+#### Last Progress  : Adding kitty and improving foot process

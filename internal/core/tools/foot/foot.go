@@ -1,5 +1,7 @@
 package foot
 
+import "theme-engine/internal/core/themes/palette"
+
 type Foot struct {
 	Font string
 	FontSize float64
@@ -7,8 +9,5 @@ type Foot struct {
 	PaddingX float64
 	PaddingY float64
 
-	Foreground string
-	Background string
-
-	Colors [16]string
+	Palette *palette.ResolvedPalette
 }

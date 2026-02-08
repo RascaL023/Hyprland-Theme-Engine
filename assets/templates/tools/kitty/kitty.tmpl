@@ -1,0 +1,50 @@
+##########
+# Colors #
+##########
+
+foreground                {{ .Palette.Foreground }}
+background                {{ .Palette.Background }}
+cursor                    {{ .Palette.Cursor }}
+
+selection_background      {{ .SelectionBackground }}
+selection_foreground      {{ .SelectionForeground }}
+
+{{- range $i, $c := .Palette.Colors }}
+color{{ $i }}                    {{ $c }}
+{{- end }}
+
+active_tab_foreground     {{ .ActiveTabFg }}
+active_tab_background     {{ .ActiveTabBg }}
+inactive_tab_foreground   {{ .InActiveTabFg }}
+inactive_tab_background   {{ .InActiveTabBg }}
+
+active_border_color       {{ .ActiveBorder }}
+inactive_border_color     {{ .InActiveBorder }}
+
+
+##########
+# Layout #
+##########
+
+cursor_shape          {{ .CursorShape }}
+background_opacity    {{ .Opacity }}
+
+tab_bar_style         {{ .TabBar }}
+tab_powerline_style   {{ .TabPowerline }}
+
+window_border_width   {{ .WindowBorder }}
+window_margin_width   {{ .WindowMargin }}
+window_padding_width  {{ .WindowPadding }}
+
+
+#########
+# Fonts #
+#########
+
+font_size        {{ .FontSize }}
+
+font_family      {{ .FontFamily }}
+bold_font        {{ .FontFamily }} Bold
+italic_font      {{ .FontFamily }} Italic
+bold_italic_font {{ .FontFamily }} Bold Italic
+

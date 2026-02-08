@@ -22,30 +22,14 @@ func (FootProcessor) Parse(in any) (any, error) {
 func (FootProcessor) Resolve(in any, ctx *context.Context) (any, error) {
 	inp := in.(Raw);
 
-	cfg := Foot{
+	return Foot{
 		Font: ctx.Theme.Theme.Fonts.Primary,
 		FontSize: inp.FontSize,
 		PaddingX: inp.Padding.X,
 		PaddingY: inp.Padding.Y,
 
-		// Foreground: ctx.Palette.Foreground,
-		// Background: ctx.Palette.Background,
-		//
-		// Colors: [16]string(ctx.Palette.Colors),
-	}
-	var temp string;
-
-	temp = ctx.Palette.Foreground;
-	cfg.Foreground = temp[1:];
-
-	temp = ctx.Palette.Background;
-	cfg.Background = temp[1:];
-
-	for idx, temp := range ctx.Palette.Colors {
-		cfg.Colors[idx] = temp[1:];
-	}
-
-	return cfg, nil;
+		Palette: ctx.Palette,
+	}, nil;
 }
 
 func (FootProcessor) Render(templatePath, outputPath string, data any) error {

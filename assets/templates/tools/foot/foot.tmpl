@@ -3,23 +3,23 @@ font={{ .Font }}:size={{ .FontSize }}
 pad={{ .PaddingX }}x{{ .PaddingY }}
 
 [colors]
-foreground={{ .Foreground }}
-background={{ .Background }}
+foreground={{ hex .Palette.Foreground }}
+background={{ hex .Palette.Background }}
 
-regular0={{ index .Colors 0 }}  # black
-regular1={{ index .Colors 1 }}  # red
-regular2={{ index .Colors 2 }}  # green
-regular3={{ index .Colors 3 }}  # yellow
-regular4={{ index .Colors 4 }}  # blue
-regular5={{ index .Colors 5 }}  # magenta
-regular6={{ index .Colors 6 }}  # cyan
-regular7={{ index .Colors 7 }}  # white
-bright0={{ index .Colors 8 }}   # bright black
-bright1={{ index .Colors 9 }}   # bright red
-bright2={{ index .Colors 10 }}   # bright green
-bright3={{ index .Colors 11 }}   # bright yellow
-bright4={{ index .Colors 12 }}   # bright blue
-bright5={{ index .Colors 13 }}   # bright magenta
-bright6={{ index .Colors 14 }}   # bright cyan
-bright7={{ index .Colors 15 }}   # bright white
+regular0={{ hex (index .Palette.Colors 0) }}  # black
+regular1={{ hex (index .Palette.Colors 1) }}  # red
+regular2={{ hex (index .Palette.Colors 2) }}  # green
+regular3={{ hex (index .Palette.Colors 3) }}  # yellow
+regular4={{ hex (index .Palette.Colors 4) }}  # blue
+regular5={{ hex (index .Palette.Colors 5) }}  # magenta
+regular6={{ hex (index .Palette.Colors 6) }}  # cyan
+regular7={{ hex (index .Palette.Colors 7) }}  # white
+bright0={{ hex (index .Palette.Colors 8) }}   # bright black
+bright1={{ hex (index .Palette.Colors 9) }}   # bright red
+bright2={{ hex (index .Palette.Colors 10) }}   # bright green
+bright3={{ hex (index .Palette.Colors 11) }}   # bright yellow
+bright4={{ hex (index .Palette.Colors 12) }}   # bright blue
+bright5={{ hex (index .Palette.Colors 13) }}   # bright magenta
+bright6={{ hex (index .Palette.Colors 14) }}   # bright cyan
+bright7={{ hex (index .Palette.Colors 15) }}   # bright white
 
