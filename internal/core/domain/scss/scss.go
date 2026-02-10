@@ -1,6 +1,6 @@
-package css
+package scss
 
-type Css struct {
+type Scss struct {
 	Accent1 string
 	Accent2 string
 

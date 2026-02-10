@@ -1,4 +1,4 @@
-package css
+package scss
 
 import (
 	"fmt"
@@ -7,18 +7,18 @@ import (
 	"theme-engine/internal/renderer"
 )
 
-type CssProcessor struct {}
+type ScssProcessor struct {}
 
-func (CssProcessor) Name() string { return "css"; }
+func (ScssProcessor) Name() string { return "scss"; }
 
-func init() { processor.RegisterProcessor(CssProcessor{}); }
+func init() { processor.RegisterProcessor(ScssProcessor{}); }
 
-func (CssProcessor) Parse(_ any) (any, error) {
+func (ScssProcessor) Parse(_ any) (any, error) {
 	return nil, nil;
 }
 
-func (CssProcessor) Resolve(_ any, ctx *context.Context) (any, error) {
-	return Css{
+func (ScssProcessor) Resolve(_ any, ctx *context.Context) (any, error) {
+	return Scss{
 		Accent1: ctx.Palette.PrimaryAccent,
 		Accent2: ctx.Palette.SecondaryAccent,
 
@@ -44,7 +44,7 @@ func (CssProcessor) Resolve(_ any, ctx *context.Context) (any, error) {
 	}, nil;
 }
 
-func (CssProcessor) Render(
+func (ScssProcessor) Render(
 	templatePath, 
 	outputPath string,
 	data any,
