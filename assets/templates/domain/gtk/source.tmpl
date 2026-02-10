@@ -1,0 +1,53 @@
+$foreground     : {{ .Config.Palette.Foreground }};
+$background     : {{ .Config.Palette.Background }};
+
+$black          : {{ index .Config.Palette.Colors 0 }};
+$red            : {{ index .Config.Palette.Colors 1 }};
+$green          : {{ index .Config.Palette.Colors 2 }};
+$yellow         : {{ index .Config.Palette.Colors 3 }};
+$blue           : {{ index .Config.Palette.Colors 4 }};
+$magenta        : {{ index .Config.Palette.Colors 5 }};
+$cyan           : {{ index .Config.Palette.Colors 6 }};
+$white          : {{ index .Config.Palette.Colors 7 }};
+
+$black-bright   : {{ index .Config.Palette.Colors 8 }};
+$red-bright     : {{ index .Config.Palette.Colors 9 }};
+$green-bright   : {{ index .Config.Palette.Colors 10 }};
+$yellow-bright  : {{ index .Config.Palette.Colors 11 }};
+$blue-bright    : {{ index .Config.Palette.Colors 12 }};
+$magenta-bright : {{ index .Config.Palette.Colors 13 }};
+$cyan-bright    : {{ index .Config.Palette.Colors 14 }};
+$white-bright   : {{ index .Config.Palette.Colors 15 }};
+
+
+$primary-accent     : {{ .Config.Palette.PrimaryAccent }};
+$secondary-accent   : {{ .Config.Palette.SecondaryAccent }};
+
+$primary-text       : {{ .Config.Palette.PrimaryText }};
+$secondary-text     : {{ .Config.Palette.SecondaryText }};
+$teritary-text      : {{ .Config.Palette.TeritaryText }};
+
+$primary-overlay    : {{ .Config.Palette.PrimaryOverlay }};
+$secondary-overlay  : {{ .Config.Palette.SecondaryOverlay }};
+$teritary-overlay   : {{ .Config.Palette.TeritaryOverlay }};
+
+$primary-surface    : {{ .Config.Palette.PrimarySurface }};
+$secondary-surface  : {{ .Config.Palette.SecondarySurface }};
+$teritary-surface   : {{ .Config.Palette.TeritarySurface }};
+
+$base      : {{ .Config.Palette.Base }};
+$mantle    : {{ .Config.Palette.Mantle }};
+$crust     : {{ .Config.Palette.Crust }};
+
+$warning   : {{ .Config.Palette.Warning }};
+$critical  : {{ .Config.Palette.Critical }};
+$charging  : {{ .Config.Palette.Charging }};
+
+
+$primary-font   : "{{ .Config.Theme.Theme.Fonts.Primary }}";
+$secondary-font : "{{ .Config.Theme.Theme.Fonts.Secondary }}";
+
+.box {
+  color: $foreground;
+}
+

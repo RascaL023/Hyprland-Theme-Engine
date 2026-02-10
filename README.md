@@ -15,11 +15,14 @@ Render JSON-based theme definition into multiple tools configuration using SSOT 
 ### Supported Tools:
 - Foot
 - Cava
-- GTK-CSS
 - Kitty
+- GTK-CSS
+    Member of Gtk-Css config: Waybar, Eww, Wlogout
 
 ### Planned Tools:
-- Wlogout
+- Hyprland
+- Ncmcpp
+- Yazi
 
 ### Future Plans:
 - Hot-reload support
@@ -28,5 +31,5 @@ Render JSON-based theme definition into multiple tools configuration using SSOT 
 - Documentation & examples
 - SSOT color
 
-#### Pending        : Add next tool
-#### Last Progress  : Adding kitty and improving foot process
+#### Pending        : Resolve gtk variants
+#### Last Progress  : Rendered scss
