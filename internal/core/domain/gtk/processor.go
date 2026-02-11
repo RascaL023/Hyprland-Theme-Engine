@@ -24,8 +24,8 @@ func (GtkProcessor) Resolve(_ any, ctx *context.Context) (any, error) {
 	}, nil;
 }
 
-func compileSCSS(inputPath, outputPath string) error {
-	cmd := exec.Command("sassc", inputPath, outputPath);
+func compileSCSS(templatePath, outputPath string) error {
+	cmd := exec.Command("sassc", templatePath, outputPath);
 
 	var stderr bytes.Buffer;
 	cmd.Stderr = &stderr;
@@ -45,10 +45,13 @@ func (GtkProcessor) Render(
 ) error {
 	err := renderer.Render(
 		templatePath, 
-		outputPath + "/source.scss", 
+		outputPath + "/scss/source/_source.scss", 
 		data,
 	);
 	if err != nil { return err; }
 	
-	return compileSCSS(outputPath + "/source.scss", outputPath + "/result.css");
+	err = compileSCSS(outputPath + "/scss/base/base.scss", outputPath + "/css/source.css");
+	if err != nil { return err; }
+
+	return compileSCSS(outputPath + "/scss/base/rofi-base.scss", outputPath + "/rasi/source.rasi");
 }
