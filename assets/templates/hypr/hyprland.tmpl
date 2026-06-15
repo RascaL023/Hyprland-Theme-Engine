@@ -1,0 +1,12 @@
+$primaryAccent = rgb({{ hex .Palette.PrimaryAccent }})
+$secondaryAccent = rgb({{ hex .Palette.SecondaryAccent }})
+$background = rgb({{ hex .Palette.Background }})
+
+general {
+    col.active_border = $primaryAccent $secondaryAccent 45deg
+    col.inactive_border = $background
+}
+
+decoration {
+    col.shadow = $background
+}

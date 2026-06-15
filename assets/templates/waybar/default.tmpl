@@ -1,0 +1,26 @@
+@define-color foreground {{ .Palette.Foreground }};
+@define-color background {{ .Palette.Background }};
+@define-color primary_accent {{ .Palette.PrimaryAccent }};
+@define-color secondary_accent {{ .Palette.SecondaryAccent }};
+@define-color primary_surface {{ .Palette.PrimarySurface }};
+@define-color secondary_surface {{ .Palette.SecondarySurface }};
+@define-color primary_text {{ .Palette.PrimaryText }};
+@define-color secondary_text {{ .Palette.SecondaryText }};
+
+* {
+  color: @foreground;
+  font-family: "{{ .Theme.Theme.Fonts.Primary }}";
+  font-size: {{ .Theme.Theme.Fonts.Size }}pt;
+}
+
+window#waybar {
+  background: @background;
+}
+
+#workspaces button.active,
+#pulseaudio,
+#network,
+#clock {
+  background: @primary_surface;
+  color: @primary_text;
+}

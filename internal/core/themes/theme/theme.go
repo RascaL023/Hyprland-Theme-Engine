@@ -7,9 +7,9 @@ type Theme struct {
 		Name string `json:"name"`
 
 		Fonts struct {
-			Primary string `json:"primary"`
-			Secondary string `json:"secondary"`
-			Size float64 `json:"size"`
+			Primary   string  `json:"primary"`
+			Secondary string  `json:"secondary"`
+			Size      float64 `json:"size"`
 		} `json:"fonts"`
 	} `json:"theme"`
 

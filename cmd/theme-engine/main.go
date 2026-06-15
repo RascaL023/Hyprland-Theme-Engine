@@ -2,64 +2,34 @@ package main
 
 import (
 	"os"
-	"path/filepath"
 
-	"theme-engine/internal/core/context"
-	"theme-engine/internal/core/themes/palette"
-	"theme-engine/internal/core/themes/state"
-	"theme-engine/internal/core/themes/theme"
+	"theme-engine/internal/engine"
 	"theme-engine/internal/helper"
-	"theme-engine/internal/loader"
 )
-
 
 const (
 	ExitOK        = 0
 	ExitGeneral   = 1
-	ExitLoad	    = 2
+	ExitLoad      = 2
 	ExitIOError   = 3
 	ExitParseFail = 4
-	ExitResolve		= 5
-	ExitRender		= 6
+	ExitResolve   = 5
+	ExitRender    = 6
 )
 
 func main() {
-	option := os.Args[1];
-
-	// ============================= RESOURCE INPUT =============================
-
-	assetsMap := os.ExpandEnv("$MYENV/map");
-
-	state, err := loader.LoadJSON[state.State](assetsMap + "/.state.json");
-	helper.CheckErr(err, ExitLoad, "Error on loading state!");
-
-	apps, err := loader.LoadToolMap(assetsMap + "/path.txt", state);
-	helper.CheckErr(err, ExitLoad, "Error on loading tools map");
-
-	rawPalette, err := loader.LoadJSON[palette.Raw](filepath.Join("themes", state.Theme.Name, "palette.json"));
-	helper.CheckErr(err, ExitLoad, "Error on loading palette");
-
-	palette := rawPalette.ResolveSelected(state.Theme.Type);
-	theme.BuildFlattenPalette(palette);
-
-	rawTheme, err := loader.LoadJSON[theme.Theme](filepath.Join("themes", state.Theme.Name, "theme.json"));
-	helper.CheckErr(err, ExitLoad, "Error on loading theme %s", state.Theme.Name);
-
-	// ============================= RESOURCE INPUT =============================
-
-	ctx := context.Context{
-		Palette: palette,
-		Theme: rawTheme,
+	target := ""
+	if len(os.Args) > 1 {
+		target = os.Args[1]
 	}
 
-	switch option {
-		case "": runAll(apps, rawTheme, ctx);
-		default:
-			app, ok := apps[option]; 
-			if !ok {
-				helper.ExitWrapper(ExitGeneral, "Unknown option %s", option);
-			}
-			
-			runSpecific(option, app, rawTheme, ctx);
+	app, err := engine.New(engine.Config{MapDir: engine.DefaultMapDir()})
+	helper.CheckErr(err, ExitLoad, "Error on initializing engine")
+
+	if target == "" {
+		helper.CheckErr(app.RunAll(), ExitGeneral, "Error on rendering all targets")
+		return
 	}
+
+	helper.CheckErr(app.Run(target), ExitGeneral, "Error on rendering %s", target)
 }

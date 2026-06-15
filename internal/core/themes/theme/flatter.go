@@ -1,46 +1,48 @@
 package theme
 
-import (
-	"reflect"
-	"strings"
-	"theme-engine/internal/core/themes/palette"
-)
-
-func flattenStruct(prefix string, v reflect.Value, out map[string]string) {
-	if v.Kind() == reflect.Pointer {
-		v = v.Elem()
-	}
-
-	t := v.Type()
-
-	for i := 0; i < v.NumField(); i++ {
-		field := v.Field(i)
-		fieldType := t.Field(i)
-
-		// skip unexported
-		if !field.CanInterface() {
-			continue
-		}
-
-		name := strings.ToLower(fieldType.Name)
-		key := name
-		if prefix != "" {
-			key = prefix + "." + name
-		}
-
-		switch field.Kind() {
-		case reflect.String:
-			out[key] = field.String()
-
-		case reflect.Struct:
-			flattenStruct(key, field, out)
-		}
-	}
-}
+import "theme-engine/internal/core/themes/palette"
 
 func BuildFlattenPalette(t *palette.ResolvedPalette) {
-	t.Flat = make(map[string]string);
+	t.Flat = map[string]string{
+		"extra.foreground":       t.Foreground,
+		"extra.background":       t.Background,
+		"extra.cursor":           t.Cursor,
+		"extra.primaryaccent":    t.PrimaryAccent,
+		"extra.secondaryaccent":  t.SecondaryAccent,
+		"extra.primarytext":      t.PrimaryText,
+		"extra.secondarytext":    t.SecondaryText,
+		"extra.teritarytext":     t.TeritaryText,
+		"extra.primaryoverlay":   t.PrimaryOverlay,
+		"extra.secondaryoverlay": t.SecondaryOverlay,
+		"extra.teritaryoverlay":  t.TeritaryOverlay,
+		"extra.primarysurface":   t.PrimarySurface,
+		"extra.secondarysurface": t.SecondarySurface,
+		"extra.teritarysurface":  t.TeritarySurface,
+		"extra.base":             t.Base,
+		"extra.mantle":           t.Mantle,
+		"extra.crust":            t.Crust,
+		"extra.warning":          t.Warning,
+		"extra.critical":         t.Critical,
+		"extra.charging":         t.Charging,
+	}
 
-	flattenStruct("extra", reflect.ValueOf(t), t.Flat);
+	for i, color := range t.Colors {
+		t.Flat["color"+itoa(i)] = color
+	}
 }
 
+func itoa(n int) string {
+	if n == 0 {
+		return "0"
+	}
+
+	var buf [20]byte
+	i := len(buf)
+	for n > 0 {
+		i--
+		buf[i] = byte('0' + n%10)
+		n /= 10
+	}
+
+	return string(buf[i:])
+}

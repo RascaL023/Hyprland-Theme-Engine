@@ -2,6 +2,7 @@ package loader
 
 import (
 	"bufio"
+	"fmt"
 	"os"
 	"strings"
 	"theme-engine/internal/core/themes/state"
@@ -9,36 +10,47 @@ import (
 )
 
 type ToolMap struct {
-	TemplatePath	string
-	OutputPath		string
+	TemplatePath string
+	OutputPath   string
 }
 
 func LoadToolMap(path string, state *state.State) (map[string]*ToolMap, error) {
-	path = helper.ExpandPath(path, state);
+	path = helper.ExpandPath(path, state)
 
-	fileMap, err := os.Open(path);
+	fileMap, err := os.Open(path)
 	if err != nil {
-		return nil, err;
+		return nil, err
 	}
-	defer fileMap.Close();
+	defer fileMap.Close()
 
-	res := make(map[string]*ToolMap);
-	scanner := bufio.NewScanner(fileMap);
+	res := make(map[string]*ToolMap)
+	scanner := bufio.NewScanner(fileMap)
 
+	lineNo := 0
 	for scanner.Scan() {
-		line := helper.ExpandPath(scanner.Text(), state);
-		parts := strings.Split(line, "|");
+		lineNo++
+		line := strings.TrimSpace(scanner.Text())
+		if line == "" || strings.HasPrefix(line, "#") {
+			continue
+		}
+
+		line = helper.ExpandPath(line, state)
+		parts := strings.Split(line, "|")
 
 		if len(parts) != 3 {
-			continue;
+			return nil, fmt.Errorf("%s:%d: expected name|template|output", path, lineNo)
 		}
-		
-		res[parts[0]] = &ToolMap{
-			TemplatePath: parts[1],
-			OutputPath: parts[2],
+
+		name := strings.TrimSpace(parts[0])
+		if name == "" {
+			return nil, fmt.Errorf("%s:%d: empty target name", path, lineNo)
+		}
+
+		res[name] = &ToolMap{
+			TemplatePath: strings.TrimSpace(parts[1]),
+			OutputPath:   strings.TrimSpace(parts[2]),
 		}
 	}
 
-	return res, scanner.Err();
+	return res, scanner.Err()
 }
-

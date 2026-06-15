@@ -1,20 +1,22 @@
 package resolver
 
-import "theme-engine/internal/core/themes/vars"
+import (
+	"strings"
+	"theme-engine/internal/core/themes/vars"
+)
 
 func ResolveVar(s string, sources ...vars.VarSource) string {
-	if len(s) < 4 || s[0] != '$' {
-		return s;
+	if !strings.HasPrefix(s, "$pl.") {
+		return s
 	}
 
-	key := s[4:] // asumsi $th.xxx
+	key := s[4:]
 
 	for _, src := range sources {
 		if v, ok := src.Get(key); ok {
-			return v;
+			return v
 		}
 	}
 
-	return s;
+	return s
 }
-

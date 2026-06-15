@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "theme": {
+    "name": "nocturne",
+    "type": "dark"
+  },
+  "waybar": "default"
+}

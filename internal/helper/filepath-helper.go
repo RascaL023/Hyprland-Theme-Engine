@@ -6,51 +6,56 @@ import (
 	"theme-engine/internal/core/themes/state"
 )
 
+func Env(key string) string {
+	return os.Getenv(key)
+}
+
 func parseKeyword(keyword string, state *state.State) string {
-	res := strings.ToUpper(keyword);
+	res := strings.ToUpper(keyword)
 
 	switch res {
-		case "WAYBAR" : res = state.Waybar;
-		case "THEME"  : res = state.Theme.Name;
-		default: 
-			if res = os.Getenv(res); res == "" {
-				res = "$" + keyword;
-			}
+	case "WAYBAR":
+		res = state.Waybar
+	case "THEME":
+		res = state.Theme.Name
+	default:
+		if res = os.Getenv(res); res == "" {
+			res = "$" + keyword
+		}
 	}
-	
-	return res;
+
+	return res
 }
 
 // Faster - minimum alloc
 func ExpandPath(path string, state *state.State) string {
-    // small buffer di stack (tidak alloc heap kalo < 64 byte)
-    buf := make([]byte, 0, len(path)+32);
+	// small buffer di stack (tidak alloc heap kalo < 64 byte)
+	buf := make([]byte, 0, len(path)+32)
 
-    for i := 0; i < len(path); {
-        if path[i] != '$' {
-            buf = append(buf, path[i]);
-            i++;
-            continue;
-        }
+	for i := 0; i < len(path); {
+		if path[i] != '$' {
+			buf = append(buf, path[i])
+			i++
+			continue
+		}
 
-        start := i + 1;
-        end := start;
+		start := i + 1
+		end := start
 
-        for end < len(path) {
-            ch := path[end];
-            if ch == '/' || ch == '|' || ch == '\\' || ch == '.' {
-                break;
-            }
-            end++;
-        }
+		for end < len(path) {
+			ch := path[end]
+			if ch == '/' || ch == '|' || ch == '\\' || ch == '.' {
+				break
+			}
+			end++
+		}
 
-				parsed := parseKeyword(path[start:end], state);
+		parsed := parseKeyword(path[start:end], state)
 
-        buf = append(buf, parsed...);
+		buf = append(buf, parsed...)
 
-        i = end;
-    }
+		i = end
+	}
 
-    return string(buf);
+	return string(buf)
 }
-
