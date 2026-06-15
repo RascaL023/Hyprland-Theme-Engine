@@ -86,36 +86,36 @@
 
       "extra": {
         "accent": {
-          "primary": "#c299ff",
-          "secondary": "#b380ff"
+          "primary": "$pl.color5",
+          "secondary": "#b892ff"
         },
 
         "text": {
-          "primary": "#e0d6f7",
-          "secondary": "#cbbde6",
-          "teritary": "#b3a3d6"
+          "primary": "$pl.color0",
+          "secondary": "#4a3b66",
+          "teritary": "#6c5a8f"
         },
 
         "overlay": [
-          "#6e5f99",
-          "#8575ad",
-          "#9c8cc2"
+          "#ece7f8",
+          "#f1ecfb",
+          "#f7f4ff"
         ],
 
         "surface": [
-          "#33294d",
-          "#443966",
-          "#594d80"
+          "#e0d6f7",
+          "#e8e0fa",
+          "#f2edfC"
         ],
 
-        "base": "#221933",
-        "mantle": "#1a1226",
-        "crust": "#120d1a",
+        "base": "#f3eefc",
+        "mantle": "#ede6f7",
+        "crust": "#d9cbed",
 
-        "warning": "#ff80ff",
-        "critical": "#cc33ff",
-        "charging": "#aa66ff"
-      }
+        "warning": "#d272ff",
+        "critical": "#b64cff",
+        "charging": "#9e6eff"
+      }  
     }
   }
 }
