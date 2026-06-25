@@ -21,7 +21,6 @@
 
     "foot": {
       "fontSize": 11.5,
-      "opacity": 0.85,
       "padding": {
         "x": 16,
         "y": 10
@@ -57,6 +56,46 @@
 
         "margin": 5,
         "padding": 8
+      }
+    },
+
+    "hypr": {
+      "gaps": {
+        "in": 1,
+        "out": 5
+      },
+
+      "border": {
+        "size": 2,
+        "active": {
+          "degree": 45,
+          "primary": "rgba(C299FFee)",
+          "secondary": "rgba(978BF8ee)"
+        },
+        "inactive": {
+          "primary": "rgba(0E0C13ff)"
+        }
+      },
+
+      "blur": {
+        "option": true,
+        "size": 4,
+        "passes": 3
+      },
+
+      "rounding": 7,
+
+      "shadow": {
+        "option": true,
+        "range": 6,
+        "renderPower": 1,
+        "color": "rgba(7, 0, 9, 0.88)"
+      },
+
+      "windowRule": {
+        "foot": {
+          "opacity": 0.85
+        }
       }
     }
   }
