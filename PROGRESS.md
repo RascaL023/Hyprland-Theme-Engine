@@ -30,10 +30,11 @@ Dokumen ini melacak status rilis, fitur yang telah diimplementasikan, serta memb
 | **Cava** | Custom Tool | [x] Selesai | `assets/templates/tools/cava/cava.tmpl` | `output/tools/cava/cava_extra` |
 | **Foot** | Custom Tool | [x] Selesai | `assets/templates/tools/foot/foot.tmpl` | `output/tools/foot/ui.ini` |
 | **Kitty** | Custom Tool | [x] Selesai | `assets/templates/tools/kitty/kitty.tmpl` | `output/tools/kitty/ui.conf` |
-| **Waybar** | Generic / Static | [x] Selesai | `assets/templates/waybar/$WAYBAR.tmpl` | `output/waybar/sources.css` |
-| **Hyprland** | Generic / Static | [x] Selesai | `assets/templates/hypr/hyprland.tmpl` | `output/hypr/hyprland.conf` |
-| **Yazi** | Generic / Custom | [ ] Rencana | - | - |
-| **Ncmcpp** | Generic / Custom | [ ] Rencana | - | - |
+| **Yazi** | Static | [x] Selesai | `assets/templates/yazi/theme.tmpl` | `output/tools/yazi/theme.toml` |
+| **Hyprland** | Static / Custom | [ ] Progress | `assets/templates/hypr/hyprland.tmpl` | `output/hypr/hyprland.conf` |
+| **Waybar** | Static / Custom | [ ] Progress | `assets/templates/waybar/$WAYBAR.tmpl` | `output/waybar/sources.css` |
+| **Ncmcpp** | Static / Custom | [ ] Rencana | - | - |
+| **Nvim** | Static / Custom | [ ] Rencana | - | - |
 
 ### C. Perkakas Pengembangan (Developer Tooling)
 - [x] **Runner Script (`runner.sh`)**: Orkestrator otomatis untuk kompilasi, pengujian, pembersihan, dan penanganan log senyap dengan notifikasi desktop (`notify-send`).
