@@ -1,0 +1,918 @@
+[flavor]
+dark  = ""
+light = ""
+
+[app]
+overall = { fg = "{{ .Palette.Foreground }}", bg = "{{ .Palette.Background }}" }
+
+# : Manager
+[mgr]
+cwd = { fg = "{{ index .Palette.Colors 5 }}", bold = true }
+
+# Find (High contrast warning/pink text on deep surface purple)
+find_keyword  = { fg = "{{ .Palette.Warning }}", bg = "{{ index .Palette.Colors 2 }}", bold = true, italic = true, underline = true }
+find_position = { fg = "{{ index .Palette.Colors 9 }}", bold = true, italic = true }
+
+# Marker
+marker_copied   = { fg = "{{ index .Palette.Colors 9 }}", bg = "{{ index .Palette.Colors 2 }}" }
+marker_cut      = { fg = "{{ .Palette.Warning }}", bg = "{{ index .Palette.Colors 2 }}" }
+marker_marked   = { fg = "{{ index .Palette.Colors 5 }}", bg = "{{ index .Palette.Colors 2 }}" }
+marker_selected = { fg = "{{ index .Palette.Colors 13 }}", bg = "{{ index .Palette.Colors 2 }}" }
+marker_symbol   = "│"
+
+# Count
+count_copied   = { fg = "{{ index .Palette.Colors 15 }}", bg = "{{ index .Palette.Colors 4 }}" }
+count_cut      = { fg = "{{ index .Palette.Colors 15 }}", bg = "{{ .Palette.Critical }}" }
+count_selected = { fg = "{{ index .Palette.Colors 15 }}", bg = "{{ index .Palette.Colors 3 }}" }
+
+# Border
+border_symbol = "┃"
+border_style  = { fg = "{{ index .Palette.Colors 2 }}" } # Deep purple/surface borders
+
+# Highlighting
+syntect_theme = ""
+
+[tabs]
+active   = { fg = "{{ index .Palette.Colors 15 }}", bg = "{{ index .Palette.Colors 4 }}", bold = true }
+inactive = { fg = "{{ index .Palette.Colors 6 }}", bg = "{{ index .Palette.Colors 0 }}" }
+
+sep_inner = { open = "", close = "" }
+sep_outer = { open = "", close = "" }
+
+[mode]
+# Sharp, high-contrast mode indicator blocks
+normal_main = { fg = "{{ index .Palette.Colors 0 }}", bg = "{{ index .Palette.Colors 4 }}", bold = true }
+normal_alt  = { fg = "{{ index .Palette.Colors 4 }}", bg = "{{ index .Palette.Colors 2 }}" }
+
+# Select mode
+select_main = { fg = "{{ index .Palette.Colors 0 }}", bg = "{{ index .Palette.Colors 5 }}", bold = true }
+select_alt  = { fg = "{{ index .Palette.Colors 5 }}", bg = "{{ index .Palette.Colors 2 }}" }
+
+# Unset mode
+unset_main = { fg = "{{ index .Palette.Colors 0 }}", bg = "{{ .Palette.Warning }}", bold = true }
+unset_alt  = { fg = "{{ .Palette.Warning }}", bg = "{{ index .Palette.Colors 2 }}" }
+
+# : Indicator of hovered file
+[indicator]
+parent  = { bg = "{{ index .Palette.Colors 0 }}" }
+current = { fg = "{{ index .Palette.Colors 15 }}", bg = "{{ index .Palette.Colors 4 }}", bold = true }
+preview = { bg = "{{ index .Palette.Colors 2 }}", underline = true }
+padding = { open = " ", close = " " }
+
+# : Status bar
+[status]
+overall   = { fg = "{{ .Palette.SecondaryText }}", bg = "{{ index .Palette.Colors 0 }}" }
+sep_left  = { open = " ", close = " " }
+sep_right = { open = " ", close = " " }
+
+# Permissions
+perm_sep   = { fg = "{{ index .Palette.Colors 8 }}" }
+perm_type  = { fg = "{{ index .Palette.Colors 5 }}" }
+perm_read  = { fg = "{{ .Palette.SecondaryAccent }}" }
+perm_write = { fg = "{{ .Palette.Warning }}" }
+perm_exec  = { fg = "{{ .Palette.Charging }}" }
+
+# Progress
+progress_label  = { bold = true }
+progress_normal = { fg = "{{ index .Palette.Colors 5 }}", bg = "{{ index .Palette.Colors 2 }}" }
+progress_error  = { fg = "{{ .Palette.Warning }}", bg = "{{ index .Palette.Colors 2 }}" }
+
+[which]
+cols            = 3
+mask            = { bg = "{{ index .Palette.Colors 0 }}" }
+cand            = { fg = "{{ index .Palette.Colors 5 }}" }
+rest            = { fg = "{{ index .Palette.Colors 6 }}" }
+desc            = { fg = "{{ .Palette.TeritaryText }}" }
+separator       = "  "
+separator_style = { fg = "{{ index .Palette.Colors 8 }}" }
+
+# : Confirmation
+[confirm]
+border     = { fg = "{{ index .Palette.Colors 4 }}" }
+title      = { fg = "{{ index .Palette.Colors 5 }}", bold = true }
+body       = {}
+list       = {}
+btn_yes    = { fg = "{{ index .Palette.Colors 0 }}", bg = "{{ index .Palette.Colors 5 }}" }
+btn_no     = { fg = "{{ .Palette.Foreground }}", bg = "{{ index .Palette.Colors 2 }}" }
+btn_labels = [ "  [Y]es  ", "  (N)o  " ]
+
+# : Spotter
+[spot]
+border = { fg = "{{ index .Palette.Colors 4 }}" }
+title  = { fg = "{{ index .Palette.Colors 5 }}", bold = true }
+
+# Table
+tbl_col  = { fg = "{{ index .Palette.Colors 5 }}" }
+tbl_cell = { fg = "{{ .Palette.Warning }}", reversed = true }
+
+# : Notification
+[notify]
+title_info  = { fg = "{{ index .Palette.Colors 5 }}" }
+title_warn  = { fg = "{{ .Palette.Warning }}" }
+title_error = { fg = "{{ .Palette.Critical }}" }
+
+# Icons
+icon_info  = ""
+icon_warn  = ""
+icon_error = ""
+
+# : Picker
+[pick]
+border   = { fg = "{{ index .Palette.Colors 4 }}" }
+active   = { fg = "{{ .Palette.Warning }}", bg = "{{ index .Palette.Colors 2 }}", bold = true }
+inactive = {}
+
+# : Input
+[input]
+border   = { fg = "{{ index .Palette.Colors 4 }}" }
+title    = { fg = "{{ index .Palette.Colors 5 }}" }
+value    = {}
+selected = { reversed = true }
+
+# : Completion
+[cmp]
+border   = { fg = "{{ index .Palette.Colors 4 }}" }
+active   = { fg = "{{ index .Palette.Colors 0 }}", bg = "{{ index .Palette.Colors 5 }}", bold = true }
+inactive = {}
+
+# Icons
+icon_file    = ""
+icon_folder  = ""
+icon_command = ""
+
+# : Task manager
+[tasks]
+border  = { fg = "{{ index .Palette.Colors 4 }}" }
+title   = { fg = "{{ index .Palette.Colors 5 }}" }
+hovered = { fg = "{{ .Palette.Warning }}", bold = true }
+
+# : Help menu
+[help]
+on      = { fg = "{{ index .Palette.Colors 5 }}" }
+run     = { fg = "{{ .Palette.Warning }}" }
+desc    = {}
+hovered = { fg = "{{ index .Palette.Colors 0 }}", bg = "{{ index .Palette.Colors 5 }}", bold = true }
+footer  = { fg = "{{ index .Palette.Colors 0 }}", bg = "{{ index .Palette.Colors 15 }}" }
+
+# : File-specific styles
+[filetype]
+rules = [
+	# Image (Light Purple)
+	{ mime = "image/*", fg = "{{ index .Palette.Colors 5 }}" },
+	# Media (Pink/Magenta)
+	{ mime = "{audio,video}/*", fg = "{{ .Palette.Warning }}" },
+	# Archive (Medium Purple)
+	{ mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", fg = "{{ index .Palette.Colors 1 }}" },
+	# Document (Tertiary Text)
+	{ mime = "application/{pdf,doc,rtf}", fg = "{{ .Palette.TeritaryText }}" },
+	# Virtual file system (Gray)
+	{ mime = "vfs/{absent,stale}", fg = "{{ index .Palette.Colors 8 }}" },
+	# Special file
+	{ url = "*", is = "orphan", bg = "{{ .Palette.Critical }}" },
+	{ url = "*", is = "exec"  , fg = "{{ index .Palette.Colors 15 }}" },
+	# Dummy file
+	{ url = "*", is = "dummy", bg = "{{ .Palette.Critical }}" },
+	{ url = "*/", is = "dummy", bg = "{{ .Palette.Critical }}" },
+	# Fallback Directory
+	{ url = "*/", fg = "{{ .Palette.SecondaryOverlay }}" }
+]
+
+# : Icons
+[icon]
+globs = []
+dirs  = [
+	{ name = ".config", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = ".git", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = ".github", text = "", fg = "{{ .Palette.TeritaryOverlay }}" },
+	{ name = ".npm", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "Desktop", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "Development", text = "", fg = "{{ .Palette.TeritaryOverlay }}" },
+	{ name = "Documents", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "Downloads", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "Library", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "Movies", text = "", fg = "{{ .Palette.SecondaryAccent }}" },
+	{ name = "Music", text = "", fg = "{{ .Palette.SecondaryAccent }}" },
+	{ name = "Pictures", text = "", fg = "{{ .Palette.SecondaryAccent }}" },
+	{ name = "Public", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "Videos", text = "", fg = "{{ .Palette.SecondaryAccent }}" },
+]
+files = [
+	{ name = ".babelrc", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = ".bash_profile", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = ".bashrc", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = ".clang-format", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = ".clang-tidy", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = ".codespellrc", text = "󰛢", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = ".condarc", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = ".dockerignore", text = "󰡨", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = ".ds_store", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = ".editorconfig", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = ".env", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = ".eslintignore", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = ".eslintrc", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = ".git-blame-ignore-revs", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = ".gitattributes", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = ".gitconfig", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = ".gitignore", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = ".gitlab-ci.yml", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = ".gitmodules", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = ".gtkrc-2.0", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = ".gvimrc", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = ".justfile", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = ".luacheckrc", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = ".luaurc", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = ".mailmap", text = "󰊢", fg = "{{ .Palette.Warning }}" },
+	{ name = ".nanorc", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = ".npmignore", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = ".npmrc", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = ".nuxtrc", text = "󱄆", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = ".nvmrc", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = ".pnpmfile.cjs", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = ".pre-commit-config.yaml", text = "󰛢", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = ".prettierignore", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = ".prettierrc", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = ".prettierrc.cjs", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = ".prettierrc.js", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = ".prettierrc.json", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = ".prettierrc.json5", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = ".prettierrc.mjs", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = ".prettierrc.toml", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = ".prettierrc.yaml", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = ".prettierrc.yml", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = ".pylintrc", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = ".settings.json", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = ".SRCINFO", text = "󰣇", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = ".vimrc", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = ".Xauthority", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = ".xinitrc", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = ".Xresources", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = ".xsession", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = ".zprofile", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = ".zshenv", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = ".zshrc", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "_gvimrc", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "_vimrc", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "AUTHORS", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "AUTHORS.txt", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "brewfile", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "bspwmrc", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "build", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "build.gradle", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "build.zig.zon", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "bun.lock", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "bun.lockb", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "cantorrc", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "checkhealth", text = "󰓙", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "cmakelists.txt", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "code_of_conduct", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "code_of_conduct.md", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "commit_editmsg", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "commitlint.config.js", text = "󰜘", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "commitlint.config.ts", text = "󰜘", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "compose.yaml", text = "󰡨", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "compose.yml", text = "󰡨", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "config", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "containerfile", text = "󰡨", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "copying", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "copying.lesser", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "Directory.Build.props", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "Directory.Build.targets", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "Directory.Packages.props", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "docker-compose.yaml", text = "󰡨", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "docker-compose.yml", text = "󰡨", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "dockerfile", text = "󰡨", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "eslint.config.cjs", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "eslint.config.js", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "eslint.config.mjs", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "eslint.config.ts", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "ext_typoscript_setup.txt", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "favicon.ico", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "fp-info-cache", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "fp-lib-table", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "FreeCAD.conf", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "Gemfile", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "gnumakefile", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "go.mod", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "go.sum", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "go.work", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "gradle-wrapper.properties", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "gradle.properties", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "gradlew", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "groovy", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "gruntfile.babel.js", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "gruntfile.coffee", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "gruntfile.js", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "gruntfile.ts", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "gtkrc", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "gulpfile.babel.js", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "gulpfile.coffee", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "gulpfile.js", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "gulpfile.ts", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "hypridle.conf", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "hyprland.conf", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "hyprlandd.conf", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "hyprlock.conf", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "hyprpaper.conf", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "hyprsunset.conf", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "i18n.config.js", text = "󰗊", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "i18n.config.ts", text = "󰗊", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "i3blocks.conf", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "i3status.conf", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "index.theme", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "ionic.config.json", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "Jenkinsfile", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "justfile", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "kalgebrarc", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "kdeglobals", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "kdenlive-layoutsrc", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "kdenliverc", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "kritadisplayrc", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "kritarc", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "license", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "license.md", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "lxde-rc.xml", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "lxqt.conf", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "makefile", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "mix.lock", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "mpv.conf", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "next.config.cjs", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "next.config.js", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "next.config.ts", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "node_modules", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "nuxt.config.cjs", text = "󱄆", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "nuxt.config.js", text = "󱄆", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "nuxt.config.mjs", text = "󱄆", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "nuxt.config.ts", text = "󱄆", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "package-lock.json", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "package.json", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "PKGBUILD", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "platformio.ini", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "playwright.config.cjs", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "playwright.config.cts", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "playwright.config.js", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "playwright.config.mjs", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "playwright.config.mts", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "playwright.config.ts", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "pnpm-lock.yaml", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "pnpm-workspace.yaml", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "pom.xml", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "prettier.config.cjs", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "prettier.config.js", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "prettier.config.mjs", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "prettier.config.ts", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "prisma.config.mts", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "prisma.config.ts", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "procfile", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "PrusaSlicer.ini", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "PrusaSlicerGcodeViewer.ini", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "py.typed", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "QtProject.conf", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "rakefile", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "readme", text = "󰂺", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "readme.md", text = "󰂺", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "rmd", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "robots.txt", text = "󰚩", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "security", text = "󰒃", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "security.md", text = "󰒃", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "settings.gradle", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "svelte.config.js", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "sxhkdrc", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "sym-lib-table", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "tailwind.config.js", text = "󱏿", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "tailwind.config.mjs", text = "󱏿", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "tailwind.config.ts", text = "󱏿", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "tmux.conf", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "tmux.conf.local", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "tsconfig.json", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "unlicense", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "vagrantfile", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "vercel.json", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "vite.config.cjs", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "vite.config.cts", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "vite.config.js", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "vite.config.mjs", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "vite.config.mts", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "vite.config.ts", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "vitest.config.cjs", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "vitest.config.cts", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "vitest.config.js", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "vitest.config.mjs", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "vitest.config.mts", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "vitest.config.ts", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "vlcrc", text = "󰕼", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "webpack", text = "󰜫", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "weston.ini", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "workspace", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "wrangler.jsonc", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "wrangler.toml", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "xdph.conf", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "xmobarrc", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "xmobarrc.hs", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "xmonad.hs", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "xorg.conf", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "xsettingsd.conf", text = "", fg = "{{ .Palette.Warning }}" },
+]
+exts = [
+	{ name = "3gp", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "3mf", text = "󰆧", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "7z", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "a", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "aac", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "ada", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "adb", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "ads", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "ai", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "aif", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "aiff", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "android", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "ape", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "apk", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "apl", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "app", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "applescript", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "asc", text = "󰦝", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "asm", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "ass", text = "󰨖", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "astro", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "avif", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "awk", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "azcli", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "bak", text = "󰁯", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "bash", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "bat", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "bazel", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "bib", text = "󱉟", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "bicep", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "bicepparam", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "bin", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "blade.php", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "blend", text = "󰂫", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "blp", text = "󰺾", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "bmp", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "bqn", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "brep", text = "󰻫", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "bz", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "bz2", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "bz3", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "bzl", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "c", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "c++", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "cache", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "cast", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "cbl", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "cc", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "ccm", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "cfc", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "cfg", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "cfm", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "cjs", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "clj", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "cljc", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "cljd", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "cljs", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "cmake", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "cob", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "cobol", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "coffee", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "conda", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "conf", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "config.ru", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "cow", text = "󰆚", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "cp", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "cpp", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "cppm", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "cpy", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "cr", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "crdownload", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "cs", text = "󰌛", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "csh", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "cshtml", text = "󱦗", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "cson", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "csproj", text = "󰪮", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "css", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "csv", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "cts", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "cu", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "cue", text = "󰲹", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "cuh", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "cxx", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "cxxm", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "d", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "d.ts", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "dart", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "db", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "dconf", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "desktop", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "diff", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "dll", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "doc", text = "󰈬", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "Dockerfile", text = "󰡨", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "dockerignore", text = "󰡨", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "docx", text = "󰈬", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "dot", text = "󱁉", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "download", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "drl", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "dropbox", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "dump", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "dwg", text = "󰻫", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "dxf", text = "󰻫", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "ebook", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "ebuild", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "edn", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "eex", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "ejs", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "el", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "elc", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "elf", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "elm", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "eln", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "env", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "eot", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "epp", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "epub", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "erb", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "erl", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "ex", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "exe", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "exs", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "f#", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "f3d", text = "󰻫", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "f90", text = "󱈚", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "fbx", text = "󰆧", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "fcbak", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "fcmacro", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "fcmat", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "fcparam", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "fcscript", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "fcstd", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "fcstd1", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "fctb", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "fctl", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "fdmdownload", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "feature", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "fish", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "flac", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "flc", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "flf", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "fnl", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "fodg", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "fodp", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "fods", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "fodt", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "frag", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "fs", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "fsi", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "fsscript", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "fsx", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "gcode", text = "󰐫", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "gd", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "gemspec", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "geom", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "gif", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "git", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "glb", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "gleam", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "glsl", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "gnumakefile", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "go", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "godot", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "gpr", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "gql", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "gradle", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "graphql", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "gresource", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "gv", text = "󱁉", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "gz", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "h", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "haml", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "hbs", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "heex", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "hex", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "hh", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "hpp", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "hrl", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "hs", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "htm", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "html", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "http", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "huff", text = "󰡘", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "hurl", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "hx", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "hxx", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "ical", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "icalendar", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "ico", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "ics", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "ifb", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "ifc", text = "󰻫", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "ige", text = "󰻫", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "iges", text = "󰻫", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "igs", text = "󰻫", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "image", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "img", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "import", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "info", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "ini", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "ino", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "ipynb", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "iso", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "ixx", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "jar", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "java", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "jl", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "jpeg", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "jpg", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "js", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "json", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "json5", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "jsonc", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "jsx", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "jwmrc", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "jxl", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "kbx", text = "󰯄", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "kdb", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "kdbx", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "kdenlive", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "kdenlivetitle", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "kicad_dru", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "kicad_mod", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "kicad_pcb", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "kicad_prl", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "kicad_pro", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "kicad_sch", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "kicad_sym", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "kicad_wks", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "ko", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "kpp", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "kra", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "krz", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "ksh", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "kt", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "kts", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "lck", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "leex", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "less", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "lff", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "lhs", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "lib", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "license", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "liquid", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "lock", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "log", text = "󰌱", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "lrc", text = "󰨖", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "lua", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "luac", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "luau", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "m", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "m3u", text = "󰲹", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "m3u8", text = "󰲹", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "m4a", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "m4v", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "magnet", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "makefile", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "markdown", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "material", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "md", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "md5", text = "󰕥", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "mdx", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "mint", text = "󰌪", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "mjs", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "mk", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "mkv", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "ml", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "mli", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "mm", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "mo", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "mobi", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "mojo", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "mov", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "mp3", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "mp4", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "mpp", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "msf", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "mts", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "mustache", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "nfo", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "nim", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "nix", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "norg", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "nswag", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "nu", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "o", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "obj", text = "󰆧", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "odf", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "odg", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "odin", text = "󰟢", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "odp", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "ods", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "odt", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "oga", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "ogg", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "ogv", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "ogx", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "opus", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "org", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "otf", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "out", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "part", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "patch", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "pck", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "pcm", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "pdf", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "php", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "pl", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "pls", text = "󰲹", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "ply", text = "󰆧", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "pm", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "png", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "po", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "pot", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "pp", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "ppt", text = "󰈧", fg = "{{ .Palette.Warning }}" },
+	{ name = "pptx", text = "󰈧", fg = "{{ .Palette.Warning }}" },
+	{ name = "prisma", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "pro", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "ps1", text = "󰨊", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "psb", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "psd", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "psd1", text = "󰨊", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "psm1", text = "󰨊", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "pub", text = "󰷖", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "pxd", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "pxi", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "py", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "pyc", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "pyd", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "pyi", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "pyo", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "pyw", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "pyx", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "qm", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "qml", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "qrc", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "qss", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "query", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "R", text = "󰟔", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "r", text = "󰟔", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "rake", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "rar", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "rasi", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "razor", text = "󱦘", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "rb", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "res", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "resi", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "rlib", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "rmd", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "rproj", text = "󰗆", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "rs", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "rss", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "s", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "sass", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "sbt", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "sc", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "scad", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "scala", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "scm", text = "󰘧", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "scss", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "sh", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "sha1", text = "󰕥", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "sha224", text = "󰕥", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "sha256", text = "󰕥", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "sha384", text = "󰕥", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "sha512", text = "󰕥", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "sig", text = "󰘧", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "signature", text = "󰘧", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "skp", text = "󰻫", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "sldasm", text = "󰻫", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "sldprt", text = "󰻫", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "slim", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "sln", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "slnx", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "slvs", text = "󰻫", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "sml", text = "󰘧", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "so", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "sol", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "spec.js", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "spec.jsx", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "spec.ts", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "spec.tsx", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "spx", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "sql", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "sqlite", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "sqlite3", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "srt", text = "󰨖", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "ssa", text = "󰨖", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "ste", text = "󰻫", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "step", text = "󰻫", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "stl", text = "󰆧", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "stories.js", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "stories.jsx", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "stories.mjs", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "stories.svelte", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "stories.ts", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "stories.tsx", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "stories.vue", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "stp", text = "󰻫", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "strings", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "styl", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "sub", text = "󰨖", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "sublime", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "suo", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "sv", text = "󰍛", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "svelte", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "svg", text = "󰜡", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "svgz", text = "󰜡", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "svh", text = "󰍛", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "swift", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "t", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "tbc", text = "󰛓", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "tcl", text = "󰛓", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "templ", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "terminal", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "test.js", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "test.jsx", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "test.ts", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "test.tsx", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "tex", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "tf", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "tfvars", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "tgz", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "tmpl", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "tmux", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "toml", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "torrent", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "tres", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "ts", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "tscn", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "tsconfig", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "tsx", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "ttf", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "twig", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "txt", text = "󰈙", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "txz", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "typ", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "typoscript", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "ui", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "v", text = "󰍛", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "vala", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "vert", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "vh", text = "󰍛", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "vhd", text = "󰍛", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "vhdl", text = "󰍛", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "vi", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "vim", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "vsh", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "vsix", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "vue", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "wasm", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "wav", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "webm", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "webmanifest", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "webp", text = "", fg = "{{ index .Palette.Colors 1 }}" },
+	{ name = "webpack", text = "󰜫", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "wma", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "wmv", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "woff", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "woff2", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ name = "wrl", text = "󰆧", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "wrz", text = "󰆧", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "wv", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "wvc", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "x", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "xaml", text = "󰙳", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "xcf", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "xcplayground", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "xcstrings", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "xls", text = "󰈛", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "xlsx", text = "󰈛", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "xm", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ name = "xml", text = "󰗀", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "xpi", text = "", fg = "{{ .Palette.Warning }}" },
+	{ name = "xslt", text = "󰗀", fg = "{{ index .Palette.Colors 4 }}" },
+	{ name = "xul", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "xz", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "yaml", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "yml", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ name = "zig", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "zip", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "zsh", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ name = "zst", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ name = "🔥", text = "", fg = "{{ .Palette.Warning }}" },
+]
+conds = [
+	# Special files
+	{ if = "orphan", text = "", fg = "{{ index .Palette.Colors 8 }}" },
+	{ if = "link", text = "", fg = "{{ index .Palette.Colors 6 }}" },
+	{ if = "block", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ if = "char", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ if = "fifo", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ if = "sock", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ if = "sticky", text = "", fg = "{{ index .Palette.Colors 9 }}" },
+	{ if = "dummy", text = "", fg = "{{ .Palette.Warning }}" },
+
+	# Fallback (Uses standard Blue/Purple for folders and Lavender for generic files)
+	{ if = "dir & hovered", text = "", fg = "{{ index .Palette.Colors 5 }}" },
+	{ if = "dir", text = "", fg = "{{ index .Palette.Colors 4 }}" },
+	{ if = "exec", text = "", fg = "{{ .Palette.SecondaryOverlay }}" },
+	{ if = "!dir", text = "", fg = "{{ .Palette.Foreground }}" },
+]

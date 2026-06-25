@@ -4,3 +4,4 @@ foot|assets/templates/tools/foot/foot.tmpl|output/tools/foot/ui.ini
 kitty|assets/templates/tools/kitty/kitty.tmpl|output/tools/kitty/ui.conf
 waybar|assets/templates/waybar/$WAYBAR.tmpl|output/waybar/sources.css
 hyprland|assets/templates/hypr/hyprland.tmpl|output/hypr/hyprland.conf
+yazi|assets/templates/yazi/theme.tmpl|output/yazi/theme.toml
