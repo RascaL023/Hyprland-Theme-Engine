@@ -69,11 +69,11 @@
         "size": 2,
         "active": {
           "degree": 45,
-          "primary": "rgba(C299FFee)",
-          "secondary": "rgba(978BF8ee)"
+          "primary": "$pl.extra.primaryaccent",
+          "secondary": "$pl.extra.secondaryaccent"
         },
         "inactive": {
-          "primary": "rgba(0E0C13ff)"
+          "primary": "$pl.extra.crust"
         }
       },
 
@@ -89,7 +89,7 @@
         "option": true,
         "range": 6,
         "renderPower": 1,
-        "color": "rgba(7, 0, 9, 0.88)"
+        "color": "$pl.extra.crust"
       },
 
       "windowRule": {

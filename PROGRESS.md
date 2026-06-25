@@ -31,7 +31,7 @@ Dokumen ini melacak status rilis, fitur yang telah diimplementasikan, serta memb
 | **Foot** | Custom Tool | [x] Selesai | `assets/templates/tools/foot/foot.tmpl` | `output/tools/foot/ui.ini` |
 | **Kitty** | Custom Tool | [x] Selesai | `assets/templates/tools/kitty/kitty.tmpl` | `output/tools/kitty/ui.conf` |
 | **Yazi** | Static | [x] Selesai | `assets/templates/yazi/theme.tmpl` | `output/tools/yazi/theme.toml` |
-| **Hyprland** | Custom | [ ] Progress | `assets/templates/hypr/hyprland.tmpl` | `output/hypr/source.conf` |
+| **Hyprland** | Custom | [x] Selesai | `assets/templates/hypr/hyprland.tmpl` | `output/hypr/source.conf` |
 | **Waybar** | Static / Custom | [ ] Rencana | `assets/templates/waybar/$WAYBAR.tmpl` | `output/waybar/sources.css` |
 | **Ncmcpp** | Static / Custom | [ ] Rencana | - | - |
 | **Nvim** | Static / Custom | [ ] Rencana | - | - |
