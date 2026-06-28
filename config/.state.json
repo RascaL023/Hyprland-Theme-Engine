@@ -1,8 +1,8 @@
 {
   "version": 1,
   "theme": {
-    "name": "nocturne",
-    "type": "dark"
+    "name": "ghostly",
+    "type": "light"
   },
   "waybar": "default"
 }

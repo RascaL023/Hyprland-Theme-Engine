@@ -9,6 +9,15 @@ Dokumen ini melacak status rilis, fitur yang telah diimplementasikan, serta memb
 - **Status Saat Ini**: Aktif / Siap Dilanjutkan (Stabil & Teruji)
 - **Arsitektur Inti (Core Engine)**: **100% Selesai & Stabil** (Mendukung pemrosesan state, pemetaan dinamis, caching, penulisan aman/atomik, dan skip-unchanged).
 - **Cakupan Pengujian**: Unit test mencakup modul krusial seperti `loader` dan `renderer`.
+- **[BARU] Schema Rebranding & Expansion**: Kategori `extra` di-*refactor* total dari skema
+  `surface[3]` + `overlay[3]` + `base/mantle/crust` + `accent[2]` + `text[3]` menjadi
+  terstruktur seperti *design system* modern:
+  - `accent` → ditambah `on_accent`
+  - `text` → `teritary` diganti `muted`, ditambah `link`
+  - `layer` → pengganti `base/mantle/crust` + `surface[3]` + `overlay[3]`
+  - `border` → kategori baru (default & active)
+  - `status` → kategori baru (success, warning, error, critical, info)
+- **[BARU] Ghostly Theme**: Tema ghostly kini sudah memiliki `palette.json` (dark & light) dan `theme.json`.
 
 ---
 
@@ -33,7 +42,7 @@ Dokumen ini melacak status rilis, fitur yang telah diimplementasikan, serta memb
 | **Yazi** | Static | [x] Selesai | `assets/templates/yazi/theme.tmpl` | `output/tools/yazi/theme.toml` |
 | **Hyprland** | Custom | [x] Selesai | `assets/templates/hypr/hyprland.tmpl` | `output/hypr/source.conf` |
 | **Starship[Terminal]** | Static / Custom | [ ] Softing | - | - |
-| **Waybar** | Static / Custom | [ ] Rencana | `assets/templates/waybar/$WAYBAR.tmpl` | `output/waybar/sources.css` |
+| **Waybar** | Migrated to GTK | [x] Selesai | via `output/domain/gtk/css/source.css` | Config langsung `@import` source.css dari GTK |
 | **Ncmcpp** | Static / Custom | [ ] Rencana | - | - |
 | **Nvim** | Static / Custom | [ ] Rencana | - | - |
 | **Btop** | Static / Custom | [ ] Rencana | - | - |
@@ -42,7 +51,13 @@ Dokumen ini melacak status rilis, fitur yang telah diimplementasikan, serta memb
 | **Nemo** | Static / Custom | [ ] Rencana | - | - |
 | **Zathura** | Static / Custom | [ ] Rencana | - | - |
 
-### C. Perkakas Pengembangan (Developer Tooling)
+### C. Daftar Tema
+| Tema | Dark | Light | Theme JSON |
+| :--- | :---: | :---: | :---: |
+| **Nocturne** | [x] | [x] | [x] |
+| **Ghostly** | [x] | [x] | [x] |
+
+### D. Perkakas Pengembangan (Developer Tooling)
 - [x] **Runner Script (`runner.sh`)**: Orkestrator otomatis untuk kompilasi, pengujian, pembersihan, dan penanganan log senyap dengan notifikasi desktop (`notify-send`).
 - [x] **Unit Testing**: Pengujian otomatis untuk penulisan file, render, caching, dan pemetaan path.
 
@@ -52,8 +67,8 @@ Dokumen ini melacak status rilis, fitur yang telah diimplementasikan, serta memb
 
 Jika Anda ingin melanjutkan coding sekarang, pilih salah satu dari tugas terarah berikut:
 
-### 🎯 Prioritas 1: Menambah Target Baru (Yazi & Ncmcpp)
-- **Tujuan**: Membawa integrasi file manager terminal (Yazi) dan music player (Ncmcpp) ke dalam sistem tema terpadu.
+### 🎯 Prioritas 1: Menambah Target Baru (Ncmcpp & Nvim)
+- **Tujuan**: Membawa integrasi music player (Ncmcpp) dan editor (Nvim) ke dalam sistem tema terpadu.
 - **Langkah-Langkah**:
   1. Tentukan apakah target baru ini butuh opsi unik di `theme.json` (Gunakan **Custom Tool Processor**) atau cukup data warna global saja (Gunakan **Generic Static Processor**).
   2. Rujuk panduan penambahan target di **`FLOW.md` Bab 7** untuk cara pembuatan kodenya.
