@@ -3,5 +3,4 @@ cava|assets/templates/tools/cava/cava.tmpl|output/tools/cava/cava_extra
 foot|assets/templates/tools/foot/foot.tmpl|output/tools/foot/ui.ini
 kitty|assets/templates/tools/kitty/kitty.tmpl|output/tools/kitty/ui.conf
 hypr|assets/templates/tools/hypr/hypr.tmpl|output/tools/hypr/source.conf
-waybar|assets/templates/waybar/$WAYBAR.tmpl|output/waybar/sources.css
 yazi|assets/templates/yazi/theme.tmpl|output/yazi/theme.toml
