@@ -3,7 +3,7 @@
     "dark": {
       "background": "#0a0a0a",
       "foreground": "#c1c1c1",
-      "cursor": "#c1c1c1",
+      "cursor": "#B59FA6",
 
       "colors": [
         "#0a0a0a",
@@ -27,16 +27,16 @@
 
       "extra": {
         "accent": {
-          "primary": "$pl.color5",
-          "secondary": "$pl.color6",
-          "on_accent": "$pl.color0"
+          "primary": "$pl.color10",
+          "secondary": "$pl.color2",
+          "on_accent": "#0a0a0a"
         },
 
         "text": {
           "primary": "$pl.foreground",
-          "secondary": "$pl.color14",
-          "muted": "$pl.color8",
-          "link": "$pl.color4"
+          "secondary": "#A1A1A1",
+          "muted": "#6E6E6E",
+          "link": "$pl.color10"
         },
 
         "layer": {
@@ -49,16 +49,79 @@
         },
 
         "border": {
-          "default": "$pl.color0",
-          "active": "$pl.color5"
+          "default": "#2a2a2a",
+          "active": "$pl.color10"
+        },
+
+        "status": {
+          "success": "$pl.color10",
+          "warning": "$pl.color11",
+          "error": "$pl.color1",
+          "critical": "$pl.color9",
+          "info": "$pl.color6"
+        }
+      }
+    },
+
+    "light": {
+      "background": "#FAFAFA",
+      "foreground": "#2B2B2B",
+      "cursor": "#7A5B65",
+
+      "colors": [
+        "#FAFAFA",
+        "#9A7581",
+        "#7A5B65",
+        "#6A6C6D",
+        "#6D6E6F",
+        "#7D7D7D",
+        "#8A8A8A",
+        "#2B2B2B",
+
+        "#E0E0E0",
+        "#8E6C77",
+        "#634751",
+        "#595B5C",
+        "#5D5E5F",
+        "#6D6D6D",
+        "#7A7A7A",
+        "#1A1A1A"
+      ],
+
+      "extra": {
+        "accent": {
+          "primary": "$pl.color2",
+          "secondary": "$pl.color1",
+          "on_accent": "#FFFFFF"
+        },
+
+        "text": {
+          "primary": "$pl.foreground",
+          "secondary": "#5E5E5E",
+          "muted": "#969696",
+          "link": "$pl.color2"
+        },
+
+        "layer": {
+          "base": "#F5F5F5",
+          "mantle": "#EBEBEB",
+          "crust": "$pl.color0",
+          "surface": "#E0E0E0",
+          "surface_raised": "#D6D6D6",
+          "surface_overlay": "#CCCCCC"
+        },
+
+        "border": {
+          "default": "#D6D6D6",
+          "active": "$pl.color2"
         },
 
         "status": {
           "success": "$pl.color2",
           "warning": "$pl.color3",
-          "error": "$pl.color1",
+          "error": "$pl.color9",
           "critical": "$pl.color1",
-          "info": "$pl.color4"
+          "info": "$pl.color6"
         }
       }
     }
