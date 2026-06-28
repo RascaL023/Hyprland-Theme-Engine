@@ -47,7 +47,7 @@ cmd/theme-engine/              Entrypoint CLI dan import processor
 internal/engine/               Pipeline utama load -> resolve -> render
 internal/loader/               Loader JSON dan path map
 internal/renderer/             Template cache, atomic write, skip unchanged write
-internal/resolver/             Resolver variable, contoh $pl.extra.base
+internal/resolver/             Resolver variable, contoh $pl.extra.layer.base
 internal/processor/            Registry processor
 internal/register/             Interface bersama untuk processor
 
@@ -250,7 +250,7 @@ themes/<theme-name>/palette.json
 Variable palette memakai prefix `$pl.`:
 
 ```json
-"active": "$pl.extra.primaryaccent"
+"active": "$pl.extra.accent.primary"
 ```
 
 ## Template
@@ -261,7 +261,7 @@ Data umum yang bisa dipakai di template:
 
 ```gotemplate
 {{ .Palette.Foreground }}
-{{ .Palette.PrimaryAccent }}
+{{ .Palette.AccentPrimary }}
 {{ .Palette.Background }}
 {{ .Theme.Theme.Fonts.Primary }}
 {{ .Theme.Theme.Fonts.Size }}
@@ -270,7 +270,7 @@ Data umum yang bisa dipakai di template:
 Renderer juga menyediakan helper `hex` untuk menghapus awalan `#`:
 
 ```gotemplate
-rgb({{ hex .Palette.PrimaryAccent }})
+rgb({{ hex .Palette.AccentPrimary }})
 ```
 
 ## Menambah Tool Baru
@@ -335,7 +335,7 @@ Tambah config tool ke `themes/<theme>/theme.json`:
 ```json
 "dunst": {
   "radius": 8,
-  "border": "$pl.extra.primaryaccent"
+  "border": "$pl.extra.accent.primary"
 }
 ```
 

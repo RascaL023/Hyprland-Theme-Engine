@@ -11,11 +11,11 @@
   "tools": {
     "cava": {
       "gradients": [
-        "$pl.extra.primarysurface",
-        "$pl.extra.secondarysurface",
-        "$pl.extra.teritarysurface",
-        "$pl.extra.primaryoverlay",
-        "$pl.extra.secondaryoverlay"
+        "$pl.extra.layer.crust",
+        "$pl.extra.layer.surface",
+        "$pl.extra.layer.surface_raised",
+        "$pl.extra.layer.surface_overlay",
+        "$pl.extra.accent.secondary"
       ]
     },
 
@@ -34,12 +34,12 @@
 
       "tab": {
         "active": {
-          "foreground": "$pl.extra.secondarytext",
-          "background": "$pl.extra.primarysurface"
+          "foreground": "$pl.extra.text.secondary",
+          "background": "$pl.extra.layer.surface"
         },
         "inactive": {
-          "foreground": "$pl.extra.secondarysurface",
-          "background": "$pl.extra.secondarytext"
+          "foreground": "$pl.extra.layer.surface_raised",
+          "background": "$pl.extra.text.secondary"
         },
 
         "bar": "powerline",
@@ -48,8 +48,8 @@
 
       "window": {
         "border": {
-          "active": "$pl.extra.primaryaccent",
-          "inactive": "$pl.extra.mantle",
+          "active": "$pl.extra.accent.primary",
+          "inactive": "$pl.extra.layer.mantle",
 
           "width": 1
         },
@@ -69,11 +69,11 @@
         "size": 2,
         "active": {
           "degree": 45,
-          "primary": "$pl.extra.primaryaccent",
-          "secondary": "$pl.extra.secondaryaccent"
+          "primary": "$pl.extra.accent.primary",
+          "secondary": "$pl.extra.accent.secondary"
         },
         "inactive": {
-          "primary": "$pl.extra.crust"
+          "primary": "$pl.extra.layer.crust"
         }
       },
 
@@ -89,7 +89,7 @@
         "option": true,
         "range": 6,
         "renderPower": 1,
-        "color": "$pl.extra.crust"
+        "color": "$pl.extra.layer.crust"
       },
 
       "windowRule": {

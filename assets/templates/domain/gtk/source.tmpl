@@ -20,28 +20,30 @@ $cyan-bright    : {{ index .Config.Palette.Colors 14 }};
 $white-bright   : {{ index .Config.Palette.Colors 15 }};
 
 
-$primary-accent     : {{ .Config.Palette.PrimaryAccent }};
-$secondary-accent   : {{ .Config.Palette.SecondaryAccent }};
+$accent-primary     : {{ .Config.Palette.AccentPrimary }};
+$accent-secondary   : {{ .Config.Palette.AccentSecondary }};
+$accent-on          : {{ .Config.Palette.AccentOn }};
 
-$primary-text       : {{ .Config.Palette.PrimaryText }};
-$secondary-text     : {{ .Config.Palette.SecondaryText }};
-$teritary-text      : {{ .Config.Palette.TeritaryText }};
+$text-primary       : {{ .Config.Palette.TextPrimary }};
+$text-secondary     : {{ .Config.Palette.TextSecondary }};
+$text-muted         : {{ .Config.Palette.TextMuted }};
+$text-link          : {{ .Config.Palette.TextLink }};
 
-$primary-overlay    : {{ .Config.Palette.PrimaryOverlay }};
-$secondary-overlay  : {{ .Config.Palette.SecondaryOverlay }};
-$teritary-overlay   : {{ .Config.Palette.TeritaryOverlay }};
+$layer-base         : {{ .Config.Palette.LayerBase }};
+$layer-mantle       : {{ .Config.Palette.LayerMantle }};
+$layer-crust        : {{ .Config.Palette.LayerCrust }};
+$layer-surface      : {{ .Config.Palette.LayerSurface }};
+$layer-surface-raised  : {{ .Config.Palette.LayerSurfaceRaised }};
+$layer-surface-overlay : {{ .Config.Palette.LayerSurfaceOverlay }};
 
-$primary-surface    : {{ .Config.Palette.PrimarySurface }};
-$secondary-surface  : {{ .Config.Palette.SecondarySurface }};
-$teritary-surface   : {{ .Config.Palette.TeritarySurface }};
+$border-default     : {{ .Config.Palette.BorderDefault }};
+$border-active      : {{ .Config.Palette.BorderActive }};
 
-$base      : {{ .Config.Palette.Base }};
-$mantle    : {{ .Config.Palette.Mantle }};
-$crust     : {{ .Config.Palette.Crust }};
-
-$warning   : {{ .Config.Palette.Warning }};
-$critical  : {{ .Config.Palette.Critical }};
-$charging  : {{ .Config.Palette.Charging }};
+$status-success     : {{ .Config.Palette.StatusSuccess }};
+$status-warning     : {{ .Config.Palette.StatusWarning }};
+$status-error       : {{ .Config.Palette.StatusError }};
+$status-critical    : {{ .Config.Palette.StatusCritical }};
+$status-info        : {{ .Config.Palette.StatusInfo }};
 
 
 $primary-font   : "{{ .Config.Theme.Theme.Fonts.Primary }}";

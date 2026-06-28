@@ -24,7 +24,7 @@ cmd/theme-engine/              # Titik masuk aplikasi (CLI parser)
 internal/
  ├── engine/                   # Pipeline utama: orchestrator flow aplikasi
  ├── loader/                   # I/O Loader untuk JSON, State, dan Path Map (path.txt)
- ├── resolver/                 # Engine penyelesai variabel seperti "$pl.extra.base"
+ ├── resolver/                 # Engine penyelesai variabel seperti "$pl.extra.layer.base"
  ├── renderer/                 # Template parser, cache, & atomic write dengan skip-unchanged
  ├── processor/                # Pendaftaran (Registry) dan pemanggilan Processor target
  ├── register/                 # Interface kontrak (Parser, Resolver, Renderer) bagi Processor
@@ -113,7 +113,7 @@ Setiap aplikasi (seperti Kitty, Foot) mendaftarkan dirinya secara otomatis ke `p
 #### Langkah 6: Pemrosesan Data oleh Processor
 Setiap processor memenuhi interface kontrak `Processor` yang terdiri dari tiga metode utama:
 1. **`Parse(in any) (any, error)`**: Mengonversi sub-JSON mentah (`json.RawMessage`) dari `theme.json` khusus untuk tool tersebut menjadi Go struct representatif tool tersebut (misal `kitty.Raw`).
-2. **`Resolve(in any, ctx *context.Context) (any, error)`**: Menerima struct mentah dan mengembalikan struct siap render. Di langkah ini, nilai bertipe variabel (seperti `"$pl.extra.primaryaccent"`) diselesaikan menjadi warna Hex asli dengan memanggil `resolver.ResolveVar` terhadap map warna yang sudah di-*flatten* di Langkah 3.
+2. **`Resolve(in any, ctx *context.Context) (any, error)`**: Menerima struct mentah dan mengembalikan struct siap render. Di langkah ini, nilai bertipe variabel (seperti `"$pl.extra.accent.primary"`) diselesaikan menjadi warna Hex asli dengan memanggil `resolver.ResolveVar` terhadap map warna yang sudah di-*flatten* di Langkah 3.
 3. **`Render(templatePath, outputPath string, data any) error`**: Mengirim data yang sudah matang ke mesin pembuat file.
 
 #### Langkah 7: Template Rendering & Atomic/Skip Write
@@ -126,7 +126,7 @@ Modul `internal/renderer/render.go` menangani penulisan file ke filesystem denga
 
 ## 4. Mekanisme Resolving Variabel `$pl.`
 
-Bagaimana `$pl.extra.primaryaccent` berubah menjadi kode warna hex nyata?
+Bagaimana `$pl.extra.accent.primary` berubah menjadi kode warna hex nyata?
 
 1. Di `internal/resolver/var-resolver.go`, fungsi `ResolveVar(s string, sources ...vars.VarSource)` bertugas menyaring string input.
 2. Jika string **tidak** diawali `$pl.`, fungsi langsung mengembalikan string tersebut (misal, string `#ffffff` atau string biasa tetap utuh).

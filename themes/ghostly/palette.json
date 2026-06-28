@@ -23,7 +23,44 @@
         "#B5B5B5",
         "#C0C1C1",
         "#D6D6D6"
-      ]
+      ],
+
+      "extra": {
+        "accent": {
+          "primary": "$pl.color5",
+          "secondary": "$pl.color6",
+          "on_accent": "$pl.color0"
+        },
+
+        "text": {
+          "primary": "$pl.foreground",
+          "secondary": "$pl.color14",
+          "muted": "$pl.color8",
+          "link": "$pl.color4"
+        },
+
+        "layer": {
+          "base": "#141414",
+          "mantle": "#0f0f0f",
+          "crust": "$pl.color0",
+          "surface": "#1f1f1f",
+          "surface_raised": "#2a2a2a",
+          "surface_overlay": "#353535"
+        },
+
+        "border": {
+          "default": "$pl.color0",
+          "active": "$pl.color5"
+        },
+
+        "status": {
+          "success": "$pl.color2",
+          "warning": "$pl.color3",
+          "error": "$pl.color1",
+          "critical": "$pl.color1",
+          "info": "$pl.color4"
+        }
+      }
     }
   }
 }

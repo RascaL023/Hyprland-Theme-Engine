@@ -10,27 +10,29 @@ func ResolvePalette(raw *Palette) *ResolvedPalette {
 
 		Colors: raw.Colors,
 
-		PrimaryAccent: resolver.ResolveVar(raw.Extra.Accent.Primary, RawPaletteVars{raw}),
-		SecondaryAccent: resolver.ResolveVar(raw.Extra.Accent.Secondary, RawPaletteVars{raw}),
+		AccentPrimary: resolver.ResolveVar(raw.Extra.Accent.Primary, RawPaletteVars{raw}),
+		AccentSecondary: resolver.ResolveVar(raw.Extra.Accent.Secondary, RawPaletteVars{raw}),
+		AccentOn: resolver.ResolveVar(raw.Extra.Accent.OnAccent, RawPaletteVars{raw}),
 
-		PrimaryText: resolver.ResolveVar(raw.Extra.Text.Primary, RawPaletteVars{raw}),
-		SecondaryText: resolver.ResolveVar(raw.Extra.Text.Secondary, RawPaletteVars{raw}),
-		TeritaryText: resolver.ResolveVar(raw.Extra.Text.Teritary, RawPaletteVars{raw}),
+		TextPrimary: resolver.ResolveVar(raw.Extra.Text.Primary, RawPaletteVars{raw}),
+		TextSecondary: resolver.ResolveVar(raw.Extra.Text.Secondary, RawPaletteVars{raw}),
+		TextMuted: resolver.ResolveVar(raw.Extra.Text.Muted, RawPaletteVars{raw}),
+		TextLink: resolver.ResolveVar(raw.Extra.Text.Link, RawPaletteVars{raw}),
 
-		PrimarySurface: resolver.ResolveVar(raw.Extra.Surface[2], RawPaletteVars{raw}),
-		SecondarySurface: resolver.ResolveVar(raw.Extra.Surface[1], RawPaletteVars{raw}),
-		TeritarySurface: resolver.ResolveVar(raw.Extra.Surface[0], RawPaletteVars{raw}),
+		LayerBase: resolver.ResolveVar(raw.Extra.Layer.Base, RawPaletteVars{raw}),
+		LayerMantle: resolver.ResolveVar(raw.Extra.Layer.Mantle, RawPaletteVars{raw}),
+		LayerCrust: resolver.ResolveVar(raw.Extra.Layer.Crust, RawPaletteVars{raw}),
+		LayerSurface: resolver.ResolveVar(raw.Extra.Layer.Surface, RawPaletteVars{raw}),
+		LayerSurfaceRaised: resolver.ResolveVar(raw.Extra.Layer.SurfaceRaised, RawPaletteVars{raw}),
+		LayerSurfaceOverlay: resolver.ResolveVar(raw.Extra.Layer.SurfaceOverlay, RawPaletteVars{raw}),
 
-		PrimaryOverlay: resolver.ResolveVar(raw.Extra.Overlay[2], RawPaletteVars{raw}),
-		SecondaryOverlay: resolver.ResolveVar(raw.Extra.Overlay[1], RawPaletteVars{raw}),
-		TeritaryOverlay: resolver.ResolveVar(raw.Extra.Overlay[0], RawPaletteVars{raw}),
+		BorderDefault: resolver.ResolveVar(raw.Extra.Border.Default, RawPaletteVars{raw}),
+		BorderActive: resolver.ResolveVar(raw.Extra.Border.Active, RawPaletteVars{raw}),
 
-		Base: resolver.ResolveVar(raw.Extra.Base, RawPaletteVars{raw}),
-		Mantle: resolver.ResolveVar(raw.Extra.Mantle, RawPaletteVars{raw}),
-		Crust: resolver.ResolveVar(raw.Extra.Crust, RawPaletteVars{raw}),
-
-		Warning: resolver.ResolveVar(raw.Extra.Warning, RawPaletteVars{raw}),
-		Critical: resolver.ResolveVar(raw.Extra.Critical, RawPaletteVars{raw}),
-		Charging: resolver.ResolveVar(raw.Extra.Charging, RawPaletteVars{raw}),
+		StatusSuccess: resolver.ResolveVar(raw.Extra.Status.Success, RawPaletteVars{raw}),
+		StatusWarning: resolver.ResolveVar(raw.Extra.Status.Warning, RawPaletteVars{raw}),
+		StatusError: resolver.ResolveVar(raw.Extra.Status.Error, RawPaletteVars{raw}),
+		StatusCritical: resolver.ResolveVar(raw.Extra.Status.Critical, RawPaletteVars{raw}),
+		StatusInfo: resolver.ResolveVar(raw.Extra.Status.Info, RawPaletteVars{raw}),
 	}
 }

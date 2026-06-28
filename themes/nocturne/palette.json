@@ -28,34 +28,38 @@
       "extra": {
         "accent": {
           "primary": "$pl.color5",
-          "secondary": "#b380ff"
+          "secondary": "#b380ff",
+          "on_accent": "$pl.color0"
         },
 
         "text": {
           "primary": "$pl.foreground",
           "secondary": "#cbbde6",
-          "teritary": "#b3a3d6"
+          "muted": "#8877B5",
+          "link": "$pl.color4"
         },
 
-        "overlay": [
-          "#6e5f99",
-          "#8575ad",
-          "#9c8cc2"
-        ],
+        "layer": {
+          "base": "#221933",
+          "mantle": "#1a1226",
+          "crust": "$pl.color0",
+          "surface": "#33294d",
+          "surface_raised": "#443966",
+          "surface_overlay": "#594d80"
+        },
 
-        "surface": [
-          "#33294d",
-          "#443966",
-          "#594d80"
-        ],
+        "border": {
+          "default": "$pl.color0",
+          "active": "$pl.color5"
+        },
 
-        "base": "#221933",
-        "mantle": "#1a1226",
-        "crust": "$pl.color0",
-
-        "warning": "#ff80ff",
-        "critical": "#cc33ff",
-        "charging": "#aa66ff"
+        "status": {
+          "success": "$pl.color2",
+          "warning": "#ff80ff",
+          "error": "$pl.color1",
+          "critical": "#cc33ff",
+          "info": "$pl.color4"
+        }
       }
     },
 
@@ -87,36 +91,39 @@
       "extra": {
         "accent": {
           "primary": "$pl.color5",
-          "secondary": "#C994E8"
+          "secondary": "#C994E8",
+          "on_accent": "$pl.color0"
         },
 
         "text": {
           "primary": "$pl.color0",
           "secondary": "#5A4A78",
-          "teritary": "#8A7A9E"
+          "muted": "#8A7A9E",
+          "link": "$pl.color4"
         },
 
-        "overlay": [
-          "#B5A2C4",
-          "#A996B8",
-          "#9C89AC"
-        ],
+        "layer": {
+          "base": "#F7F4FB",
+          "mantle": "#EFEAF7",
+          "crust": "#E0D6F7",
+          "surface": "#D5C8E8",
+          "surface_raised": "#C8BADC",
+          "surface_overlay": "#BBAAD0"
+        },
 
-        "surface": [
-          "#D5C8E8",
-          "#C8BADC",
-          "#BBAAD0"
-        ],
+        "border": {
+          "default": "$pl.color7",
+          "active": "$pl.color5"
+        },
 
-        "base": "#F7F4FB",
-        "mantle": "#EFEAF7",
-        "crust": "#E0D6F7",
-
-        "warning": "#D48A2A",
-        "critical": "#D9586A",
-        "charging": "#5ABD7F"
+        "status": {
+          "success": "$pl.color2",
+          "warning": "#D48A2A",
+          "error": "$pl.color1",
+          "critical": "#D9586A",
+          "info": "$pl.color4"
+        }
       }
     }
   }
 }
-

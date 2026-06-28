@@ -16,27 +16,39 @@ type Palette struct {
 
 	Extra struct {
 		Accent struct {
-			Primary string `json:"primary"`
+			Primary   string `json:"primary"`
 			Secondary string `json:"secondary"`
-			Teritary string `json:"teritary"`
+			OnAccent  string `json:"on_accent"`
 		} `json:"accent"`
 
 		Text struct {
-			Primary string `json:"primary"`
+			Primary   string `json:"primary"`
 			Secondary string `json:"secondary"`
-			Teritary string `json:"teritary"`
+			Muted     string `json:"muted"`
+			Link      string `json:"link"`
 		} `json:"text"`
 
-		Overlay []string `json:"overlay"`
-		Surface []string `json:"surface"`
+		Layer struct {
+			Base           string `json:"base"`
+			Mantle         string `json:"mantle"`
+			Crust          string `json:"crust"`
+			Surface        string `json:"surface"`
+			SurfaceRaised  string `json:"surface_raised"`
+			SurfaceOverlay string `json:"surface_overlay"`
+		} `json:"layer"`
 
-		Base string `json:"base"`
-		Mantle string `json:"mantle"`
-		Crust string `json:"crust"`
+		Border struct {
+			Default string `json:"default"`
+			Active  string `json:"active"`
+		} `json:"border"`
 
-		Warning string `json:"warning"`
-		Critical string `json:"critical"`
-		Charging string `json:"charging"`
+		Status struct {
+			Success  string `json:"success"`
+			Warning  string `json:"warning"`
+			Error    string `json:"error"`
+			Critical string `json:"critical"`
+			Info     string `json:"info"`
+		} `json:"status"`
 	}
 }
 

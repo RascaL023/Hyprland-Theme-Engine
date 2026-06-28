@@ -25,8 +25,8 @@ func (KittyProcessor) Resolve(in any, ctx *context.Context) (any, error) {
 	inp := in.(Raw);
 	return Kitty{
 		Palette: ctx.Palette,
-		SelectionBackground: ctx.Palette.PrimaryAccent,
-		SelectionForeground: ctx.Palette.Base,
+		SelectionBackground: ctx.Palette.AccentPrimary,
+		SelectionForeground: ctx.Palette.LayerBase,
 
 		CursorShape: inp.CursorShape,
 		Opacity: inp.Opacity,
