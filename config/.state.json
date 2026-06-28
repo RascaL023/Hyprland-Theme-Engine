@@ -2,7 +2,7 @@
   "version": 1,
   "theme": {
     "name": "nocturne",
-    "type": "dark"
+    "type": "light"
   },
   "waybar": "default"
 }

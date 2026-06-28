@@ -32,9 +32,15 @@ Dokumen ini melacak status rilis, fitur yang telah diimplementasikan, serta memb
 | **Kitty** | Custom Tool | [x] Selesai | `assets/templates/tools/kitty/kitty.tmpl` | `output/tools/kitty/ui.conf` |
 | **Yazi** | Static | [x] Selesai | `assets/templates/yazi/theme.tmpl` | `output/tools/yazi/theme.toml` |
 | **Hyprland** | Custom | [x] Selesai | `assets/templates/hypr/hyprland.tmpl` | `output/hypr/source.conf` |
+| **Starship[Terminal]** | Static / Custom | [ ] Softing | - | - |
 | **Waybar** | Static / Custom | [ ] Rencana | `assets/templates/waybar/$WAYBAR.tmpl` | `output/waybar/sources.css` |
 | **Ncmcpp** | Static / Custom | [ ] Rencana | - | - |
 | **Nvim** | Static / Custom | [ ] Rencana | - | - |
+| **Btop** | Static / Custom | [ ] Rencana | - | - |
+| **Micro** | Static / Custom | [ ] Rencana | - | - |
+| **Swaync** | Static / Custom | [ ] Rencana | - | - |
+| **Nemo** | Static / Custom | [ ] Rencana | - | - |
+| **Zathura** | Static / Custom | [ ] Rencana | - | - |
 
 ### C. Perkakas Pengembangan (Developer Tooling)
 - [x] **Runner Script (`runner.sh`)**: Orkestrator otomatis untuk kompilasi, pengujian, pembersihan, dan penanganan log senyap dengan notifikasi desktop (`notify-send`).

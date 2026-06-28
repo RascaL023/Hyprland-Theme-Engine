@@ -60,62 +60,62 @@
     },
 
     "light": {
-      "foreground": "#2A1F3D",
-      "background": "#F6F2FB",
+      "foreground": "#1A1528",
+      "background": "#F7F4FB",
       "cursor": "#6C4BA0",
 
       "colors": [
-        "#2A1F3D",
-        "#7A4BC7",
-        "#5A4A78",
-        "#8C7AB0",
-        "#6C4BA0",
-        "#9F8AC1",
-        "#7E6CA8",
-        "#E0D6F7",
+        "#1A1528",
+        "#D9586A",
+        "#4B8C63",
+        "#C9973A",
+        "#5A7FC7",
+        "#A86CCF",
+        "#479C9A",
+        "#E8E4F4",
 
-        "#4A3B66",
-        "#A863D0",
-        "#6C5A8F",
-        "#B6A6D6",
-        "#8A6FD1",
-        "#C299FF",
-        "#9C8BC7",
+        "#3E3452",
+        "#E88292",
+        "#7BB892",
+        "#E0B868",
+        "#8AA8DF",
+        "#C994E8",
+        "#78C4C2",
         "#FFFFFF"
       ],
 
       "extra": {
         "accent": {
           "primary": "$pl.color5",
-          "secondary": "#b892ff"
+          "secondary": "#C994E8"
         },
 
         "text": {
           "primary": "$pl.color0",
-          "secondary": "#4a3b66",
-          "teritary": "#6c5a8f"
+          "secondary": "#5A4A78",
+          "teritary": "#8A7A9E"
         },
 
         "overlay": [
-          "#ece7f8",
-          "#f1ecfb",
-          "#f7f4ff"
+          "#B5A2C4",
+          "#A996B8",
+          "#9C89AC"
         ],
 
         "surface": [
-          "#e0d6f7",
-          "#e8e0fa",
-          "#f2edfC"
+          "#D5C8E8",
+          "#C8BADC",
+          "#BBAAD0"
         ],
 
-        "base": "#f3eefc",
-        "mantle": "#ede6f7",
-        "crust": "#d9cbed",
+        "base": "#F7F4FB",
+        "mantle": "#EFEAF7",
+        "crust": "#E0D6F7",
 
-        "warning": "#d272ff",
-        "critical": "#b64cff",
-        "charging": "#9e6eff"
-      }  
+        "warning": "#D48A2A",
+        "critical": "#D9586A",
+        "charging": "#5ABD7F"
+      }
     }
   }
 }
