@@ -4,3 +4,4 @@ foot|assets/templates/tools/foot/foot.tmpl|output/tools/foot/ui.ini
 kitty|assets/templates/tools/kitty/kitty.tmpl|output/tools/kitty/ui.conf
 hypr|assets/templates/tools/hypr/hypr.tmpl|output/tools/hypr/source.conf
 yazi|assets/templates/yazi/theme.tmpl|output/yazi/theme.toml
+nvim|assets/templates/tools/nvim/colors.tmpl|output/tools/nvim/colors.lua

@@ -43,8 +43,8 @@ Dokumen ini melacak status rilis, fitur yang telah diimplementasikan, serta memb
 | **Hyprland** | Custom | [x] Selesai | `assets/templates/hypr/hyprland.tmpl` | `output/hypr/source.conf` |
 | **Starship[Terminal]** | Static / Custom | [ ] Softing | - | - |
 | **Waybar** | Migrated to GTK | [x] Selesai | via `output/domain/gtk/css/source.css` | Config langsung `@import` source.css dari GTK |
+| **Nvim** | Static / Custom | [ ] Progress | `assets/templates/nvim/nvim.tmpl` | `output/tools/nvim/colors.lua` |
 | **Ncmcpp** | Static / Custom | [ ] Rencana | - | - |
-| **Nvim** | Static / Custom | [ ] Rencana | - | - |
 | **Btop** | Static / Custom | [ ] Rencana | - | - |
 | **Micro** | Static / Custom | [ ] Rencana | - | - |
 | **Swaync** | Static / Custom | [ ] Rencana | - | - |

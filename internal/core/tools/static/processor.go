@@ -11,7 +11,7 @@ type Processor struct {
 }
 
 func init() {
-	processor.RegisterProcessor(Processor{name: "waybar"})
+	processor.RegisterProcessor(Processor{name: "nvim"})
 	processor.RegisterProcessor(Processor{name: "yazi"})
 }
 

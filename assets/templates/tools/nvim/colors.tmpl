@@ -1,0 +1,51 @@
+return {
+  -- Base background layers
+  bg           = "{{ .Palette.LayerBase }}",
+  bg_dark      = "{{ .Palette.LayerMantle }}",
+  bg_dark1     = "{{ .Palette.LayerCrust }}",
+  bg_highlight = "{{ .Palette.LayerSurface }}",
+
+  -- Foreground / text
+  fg           = "{{ .Palette.TextPrimary }}",
+  fg_dark      = "{{ .Palette.TextSecondary }}",
+  fg_gutter    = "{{ .Palette.TextMuted }}",
+  comment      = "{{ .Palette.TextMuted }}",
+
+  -- Dark variants  
+  dark3        = "{{ .Palette.BorderDefault }}",
+  dark5        = "{{ .Palette.TextMuted }}",
+
+  -- ANSI terminal colours (16-col palette)
+  black        = "{{ index .Palette.Colors 0 }}",
+  red          = "{{ index .Palette.Colors 1 }}",
+  green        = "{{ index .Palette.Colors 2 }}",
+  yellow       = "{{ index .Palette.Colors 3 }}",
+  blue         = "{{ index .Palette.Colors 4 }}",
+  magenta      = "{{ index .Palette.Colors 5 }}",
+  cyan         = "{{ index .Palette.Colors 6 }}",
+  white        = "{{ index .Palette.Colors 7 }}",
+  terminal_black = "{{ index .Palette.Colors 8 }}",
+
+  -- Semantic accent colours
+  purple       = "{{ .Palette.AccentPrimary }}",
+  magenta2     = "{{ .Palette.AccentSecondary }}",
+  blue0        = "{{ .Palette.BorderDefault }}",
+  blue1        = "{{ .Palette.TextLink }}",
+  blue5        = "{{ .Palette.TextLink }}",
+  blue6        = "{{ .Palette.TextLink }}",
+  blue7        = "{{ .Palette.BorderDefault }}",
+
+  -- Status / semantic colours
+  green1       = "{{ .Palette.StatusSuccess }}",
+  green2       = "{{ .Palette.StatusSuccess }}",
+  orange       = "{{ .Palette.StatusWarning }}",
+  red1         = "{{ .Palette.StatusCritical }}",
+  teal         = "{{ .Palette.StatusInfo }}",
+
+  -- Custom UI colours (used by core.theme highlight groups)
+  border       = "{{ .Palette.BorderActive }}",
+  button       = "{{ .Palette.AccentPrimary }}",
+  footer       = "{{ .Palette.AccentSecondary }}",
+  smooth_body3 = "{{ .Palette.TextMuted }}",
+  smooth_tail  = "{{ .Palette.LayerSurfaceOverlay }}",
+}
