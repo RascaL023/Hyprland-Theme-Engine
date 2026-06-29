@@ -6,28 +6,29 @@
       "cursor": "#ff276d",
 
       "colors": [
-        "#1a1819",
-        "#bc8f90",
-        "#99bc8f",
-        "#bca88f",
-        "#8f95bc",
-        "#bc8fb9",
-        "#8fb0bc",
-        "#d9d7d8",
-        "#52464a",
-        "#d5a8aa",
-        "#b3d5a8",
-        "#d5c2a8",
-        "#a8aed5",
-        "#d5a8d2",
-        "#a8c9d5",
-        "#f2f1f2"
+        "#0a0a0a",
+        "#717171",
+        "#8E6C77",
+        "#7D7F80",
+        "#7F8081",
+        "#8E8E8E",
+        "#9FA0A0",
+        "#c1c1c1",
+
+        "#685555",
+        "#717171",
+        "#8E6C77",
+        "#7D7F80",
+        "#7F8081",
+        "#8E8E8E",
+        "#9FA0A0",
+        "#c1c1c1"
       ],
 
       "extra": {
         "accent": {
-          "primary": "#ff276d",
-          "secondary": "#e51c2a",
+          "primary": "#8E6C77",
+          "secondary": "#b66173",
           "on_accent": "#131313"
         },
 
@@ -35,7 +36,7 @@
           "primary": "#b7b7b7",
           "secondary": "#a5a5a5",
           "muted": "#808080",
-          "link": "#ff276d"
+          "link": "#cf5572"
         },
 
         "layer": {
@@ -49,7 +50,7 @@
 
         "border": {
           "default": "#404040",
-          "active": "#ff276d"
+          "active": "#a96575"
         },
 
         "status": {
