@@ -1,127 +1,121 @@
 {
   "palettes": {
     "dark": {
-      "background": "#0a0a0a",
-      "foreground": "#c1c1c1",
-      "cursor": "#B59FA6",
+      "background": "#0b0b0b",
+      "foreground": "#b7b7b7",
+      "cursor": "#ff276d",
 
       "colors": [
-        "#0a0a0a",
-        "#717171",
-        "#8E6C77",
-        "#7D7F80",
-        "#7F8081",
-        "#8E8E8E",
-        "#9FA0A0",
-        "#c1c1c1",
-
-        "#5F5F5F",
-        "#A2A2A2",
-        "#B59FA6",
-        "#AAABAC",
-        "#ABACAD",
-        "#B5B5B5",
-        "#C0C1C1",
-        "#D6D6D6"
+        "#1a1819",
+        "#bc8f90",
+        "#99bc8f",
+        "#bca88f",
+        "#8f95bc",
+        "#bc8fb9",
+        "#8fb0bc",
+        "#d9d7d8",
+        "#52464a",
+        "#d5a8aa",
+        "#b3d5a8",
+        "#d5c2a8",
+        "#a8aed5",
+        "#d5a8d2",
+        "#a8c9d5",
+        "#f2f1f2"
       ],
 
       "extra": {
         "accent": {
-          "primary": "$pl.color10",
-          "secondary": "$pl.color2",
-          "on_accent": "#0a0a0a"
+          "primary": "#ff276d",
+          "secondary": "#e51c2a",
+          "on_accent": "#131313"
         },
 
         "text": {
-          "primary": "$pl.foreground",
-          "secondary": "#A1A1A1",
-          "muted": "#6E6E6E",
-          "link": "$pl.color10"
+          "primary": "#b7b7b7",
+          "secondary": "#a5a5a5",
+          "muted": "#808080",
+          "link": "#ff276d"
         },
 
         "layer": {
-          "base": "#141414",
-          "mantle": "#0f0f0f",
-          "crust": "$pl.color0",
-          "surface": "#1f1f1f",
-          "surface_raised": "#2a2a2a",
-          "surface_overlay": "#353535"
+          "base": "#1c1c1c",
+          "mantle": "#131313",
+          "crust": "#0b0b0b",
+          "surface": "#2a2a2a",
+          "surface_raised": "#373737",
+          "surface_overlay": "#535353"
         },
 
         "border": {
-          "default": "#2a2a2a",
-          "active": "$pl.color10"
+          "default": "#404040",
+          "active": "#ff276d"
         },
 
         "status": {
-          "success": "$pl.color10",
-          "warning": "$pl.color11",
-          "error": "$pl.color1",
-          "critical": "$pl.color9",
-          "info": "$pl.color6"
+          "success": "#99bc8f",
+          "warning": "#bca88f",
+          "error": "#bc8f90",
+          "critical": "#d5a8aa",
+          "info": "#8fb0bc"
         }
       }
     },
 
     "light": {
-      "background": "#FAFAFA",
-      "foreground": "#2B2B2B",
-      "cursor": "#7A5B65",
+      "background": "#fafafa",
+      "foreground": "#2b2b2b",
+      "cursor": "#ff276d",
 
       "colors": [
-        "#FAFAFA",
-        "#9A7581",
-        "#7A5B65",
-        "#6A6C6D",
-        "#6D6E6F",
-        "#7D7D7D",
-        "#8A8A8A",
-        "#2B2B2B",
-
-        "#E0E0E0",
-        "#8E6C77",
-        "#634751",
-        "#595B5C",
-        "#5D5E5F",
-        "#6D6D6D",
-        "#7A7A7A",
-        "#1A1A1A"
+        "#fafafa",
+        "#cc9aa8",
+        "#9fb8b0",
+        "#c9ad89",
+        "#9eb0d0",
+        "#c6afd6",
+        "#9dc4c4",
+        "#2b2b2b",
+        "#e6e6e6",
+        "#b88894",
+        "#8ca6a0",
+        "#b89b7c",
+        "#8c9fbf",
+        "#b39cc4",
+        "#8cb3b3",
+        "#1a1a1a"
       ],
 
       "extra": {
         "accent": {
-          "primary": "$pl.color2",
-          "secondary": "$pl.color1",
-          "on_accent": "#FFFFFF"
+          "primary": "#ff276d",
+          "secondary": "#e51c2a",
+          "on_accent": "#ffffff"
         },
-
         "text": {
-          "primary": "$pl.foreground",
-          "secondary": "#5E5E5E",
+          "primary": "#2b2b2b",
+          "secondary": "#5e5e5e",
           "muted": "#969696",
-          "link": "$pl.color2"
+          "link": "#ff276d"
         },
-
         "layer": {
-          "base": "#F5F5F5",
-          "mantle": "#EBEBEB",
-          "crust": "$pl.color0",
-          "surface": "#E0E0E0",
-          "surface_raised": "#D6D6D6",
-          "surface_overlay": "#CCCCCC"
+          "base": "#f5f5f5",
+          "mantle": "#ebebeb",
+          "crust": "#fafafa",
+          "surface": "#e0e0e0",
+          "surface_raised": "#d6d6d6",
+          "surface_overlay": "#cccccc"
         },
-
         "border": {
-          "default": "#D6D6D6",
-          "active": "$pl.color2"
+          "default": "#d6d6d6",
+          "active": "#ff276d"
         },
-
         "status": {
-          "success": "$pl.color2",
-          "warning": "$pl.color3",
-          "error": "$pl.color9",
-          "critical": "$pl.color1",
-          "info": "$pl.color6"
+          "success": "#9fb8b0",
+          "warning": "#c9ad89",
+          "error": "#cc9aa8",
+          "critical": "#b88894",
+          "info": "#9dc4c4"
         }
       }
     }

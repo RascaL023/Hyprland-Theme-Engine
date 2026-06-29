@@ -2,3 +2,4 @@
 **/output/**
 **/*.bak
 .private/
+**/palette-generator/*.json
