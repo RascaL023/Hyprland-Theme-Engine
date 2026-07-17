@@ -1,0 +1,129 @@
+{
+  "palettes": {
+    "dark": {
+      "background": "#1D1C19",
+      "foreground": "#c5c9c5",
+      "cursor": "#8992a7",
+
+      "colors": [
+        "#0d0c0c",
+        "#c4746e",
+        "#87a987",
+        "#c4b28a",
+        "#8ba4b0",
+        "#8992a7",
+        "#8ea4a2",
+        "#c5c9c5",
+
+        "#625e5a",
+        "#d98b85",
+        "#9ab89a",
+        "#d4c29a",
+        "#9fb4c0",
+        "#99a2b7",
+        "#9eb4b2",
+        "#d5d9d5"
+      ],
+
+      "extra": {
+        "accent": {
+          "primary": "#8992a7",
+          "secondary": "#a292a3",
+          "on_accent": "#0d0c0c"
+        },
+
+        "text": {
+          "primary": "#c5c9c5",
+          "secondary": "#a6a69c",
+          "muted": "#7a8382",
+          "link": "#8ba4b0"
+        },
+
+        "layer": {
+          "base": "#1D1C19",
+          "mantle": "#12120f",
+          "crust": "#0d0c0c",
+          "surface": "#282727",
+          "surface_raised": "#393836",
+          "surface_overlay": "#625e5a"
+        },
+
+        "border": {
+          "default": "#282727",
+          "active": "#8992a7"
+        },
+
+        "status": {
+          "success": "#87a987",
+          "warning": "#c4b28a",
+          "error": "#c4746e",
+          "critical": "#b6927b",
+          "info": "#8ba4b0"
+        }
+      }
+    },
+
+    "light": {
+      "background": "#f2ecbc",
+      "foreground": "#545464",
+      "cursor": "#766b90",
+
+      "colors": [
+        "#545464",
+        "#c84053",
+        "#6f894e",
+        "#77713f",
+        "#4d699b",
+        "#766b90",
+        "#5e857a",
+        "#dcd5ac",
+
+        "#8a8980",
+        "#d7474b",
+        "#6e915f",
+        "#836f4a",
+        "#5d57a3",
+        "#a09cac",
+        "#5a7785",
+        "#f2ecbc"
+      ],
+
+      "extra": {
+        "accent": {
+          "primary": "#766b90",
+          "secondary": "#b35b79",
+          "on_accent": "#f2ecbc"
+        },
+
+        "text": {
+          "primary": "#545464",
+          "secondary": "#716e61",
+          "muted": "#8a8980",
+          "link": "#4d699b"
+        },
+
+        "layer": {
+          "base": "#f2ecbc",
+          "mantle": "#e5ddb0",
+          "crust": "#dcd5ac",
+          "surface": "#e7dba0",
+          "surface_raised": "#d5cea3",
+          "surface_overlay": "#e4d794"
+        },
+
+        "border": {
+          "default": "#8a8980",
+          "active": "#766b90"
+        },
+
+        "status": {
+          "success": "#6f894e",
+          "warning": "#836f4a",
+          "error": "#c84053",
+          "critical": "#d7474b",
+          "info": "#4d699b"
+        }
+      }
+    }
+  }
+}
