@@ -34,15 +34,21 @@ A dynamic theme engine that generates configuration files for various terminal a
 #### Application Tools (Direct Variable Replacement)
 - **Kitty**: Direct color injection into configuration
 - **Foot**: Terminal emulator configuration
-- **Hyprland**: Window manager configuration
+- **Hypr**: Window manager configuration
 - **Yazi**: File manager theme
 - **Cava**: Visualization tool configuration
+- **Nvim**: Neovim integration via `colors.lua`
+- **Starship**: Cross-shell prompt with theme-aware colors
 
 #### Neovim Integration (Lua-based)
-**New Integration**:
 - Generates `colors.lua` with theme colors
 - Used by Tokyo Night theme plugin
 - Allows dynamic color injection without modifying nvim configuration
+
+#### Starship Integration
+- Static template generates theme-adaptive TOML prompt config
+- Uses palette accent/status colors instead of hardcoded ANSI names
+- Prompt layout remains user-defined; only colors adapt to active theme
 
 ### 4. Design Patterns
 
@@ -179,6 +185,23 @@ Completely reworked the palette schema to follow design system best practices:
 - Added semantic border and status color tokens
 - Maintained backward compatibility through template refactoring
 
+### Starship Integration
+Added a new template-based starship integration:
+- Generates `starship.toml` with theme-adaptive colors
+- Uses `{{ .Palette.AccentPrimary }}`, `{{ .Palette.StatusWarning }}`, etc.
+- Symlink: `ln -sf …/output/tools/starship/starship.toml ~/.config/starship.toml`
+
+### New Themes (Kanagawa, Dracula, Sakura)
+Added several hand-crafted themes with correct ANSI luminance ordering:
+- **Kanagawa Wave/Dragon**: Fixed reversed brightness pairs (dark cyan, white)
+- **Dracula**: Official spec with Dracula Classic + Alucard light
+- **Sakura**: Original cherry blossom themed palette
+
+### Starship Integration
+New static processor generating theme-adaptive `starship.toml`:
+- Uses palette `extra.*` colors (accent, status) instead of hardcoded ANSI names
+- Prompt layout stays user-defined; colors adapt per theme
+
 ### Neovim Integration
 Added a new Lua-based integration for the Tokyo Night theme plugin:
 - Generates `colors.lua` from palette
@@ -231,6 +254,10 @@ No tool-specific changes needed! The processor automatically handles the semanti
 Choose a theme that matches your needs:
 - **Nocturne**: Dark mode with purple/magenta accents
 - **Ghostly**: Modern theme with extensive light/dark support
+- **Kanagawa Wave**: Classic Kanagawa wave dark + lotus light
+- **Kanagawa Dragon**: Muted Kanagawa dragon variant
+- **Dracula**: Official Dracula Classic + Alucard light
+- **Sakura**: Cherry blossom inspired, warm rose tones
 
 ### 2. File Organization
 - Maintain existing project structure

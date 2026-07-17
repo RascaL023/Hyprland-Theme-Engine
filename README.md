@@ -3,9 +3,9 @@
 Renderer tema cepat berbasis JSON untuk setup desktop Hyprland.
 
 Theme Engine mengambil satu sumber tema, resolve variable palette, lalu render
-file config untuk beberapa target seperti GTK, Cava, Foot, Kitty, Waybar, dan
-Hyprland. Ide utamanya sederhana: data tema cukup satu sumber, kerja runtime
-dibuat sekecil mungkin, dan tool baru gampang ditambahkan.
+file config untuk beberapa target seperti GTK, Cava, Foot, Kitty, Yazi,
+Starship, dan Hyprland. Ide utamanya sederhana: data tema cukup satu sumber,
+kerja runtime dibuat sekecil mungkin, dan tool baru gampang ditambahkan.
 
 ## Highlight
 
@@ -13,7 +13,7 @@ dibuat sekecil mungkin, dan tool baru gampang ditambahkan.
 - Render path cepat dengan cached template dan skip-write kalau output tidak berubah
 - Mapping path sederhana lewat `config/path.txt` atau `$MYENV/map`
 - Processor khusus untuk tool yang butuh config sendiri
-- Processor template-only untuk target sederhana seperti Waybar dan Hyprland
+- Processor template-only untuk target sederhana seperti Starship, Yazi, dan Nvim
 - Atomic write supaya file config tidak pernah setengah tertulis
 - Config lokal tersedia, jadi repo bisa dites tanpa file eksternal
 
@@ -71,8 +71,10 @@ output/                        Hasil render config
 | `cava` | tool processor | `internal/core/tools/cava` | `assets/templates/tools/cava/cava.tmpl` |
 | `foot` | tool processor | `internal/core/tools/foot` | `assets/templates/tools/foot/foot.tmpl` |
 | `kitty` | tool processor | `internal/core/tools/kitty` | `assets/templates/tools/kitty/kitty.tmpl` |
-| `waybar` | template-only | `internal/core/tools/static` | `assets/templates/waybar/default.tmpl` |
-| `hyprland` | template-only | `internal/core/tools/static` | `assets/templates/hypr/hyprland.tmpl` |
+| `hypr` | tool processor | `internal/core/tools/hypr` | `assets/templates/tools/hypr/hypr.tmpl` |
+| `yazi` | template-only | `internal/core/tools/static` | `assets/templates/tools/yazi/theme.tmpl` |
+| `nvim` | template-only | `internal/core/tools/static` | `assets/templates/tools/nvim/colors.tmpl` |
+| `starship` | template-only | `internal/core/tools/static` | `assets/templates/tools/starship/starship.tmpl` |
 
 ## Quick Start
 
@@ -209,8 +211,10 @@ gtk|assets/templates/domain/gtk/source.tmpl|output/domain/gtk
 cava|assets/templates/tools/cava/cava.tmpl|output/tools/cava/cava_extra
 foot|assets/templates/tools/foot/foot.tmpl|output/tools/foot/ui.ini
 kitty|assets/templates/tools/kitty/kitty.tmpl|output/tools/kitty/ui.conf
-waybar|assets/templates/waybar/$WAYBAR.tmpl|output/waybar/sources.css
-hyprland|assets/templates/hypr/hyprland.tmpl|output/hypr/hyprland.conf
+hypr|assets/templates/tools/hypr/hypr.tmpl|output/tools/hypr/source.conf
+yazi|assets/templates/tools/yazi/theme.tmpl|output/tools/yazi/theme.toml
+nvim|assets/templates/tools/nvim/colors.tmpl|output/tools/nvim/colors.lua
+starship|assets/templates/tools/starship/starship.tmpl|output/tools/starship/starship.toml
 ```
 
 Baris kosong dan komentar yang diawali `#` akan diabaikan.
@@ -383,5 +387,6 @@ masih cukup aman karena konvensinya sudah terdokumentasi.
 - Render target spesifik: jalan
 - Config lokal: tersedia di `config/`
 - Test: coverage fokus untuk loader dan renderer
-- Next step yang masuk akal: template Hyprland lebih lengkap, validasi schema,
-  dan mode hot reload/watch
+- Theme: nocturne, ghostly, kanagawa-wave, kanagawa-dragon,
+  kanagawa-dragon-original, dracula, sakura
+- Tools: gtk, cava, foot, kitty, hypr, yazi, nvim, starship

@@ -39,11 +39,11 @@ Dokumen ini melacak status rilis, fitur yang telah diimplementasikan, serta memb
 | **Cava** | Custom Tool | [x] Selesai | `assets/templates/tools/cava/cava.tmpl` | `output/tools/cava/cava_extra` |
 | **Foot** | Custom Tool | [x] Selesai | `assets/templates/tools/foot/foot.tmpl` | `output/tools/foot/ui.ini` |
 | **Kitty** | Custom Tool | [x] Selesai | `assets/templates/tools/kitty/kitty.tmpl` | `output/tools/kitty/ui.conf` |
-| **Yazi** | Static | [x] Selesai | `assets/templates/yazi/theme.tmpl` | `output/tools/yazi/theme.toml` |
-| **Hyprland** | Custom | [x] Selesai | `assets/templates/hypr/hyprland.tmpl` | `output/hypr/source.conf` |
-| **Starship[Terminal]** | Static / Custom | [ ] Softing | - | - |
+| **Hypr** | Custom Tool | [x] Selesai | `assets/templates/tools/hypr/hypr.tmpl` | `output/tools/hypr/source.conf` |
+| **Yazi** | Static | [x] Selesai | `assets/templates/tools/yazi/theme.tmpl` | `output/tools/yazi/theme.toml` |
+| **Nvim** | Static | [x] Selesai | `assets/templates/tools/nvim/colors.tmpl` | `output/tools/nvim/colors.lua` |
+| **Starship** | Static | [x] Selesai | `assets/templates/tools/starship/starship.tmpl` | `output/tools/starship/starship.toml` |
 | **Waybar** | Migrated to GTK | [x] Selesai | via `output/domain/gtk/css/source.css` | Config langsung `@import` source.css dari GTK |
-| **Nvim** | Static / Custom | [ ] Progress | `assets/templates/nvim/nvim.tmpl` | `output/tools/nvim/colors.lua` |
 | **Ncmcpp** | Static / Custom | [ ] Rencana | - | - |
 | **Btop** | Static / Custom | [ ] Rencana | - | - |
 | **Micro** | Static / Custom | [ ] Rencana | - | - |
@@ -56,6 +56,13 @@ Dokumen ini melacak status rilis, fitur yang telah diimplementasikan, serta memb
 | :--- | :---: | :---: | :---: |
 | **Nocturne** | [x] | [x] | [x] |
 | **Ghostly** | [x] | [x] | [x] |
+| **Kanagawa Wave** | [x] | [x] | [x] |
+| **Kanagawa Dragon** | [x] | [x] | [x] |
+| **Custom Kanagawa Wave** | [x] | [x] | [x] |
+| **Custom Kanagawa Dragon** | [x] | [x] | [x] |
+| **Kanagawa Dragon Original** | [x] | [x] | [x] |
+| **Dracula** | [x] | [x] | [x] |
+| **Sakura** | [x] | [x] | [x] |
 
 ### D. Perkakas Pengembangan (Developer Tooling)
 - [x] **Runner Script (`runner.sh`)**: Orkestrator otomatis untuk kompilasi, pengujian, pembersihan, dan penanganan log senyap dengan notifikasi desktop (`notify-send`).

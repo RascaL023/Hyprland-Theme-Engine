@@ -143,7 +143,7 @@ Di dalam Theme Engine, terdapat tiga jenis target pemrosesan tergantung kompleks
 ### A. Generic / Template-Only (Static Processor)
 - **Karakteristik**: Aplikasi yang konfigurasinya hanya memerlukan data palette global dan metadata global theme tanpa memerlukan parser konfigurasi khusus sendiri di `theme.json`.
 - **Lokasi**: `internal/core/tools/static/processor.go`
-- **Contoh target**: `waybar`, `hyprland`.
+- **Contoh target**: `yazi`, `nvim`, `starship`.
 - **Cara Kerja**: Processor ini langsung melewatkan objek Context global (`*context.Context` yang berisi `.Palette` dan `.Theme`) ke dalam template. Semua kustomisasi dilakukan langsung di file `.tmpl` menggunakan sintaks Go template biasa.
 
 ### B. Custom Tool Processor
