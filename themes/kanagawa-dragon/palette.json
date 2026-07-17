@@ -1,63 +1,63 @@
 {
   "palettes": {
     "dark": {
-      "background": "#1D1C19",
+      "background": "#181616",
       "foreground": "#c5c9c5",
-      "cursor": "#8992a7",
+      "cursor": "#C8C093",
 
       "colors": [
         "#0d0c0c",
         "#c4746e",
-        "#87a987",
+        "#8a9a7b",
         "#c4b28a",
         "#8ba4b0",
-        "#8992a7",
+        "#a292a3",
         "#8ea4a2",
-        "#c5c9c5",
+        "#C8C093",
 
-        "#625e5a",
-        "#d98b85",
-        "#9ab89a",
-        "#d4c29a",
-        "#9fb4c0",
-        "#99a2b7",
-        "#9eb4b2",
-        "#d5d9d5"
+        "#a6a69c",
+        "#E46876",
+        "#87a987",
+        "#E6C384",
+        "#7FB4CA",
+        "#938AA9",
+        "#7AA89F",
+        "#c5c9c5"
       ],
 
       "extra": {
         "accent": {
-          "primary": "#8992a7",
+          "primary": "#8ba4b0",
           "secondary": "#a292a3",
           "on_accent": "#0d0c0c"
         },
 
         "text": {
           "primary": "#c5c9c5",
-          "secondary": "#a6a69c",
-          "muted": "#7a8382",
+          "secondary": "#C8C093",
+          "muted": "#a6a69c",
           "link": "#8ba4b0"
         },
 
         "layer": {
-          "base": "#1D1C19",
+          "base": "#181616",
           "mantle": "#12120f",
           "crust": "#0d0c0c",
-          "surface": "#282727",
-          "surface_raised": "#393836",
-          "surface_overlay": "#625e5a"
+          "surface": "#1D1C19",
+          "surface_raised": "#282727",
+          "surface_overlay": "#393836"
         },
 
         "border": {
           "default": "#282727",
-          "active": "#8992a7"
+          "active": "#8ba4b0"
         },
 
         "status": {
-          "success": "#87a987",
+          "success": "#8a9a7b",
           "warning": "#c4b28a",
           "error": "#c4746e",
-          "critical": "#b6927b",
+          "critical": "#E46876",
           "info": "#8ba4b0"
         }
       }
@@ -82,9 +82,9 @@
         "#d7474b",
         "#6e915f",
         "#836f4a",
-        "#5d57a3",
+        "#9fb5c9",
         "#a09cac",
-        "#5a7785",
+        "#8FB0A8",
         "#f2ecbc"
       ],
 

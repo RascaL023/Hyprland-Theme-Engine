@@ -1,6 +1,6 @@
 {
   "theme": {
-    "name": "kanagawa-dragon",
+    "name": "kanagawa-dragon-original",
     "fonts": {
       "primary": "FiraCode Nerd Font",
       "secondary": "Maple Mono Nerd Font",
@@ -29,7 +29,7 @@
 
     "kitty": {
       "cursorShape": "beam",
-      "opacity": 0.65,
+      "opacity": 1,
       "fontSize": 11.5,
 
       "tab": {
@@ -94,7 +94,7 @@
 
       "windowRule": {
         "foot": {
-          "opacity": 0.75
+          "opacity": 1
         }
       }
     }
