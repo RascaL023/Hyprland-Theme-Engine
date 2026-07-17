@@ -1,0 +1,73 @@
+add_newline = false
+
+format = """
+[╭─](bold fg:{{ .Palette.AccentPrimary }})[](bold fg:{{ .Palette.AccentPrimary }})$os\
+[](bold fg:{{ .Palette.AccentPrimary }} bg:{{ .Palette.AccentSecondary }})\
+[](bold fg:{{ .Palette.AccentPrimary }} bg:{{ .Palette.AccentSecondary }})\
+$username\
+[](bold fg:{{ .Palette.AccentPrimary }} bg:{{ .Palette.AccentSecondary }})\
+[](bold fg:{{ .Palette.AccentPrimary }} bg:{{ .Palette.AccentSecondary }})\
+$directory\
+[](bold fg:{{ .Palette.AccentPrimary }})\
+$git_branch$git_status$cmd_duration
+[╰─](bold fg:{{ .Palette.AccentPrimary }})$\
+character
+"""
+
+# ========== OS ICON ==========
+[os]
+format = "[$symbol](bold fg:{{ .Palette.AccentOn }} bg:{{ .Palette.AccentPrimary }})"
+disabled = false
+
+[os.symbols]
+Linux = ""
+NixOS = "  "
+
+# ========== USERNAME ==========
+[username]
+style_user = "bold fg:{{ .Palette.StatusSuccess }}"
+style_root = "bold fg:{{ .Palette.StatusError }}"
+format = "[ Ra\\$caL ](bold fg:{{ .Palette.AccentOn }} bg:{{ .Palette.AccentPrimary }})"
+disabled = false
+show_always = true
+
+# ========== HOSTNAME ==========
+[hostname]
+format = " [@](bold fg:{{ .Palette.AccentPrimary }})[$hostname](bold fg:{{ .Palette.AccentPrimary }})"
+ssh_only = false
+
+# ========== DIRECTORY ==========
+[directory]
+format = "[ [$path ](bold fg:{{ .Palette.AccentOn }} bg:{{ .Palette.AccentPrimary }})](bold fg:{{ .Palette.AccentOn }} bg:{{ .Palette.AccentPrimary }})"
+truncation_length = 3
+truncation_symbol = "…/"
+home_symbol = "~"
+
+# ========== GIT BRANCH ==========
+[git_branch]
+symbol = ""
+format = " [$symbol $branch](bold fg:{{ .Palette.StatusWarning }})"
+
+# ========== GIT STATUS ==========
+[git_status]
+format = "([$all_status](bold fg:{{ .Palette.StatusError }})) "
+conflicted = "≠"
+ahead = "↑"
+behind = "↓"
+diverged = "⇕"
+renamed = "»"
+deleted = "✘"
+untracked = "?"
+stashed = ""
+modified = "✚"
+staged = "+"
+
+# ========== CHARACTER ==========
+[character]
+success_symbol = "[➤](bold fg:{{ .Palette.AccentPrimary }})"
+error_symbol = "[➤](bold fg:{{ .Palette.StatusError }})"
+vicmd_symbol = "[➤](bold fg:{{ .Palette.AccentPrimary }})"
+
+[cmd_duration]
+format = ' [](bold fg:{{ .Palette.StatusWarning }})[  $duration ](bg:{{ .Palette.StatusWarning }} fg:{{ .Palette.AccentOn }})[](fg:{{ .Palette.StatusWarning }})'
+min_time = 2000

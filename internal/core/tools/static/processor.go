@@ -13,6 +13,7 @@ type Processor struct {
 func init() {
 	processor.RegisterProcessor(Processor{name: "nvim"})
 	processor.RegisterProcessor(Processor{name: "yazi"})
+	processor.RegisterProcessor(Processor{name: "starship"})
 }
 
 func (p Processor) Name() string { return p.name }
