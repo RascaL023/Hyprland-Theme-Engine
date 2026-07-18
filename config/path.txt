@@ -4,5 +4,5 @@ foot|assets/templates/tools/foot/foot.tmpl|output/tools/foot/ui.ini
 kitty|assets/templates/tools/kitty/kitty.tmpl|output/tools/kitty/ui.conf
 hypr|assets/templates/tools/hypr/hypr.tmpl|output/tools/hypr/source.conf
 yazi|assets/templates/tools/yazi/theme.tmpl|output/tools/yazi/theme.toml
-starship|assets/templates/tools/starship/starship.tmpl|/home/rascal/.config/starship.toml
+starship|assets/templates/tools/starship/starship.tmpl|output/tools/starship/starship.toml
 nvim|assets/templates/tools/nvim/colors.tmpl|output/tools/nvim/colors.lua

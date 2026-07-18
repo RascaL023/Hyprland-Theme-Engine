@@ -59,6 +59,25 @@
           "error": "#bc8f90",
           "critical": "#d5a8aa",
           "info": "#8fb0bc"
+        },
+
+        "syntax": {
+          "purple":   "#8E6C77",
+          "magenta2": "#b66173",
+          "blue0":    "#2a2a2a",
+          "blue1":    "#cf5572",
+          "blue5":    "#7F8081",
+          "blue6":    "#9FA0A0",
+          "blue7":    "#404040",
+          "green1":   "#99bc8f",
+          "green2":   "#8E6C77",
+          "orange":   "#bca88f",
+          "red1":     "#d5a8aa",
+          "teal":     "#9FA0A0"
+        },
+
+        "ui": {
+          "bg_statusline": "#373737"
         }
       }
     },
@@ -117,6 +136,25 @@
           "error": "#cc9aa8",
           "critical": "#b88894",
           "info": "#9dc4c4"
+        },
+
+        "syntax": {
+          "purple":   "#ff276d",
+          "magenta2": "#e51c2a",
+          "blue0":    "#e0e0e0",
+          "blue1":    "#ff276d",
+          "blue5":    "#9eb0d0",
+          "blue6":    "#9dc4c4",
+          "blue7":    "#d6d6d6",
+          "green1":   "#9fb8b0",
+          "green2":   "#9fb8b0",
+          "orange":   "#c9ad89",
+          "red1":     "#b88894",
+          "teal":     "#9dc4c4"
+        },
+
+        "ui": {
+          "bg_statusline": "#d6d6d6"
         }
       }
     }
