@@ -32,6 +32,21 @@ type ResolvedPalette struct {
 	StatusCritical string
 	StatusInfo     string
 
+	SyntaxPurple   string
+	SyntaxMagenta2 string
+	SyntaxBlue0    string
+	SyntaxBlue1    string
+	SyntaxBlue5    string
+	SyntaxBlue6    string
+	SyntaxBlue7    string
+	SyntaxGreen1   string
+	SyntaxGreen2   string
+	SyntaxOrange   string
+	SyntaxRed1     string
+	SyntaxTeal     string
+
+	BgStatusline string
+
 	Flat map[string]string
 }
 

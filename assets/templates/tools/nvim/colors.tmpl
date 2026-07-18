@@ -1,51 +1,52 @@
 return {
   -- Base background layers
-  bg           = "{{ .Palette.LayerBase }}",
-  bg_dark      = "{{ .Palette.LayerMantle }}",
-  bg_dark1     = "{{ .Palette.LayerCrust }}",
-  bg_highlight = "{{ .Palette.LayerSurface }}",
+  bg                = "{{ .Palette.LayerBase }}",
+  bg_dark           = "{{ .Palette.LayerMantle }}",
+  bg_dark1          = "{{ .Palette.LayerCrust }}",
+  bg_highlight      = "{{ .Palette.LayerSurface }}",
 
   -- Foreground / text
-  fg           = "{{ .Palette.TextPrimary }}",
-  fg_dark      = "{{ .Palette.TextSecondary }}",
-  fg_gutter    = "{{ .Palette.TextMuted }}",
-  comment      = "{{ .Palette.TextMuted }}",
+  fg                = "{{ .Palette.TextPrimary }}",
+  fg_dark           = "{{ .Palette.TextSecondary }}",
+  fg_gutter         = "{{ .Palette.LayerSurfaceOverlay }}",
+  comment           = "{{ .Palette.TextMuted }}",
 
-  -- Dark variants  
-  dark3        = "{{ .Palette.BorderDefault }}",
-  dark5        = "{{ .Palette.TextMuted }}",
+  -- Dark variants
+  dark3             = "{{ .Palette.LayerSurfaceOverlay }}",
+  dark5             = "{{ .Palette.BorderDefault }}",
 
   -- ANSI terminal colours (16-col palette)
-  black        = "{{ index .Palette.Colors 0 }}",
-  red          = "{{ index .Palette.Colors 1 }}",
-  green        = "{{ index .Palette.Colors 2 }}",
-  yellow       = "{{ index .Palette.Colors 3 }}",
-  blue         = "{{ index .Palette.Colors 4 }}",
-  magenta      = "{{ index .Palette.Colors 5 }}",
-  cyan         = "{{ index .Palette.Colors 6 }}",
-  white        = "{{ index .Palette.Colors 7 }}",
-  terminal_black = "{{ index .Palette.Colors 8 }}",
+  black             = "{{ index .Palette.Colors 0 }}",
+  red               = "{{ index .Palette.Colors 1 }}",
+  green             = "{{ index .Palette.Colors 2 }}",
+  yellow            = "{{ index .Palette.Colors 3 }}",
+  blue              = "{{ index .Palette.Colors 4 }}",
+  magenta           = "{{ index .Palette.Colors 5 }}",
+  cyan              = "{{ index .Palette.Colors 6 }}",
+  white             = "{{ index .Palette.Colors 7 }}",
+  terminal_black    = "{{ index .Palette.Colors 8 }}",
 
-  -- Semantic accent colours
-  purple       = "{{ .Palette.AccentPrimary }}",
-  magenta2     = "{{ .Palette.AccentSecondary }}",
-  blue0        = "{{ .Palette.BorderDefault }}",
-  blue1        = "{{ .Palette.TextLink }}",
-  blue5        = "{{ .Palette.TextLink }}",
-  blue6        = "{{ .Palette.TextLink }}",
-  blue7        = "{{ .Palette.BorderDefault }}",
+  -- Syntax highlighting colours (from palette syntax block)
+  purple            = "{{ .Palette.SyntaxPurple }}",
+  magenta2          = "{{ .Palette.SyntaxMagenta2 }}",
+  blue0             = "{{ .Palette.SyntaxBlue0 }}",
+  blue1             = "{{ .Palette.SyntaxBlue1 }}",
+  blue5             = "{{ .Palette.SyntaxBlue5 }}",
+  blue6             = "{{ .Palette.SyntaxBlue6 }}",
+  blue7             = "{{ .Palette.SyntaxBlue7 }}",
+  green1            = "{{ .Palette.SyntaxGreen1 }}",
+  green2            = "{{ .Palette.SyntaxGreen2 }}",
+  orange            = "{{ .Palette.SyntaxOrange }}",
+  red1              = "{{ .Palette.SyntaxRed1 }}",
+  teal              = "{{ .Palette.SyntaxTeal }}",
+
+  -- UI specific colours
+  bg_statusline     = "{{ .Palette.BgStatusline }}",
 
   -- Status / semantic colours
-  green1       = "{{ .Palette.StatusSuccess }}",
-  green2       = "{{ .Palette.StatusSuccess }}",
-  orange       = "{{ .Palette.StatusWarning }}",
-  red1         = "{{ .Palette.StatusCritical }}",
-  teal         = "{{ .Palette.StatusInfo }}",
-
-  -- Custom UI colours (used by core.theme highlight groups)
-  border       = "{{ .Palette.BorderActive }}",
-  button       = "{{ .Palette.AccentPrimary }}",
-  footer       = "{{ .Palette.AccentSecondary }}",
-  smooth_body3 = "{{ .Palette.TextMuted }}",
-  smooth_tail  = "{{ .Palette.LayerSurfaceOverlay }}",
+  border            = "{{ .Palette.BorderActive }}",
+  button            = "{{ .Palette.AccentPrimary }}",
+  footer            = "{{ .Palette.AccentSecondary }}",
+  smooth_body3      = "{{ .Palette.TextMuted }}",
+  smooth_tail       = "{{ .Palette.LayerSurfaceOverlay }}",
 }

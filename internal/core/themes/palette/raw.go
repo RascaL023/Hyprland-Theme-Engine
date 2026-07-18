@@ -49,6 +49,25 @@ type Palette struct {
 			Critical string `json:"critical"`
 			Info     string `json:"info"`
 		} `json:"status"`
+
+		Syntax struct {
+			Purple   string `json:"purple"`
+			Magenta2 string `json:"magenta2"`
+			Blue0    string `json:"blue0"`
+			Blue1    string `json:"blue1"`
+			Blue5    string `json:"blue5"`
+			Blue6    string `json:"blue6"`
+			Blue7    string `json:"blue7"`
+			Green1   string `json:"green1"`
+			Green2   string `json:"green2"`
+			Orange   string `json:"orange"`
+			Red1     string `json:"red1"`
+			Teal     string `json:"teal"`
+		} `json:"syntax"`
+
+		UI struct {
+			BgStatusline string `json:"bg_statusline"`
+		} `json:"ui"`
 	}
 }
 

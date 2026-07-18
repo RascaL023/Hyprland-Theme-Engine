@@ -29,7 +29,7 @@
 
     "kitty": {
       "cursorShape": "beam",
-      "opacity": 1,
+      "opacity": 0.9,
       "fontSize": 11.5,
 
       "tab": {
@@ -94,7 +94,7 @@
 
       "windowRule": {
         "foot": {
-          "opacity": 1
+          "opacity": 0.9
         }
       }
     }

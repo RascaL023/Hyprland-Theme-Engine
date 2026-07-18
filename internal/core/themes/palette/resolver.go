@@ -2,8 +2,15 @@ package palette
 
 import "theme-engine/internal/resolver"
 
+func fallback(val, fallback string) string {
+	if val == "" {
+		return fallback
+	}
+	return val
+}
+
 func ResolvePalette(raw *Palette) *ResolvedPalette {
-	return &ResolvedPalette{
+	rp := &ResolvedPalette{
 		Foreground: raw.Foreground,
 		Background: raw.Background,
 		Cursor: raw.Cursor,
@@ -35,4 +42,22 @@ func ResolvePalette(raw *Palette) *ResolvedPalette {
 		StatusCritical: resolver.ResolveVar(raw.Extra.Status.Critical, RawPaletteVars{raw}),
 		StatusInfo: resolver.ResolveVar(raw.Extra.Status.Info, RawPaletteVars{raw}),
 	}
+
+	s := raw.Extra.Syntax
+	rp.SyntaxPurple   = fallback(resolver.ResolveVar(s.Purple, RawPaletteVars{raw}), rp.AccentPrimary)
+	rp.SyntaxMagenta2 = fallback(resolver.ResolveVar(s.Magenta2, RawPaletteVars{raw}), rp.AccentSecondary)
+	rp.SyntaxBlue0    = fallback(resolver.ResolveVar(s.Blue0, RawPaletteVars{raw}), rp.LayerSurface)
+	rp.SyntaxBlue1    = fallback(resolver.ResolveVar(s.Blue1, RawPaletteVars{raw}), rp.TextLink)
+	rp.SyntaxBlue5    = fallback(resolver.ResolveVar(s.Blue5, RawPaletteVars{raw}), raw.Colors[4])
+	rp.SyntaxBlue6    = fallback(resolver.ResolveVar(s.Blue6, RawPaletteVars{raw}), raw.Colors[6])
+	rp.SyntaxBlue7    = fallback(resolver.ResolveVar(s.Blue7, RawPaletteVars{raw}), rp.BorderDefault)
+	rp.SyntaxGreen1   = fallback(resolver.ResolveVar(s.Green1, RawPaletteVars{raw}), rp.StatusSuccess)
+	rp.SyntaxGreen2   = fallback(resolver.ResolveVar(s.Green2, RawPaletteVars{raw}), raw.Colors[2])
+	rp.SyntaxOrange   = fallback(resolver.ResolveVar(s.Orange, RawPaletteVars{raw}), rp.StatusWarning)
+	rp.SyntaxRed1     = fallback(resolver.ResolveVar(s.Red1, RawPaletteVars{raw}), rp.StatusCritical)
+	rp.SyntaxTeal     = fallback(resolver.ResolveVar(s.Teal, RawPaletteVars{raw}), raw.Colors[6])
+
+	rp.BgStatusline = fallback(resolver.ResolveVar(raw.Extra.UI.BgStatusline, RawPaletteVars{raw}), rp.LayerSurfaceRaised)
+
+	return rp
 }

@@ -32,6 +32,21 @@ func BuildFlattenPalette(t *palette.ResolvedPalette) {
 	for i, color := range t.Colors {
 		t.Flat["color"+itoa(i)] = color
 	}
+
+	t.Flat["syntax.purple"]   = t.SyntaxPurple
+	t.Flat["syntax.magenta2"] = t.SyntaxMagenta2
+	t.Flat["syntax.blue0"]    = t.SyntaxBlue0
+	t.Flat["syntax.blue1"]    = t.SyntaxBlue1
+	t.Flat["syntax.blue5"]    = t.SyntaxBlue5
+	t.Flat["syntax.blue6"]    = t.SyntaxBlue6
+	t.Flat["syntax.blue7"]    = t.SyntaxBlue7
+	t.Flat["syntax.green1"]   = t.SyntaxGreen1
+	t.Flat["syntax.green2"]   = t.SyntaxGreen2
+	t.Flat["syntax.orange"]   = t.SyntaxOrange
+	t.Flat["syntax.red1"]     = t.SyntaxRed1
+	t.Flat["syntax.teal"]     = t.SyntaxTeal
+
+	t.Flat["ui.bg_statusline"] = t.BgStatusline
 }
 
 func itoa(n int) string {
