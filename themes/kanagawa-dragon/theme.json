@@ -1,9 +1,9 @@
 {
   "theme": {
-    "name": "kanagawa-dragon-original",
+    "name": "kanagawa-dragon",
     "fonts": {
-      "primary": "FiraCode Nerd Font",
-      "secondary": "Maple Mono Nerd Font",
+      "primary": "Maple Mono NF",
+      "secondary": "FiraCode Nerd Font",
       "size": 11.5
     }
   },
@@ -11,26 +11,26 @@
   "tools": {
     "cava": {
       "gradients": [
-        "$pl.extra.layer.crust",
-        "$pl.extra.layer.surface",
-        "$pl.extra.layer.surface_raised",
-        "$pl.extra.layer.surface_overlay",
-        "$pl.extra.accent.secondary"
+        "$pl.color6",
+        "$pl.color4",
+        "$pl.color12",
+        "$pl.color7",
+        "$pl.color11"
       ]
     },
 
     "foot": {
-      "fontSize": 11.5,
+      "fontSize": 11,
       "padding": {
-        "x": 16,
-        "y": 10
+        "x": 25,
+        "y": 20
       }
     },
 
     "kitty": {
       "cursorShape": "beam",
       "opacity": 0.9,
-      "fontSize": 11.5,
+      "fontSize": 10.7,
 
       "tab": {
         "active": {
@@ -54,19 +54,19 @@
           "width": 1
         },
 
-        "margin": 5,
-        "padding": 8
+        "margin": 6,
+        "padding": 10
       }
     },
 
     "hypr": {
       "gaps": {
-        "in": 1,
-        "out": 5
+        "in": 4,
+        "out": 7
       },
 
       "border": {
-        "size": 2,
+        "size": 1,
         "active": {
           "degree": 45,
           "primary": "$pl.extra.accent.primary",
@@ -83,12 +83,12 @@
         "passes": 4
       },
 
-      "rounding": 7,
+      "rounding": 4,
 
       "shadow": {
         "option": true,
-        "range": 6,
-        "renderPower": 1,
+        "range": 20,
+        "renderPower": 10,
         "color": "$pl.extra.layer.crust"
       },
 
