@@ -1,0 +1,23 @@
+// ==============================
+//  Utility Functions
+// ==============================
+
+// membuat rgba dari hex + opacity
+@function alpha($color, $a) {
+  @return rgba($color, $a);
+}
+
+// membuat warna lebih gelap
+@function shade($color, $amount) {
+  @return darken($color, $amount);
+}
+
+// membuat warna lebih terang
+@function tint($color, $amount) {
+  @return lighten($color, $amount);
+}
+
+// blend 2 warna
+@function blend($c1, $c2, $p) {
+  @return mix($c1, $c2, $p);
+}

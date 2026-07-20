@@ -1,0 +1,19 @@
+@import "source";
+@import "function";
+
+* {
+    bg-col:  #{$layer-base};
+    bg-selected-col: rgba($layer-surface, 40%);
+    alt-bg-selected-col : $accent-primary;
+    bg-transparent-col: rgba($layer-base, 0.45);
+
+    fg-col: $text-primary;
+    fg-selected-col: $text-primary;
+
+    accent-1: $accent-primary;
+    surface-1: $layer-mantle;
+    border-col: $border-active;
+
+    app-width: 45%;
+    wallpaper-width: 100%;
+}

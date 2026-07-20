@@ -1,0 +1,97 @@
+@import "source";
+@import "function";
+
+// ── Accent (direct + derived) ──
+@define-color accent                #{$accent-primary};
+@define-color accent-muted          #{alpha($accent-primary, 0.2)};
+@define-color accent-muted-strong   #{alpha($accent-primary, 0.3)};
+@define-color accent-shadow         #{alpha($accent-primary, 0.35)};
+@define-color accent-hover          #{shade($accent-primary, 8%)};
+@define-color accent-bright         #{tint($accent-primary, 15%)};
+@define-color accent-progress       #{blend($accent-primary, $text-primary, 50%)};
+@define-color accent-backdrop       #{tint($accent-primary, 10%)};
+@define-color accent-focus          #{alpha($text-secondary, 0.3)};
+
+// ── Background (direct + derived) ──
+@define-color bg-main               #{$layer-base};
+@define-color bg-alt                #{$layer-surface-overlay};
+@define-color bg-surface            #{$layer-surface-overlay};
+@define-color bg-surface-active     #{tint($layer-surface-overlay, 10%)};
+@define-color bg-deep               #{$layer-crust};
+@define-color bg-raised             #{$layer-surface};
+@define-color bg-dialog             #{$layer-surface-raised};
+@define-color bg-input              #{$layer-surface};
+@define-color bg-input-deep         #{tint($layer-surface, 5%)};
+@define-color bg-sidebar-hover      #{tint($layer-surface-overlay, 8%)};
+@define-color bg-menu-selected      #{tint($layer-surface-overlay, 12%)};
+@define-color bg-conflict           #{$bg-conflict};
+@define-color disk-usage-bg         #{$bg-disk-usage};
+@define-color surface-disabled      #{alpha($text-primary, 0.04)};
+
+// ── Foreground (direct + derived) ──
+@define-color fg-main               #{$text-primary};
+@define-color fg-bright             #{tint($text-primary, 15%)};
+@define-color fg-alt                #{alpha($text-primary, 0.7)};
+@define-color fg-muted              #{alpha($text-primary, 0.5)};
+@define-color fg-muted-strong       #{alpha($text-primary, 0.32)};
+@define-color fg-dim                #{$fg-dim};
+@define-color fg-dim-muted          #{$fg-dim-muted};
+@define-color fg-disabled           #{$fg-disabled};
+@define-color fg-invert             #{alpha($layer-crust, 0.87)};
+@define-color fg-invert-alt         #{alpha($layer-crust, 0.6)};
+@define-color fg-invert-muted       #{alpha($layer-crust, 0.38)};
+@define-color fg-invert-soft        #{alpha($layer-crust, 0.3)};
+@define-color fg-osd                #{alpha(shade($layer-mantle, 5%), 0.9)};
+
+// ── Selection ──
+@define-color selection-bg          #{$accent-primary};
+@define-color selection-fg          #{alpha($layer-crust, 0.87)};
+
+// ── Status ──
+@define-color error                 #{$status-error};
+@define-color error-strong          #{tint($status-error, 15%)};
+@define-color error-hover           #{shade($status-error, 8%)};
+@define-color warning               #{$status-warning};
+@define-color warning-hover         #{shade($status-warning, 8%)};
+@define-color success               #{$status-success};
+@define-color info                  #{$status-info};
+@define-color info-strong           #{tint($status-info, 15%)};
+@define-color link                  #{$text-link};
+@define-color link-visited          #{$text-visited};
+
+// ── Border ──
+@define-color border                #{alpha($text-primary, 0.12)};
+@define-color border-light          #{alpha($text-primary, 0.1)};
+@define-color border-medium         #{$border-medium};
+
+// ── Shadow ──
+@define-color shadow                rgba(0, 0, 0, 0.2);
+@define-color shadow-light          rgba(0, 0, 0, 0.15);
+@define-color shadow-medium         rgba(0, 0, 0, 0.18);
+@define-color shadow-deep           rgba(0, 0, 0, 0.4);
+
+// ── Legacy aliases (for backward compat) ──
+@define-color text-primary          #{$text-primary};
+@define-color text-secondary        #{$text-secondary};
+@define-color text-muted            #{$text-muted};
+@define-color text-link             #{$text-link};
+@define-color text-visited          #{$text-visited};
+@define-color accent-primary        #{$accent-primary};
+@define-color accent-secondary      #{$accent-secondary};
+@define-color accent-on             #{$accent-on};
+@define-color layer-base            #{$layer-base};
+@define-color layer-mantle          #{$layer-mantle};
+@define-color layer-crust           #{$layer-crust};
+@define-color layer-surface         #{$layer-surface};
+@define-color layer-surface-raised  #{$layer-surface-raised};
+@define-color layer-surface-overlay #{$layer-surface-overlay};
+@define-color border-default        #{$border-default};
+@define-color border-active         #{$border-active};
+@define-color status-success        #{$status-success};
+@define-color status-warning        #{$status-warning};
+@define-color status-error          #{$status-error};
+@define-color status-critical       #{$status-critical};
+@define-color status-info           #{$status-info};
+
+@define-color alpha-crust           #{darken(alpha($layer-crust, 0.7), 3.5)};
+@define-color tr-crust              #{darken(alpha($layer-crust, 0.6), 50%)};
