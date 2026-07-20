@@ -26,6 +26,7 @@ type Palette struct {
 			Secondary string `json:"secondary"`
 			Muted     string `json:"muted"`
 			Link      string `json:"link"`
+			Visited   string `json:"visited"`
 		} `json:"text"`
 
 		Layer struct {
@@ -40,6 +41,7 @@ type Palette struct {
 		Border struct {
 			Default string `json:"default"`
 			Active  string `json:"active"`
+			Medium  string `json:"medium"`
 		} `json:"border"`
 
 		Status struct {
@@ -49,6 +51,17 @@ type Palette struct {
 			Critical string `json:"critical"`
 			Info     string `json:"info"`
 		} `json:"status"`
+
+		Fg struct {
+			Dim      string `json:"dim"`
+			DimMuted string `json:"dim_muted"`
+			Disabled string `json:"disabled"`
+		} `json:"fg"`
+
+		Bg struct {
+			Conflict  string `json:"conflict"`
+			DiskUsage string `json:"disk_usage"`
+		} `json:"bg"`
 
 		Syntax struct {
 			Purple   string `json:"purple"`

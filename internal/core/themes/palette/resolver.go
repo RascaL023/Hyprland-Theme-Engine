@@ -41,6 +41,13 @@ func ResolvePalette(raw *Palette) *ResolvedPalette {
 		StatusError: resolver.ResolveVar(raw.Extra.Status.Error, RawPaletteVars{raw}),
 		StatusCritical: resolver.ResolveVar(raw.Extra.Status.Critical, RawPaletteVars{raw}),
 		StatusInfo: resolver.ResolveVar(raw.Extra.Status.Info, RawPaletteVars{raw}),
+
+		FgDim:      resolver.ResolveVar(raw.Extra.Fg.Dim, RawPaletteVars{raw}),
+		FgDimMuted: resolver.ResolveVar(raw.Extra.Fg.DimMuted, RawPaletteVars{raw}),
+		FgDisabled: resolver.ResolveVar(raw.Extra.Fg.Disabled, RawPaletteVars{raw}),
+
+		BgConflict:  resolver.ResolveVar(raw.Extra.Bg.Conflict, RawPaletteVars{raw}),
+		BgDiskUsage: resolver.ResolveVar(raw.Extra.Bg.DiskUsage, RawPaletteVars{raw}),
 	}
 
 	s := raw.Extra.Syntax
@@ -58,6 +65,15 @@ func ResolvePalette(raw *Palette) *ResolvedPalette {
 	rp.SyntaxTeal     = fallback(resolver.ResolveVar(s.Teal, RawPaletteVars{raw}), raw.Colors[6])
 
 	rp.BgStatusline = fallback(resolver.ResolveVar(raw.Extra.UI.BgStatusline, RawPaletteVars{raw}), rp.LayerSurfaceRaised)
+
+	rp.LinkVisited = fallback(resolver.ResolveVar(raw.Extra.Text.Visited, RawPaletteVars{raw}), rp.AccentSecondary)
+	rp.BorderMedium = fallback(resolver.ResolveVar(raw.Extra.Border.Medium, RawPaletteVars{raw}), rp.BorderDefault)
+
+	rp.FgDim = fallback(rp.FgDim, rp.TextMuted)
+	rp.FgDimMuted = fallback(rp.FgDimMuted, rp.TextMuted)
+	rp.FgDisabled = fallback(rp.FgDisabled, rp.TextMuted)
+	rp.BgConflict = fallback(rp.BgConflict, rp.StatusWarning)
+	rp.BgDiskUsage = fallback(rp.BgDiskUsage, rp.LayerSurfaceOverlay)
 
 	return rp
 }

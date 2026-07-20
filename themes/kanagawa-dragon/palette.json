@@ -36,7 +36,8 @@
           "primary": "#c5c9c5",
           "secondary": "#C8C093",
           "muted": "#a6a69c",
-          "link": "#8ba4b0"
+          "link": "#8ba4b0",
+          "visited": "#7b6f8c"
         },
 
         "layer": {
@@ -50,7 +51,8 @@
 
         "border": {
           "default": "#282727",
-          "active": "#8ba4b0"
+          "active": "#8ba4b0",
+          "medium": "#4a4a49"
         },
 
         "status": {
@@ -59,6 +61,17 @@
           "error": "#c4746e",
           "critical": "#E46876",
           "info": "#8ba4b0"
+        },
+
+        "fg": {
+          "dim": "#63635e",
+          "dim_muted": "#7a7a74",
+          "disabled": "#5a5f63"
+        },
+
+        "bg": {
+          "conflict": "#635127",
+          "disk_usage": "#50504a"
         },
 
         "syntax": {
@@ -118,7 +131,8 @@
           "primary": "#545464",
           "secondary": "#716e61",
           "muted": "#8a8980",
-          "link": "#4d699b"
+          "link": "#4d699b",
+          "visited": "#8b7399"
         },
 
         "layer": {
@@ -132,7 +146,8 @@
 
         "border": {
           "default": "#8a8980",
-          "active": "#766b90"
+          "active": "#766b90",
+          "medium": "#9c9b93"
         },
 
         "status": {
@@ -141,6 +156,17 @@
           "error": "#c84053",
           "critical": "#d7474b",
           "info": "#4d699b"
+        },
+
+        "fg": {
+          "dim": "#636355",
+          "dim_muted": "#7c7b72",
+          "disabled": "#8e8d86"
+        },
+
+        "bg": {
+          "conflict": "#d4bc76",
+          "disk_usage": "#c5c0a0"
         },
 
         "syntax": {

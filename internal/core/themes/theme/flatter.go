@@ -14,6 +14,7 @@ func BuildFlattenPalette(t *palette.ResolvedPalette) {
 		"extra.text.secondary":          t.TextSecondary,
 		"extra.text.muted":              t.TextMuted,
 		"extra.text.link":               t.TextLink,
+		"extra.text.visited":            t.LinkVisited,
 		"extra.layer.base":              t.LayerBase,
 		"extra.layer.mantle":            t.LayerMantle,
 		"extra.layer.crust":             t.LayerCrust,
@@ -22,11 +23,19 @@ func BuildFlattenPalette(t *palette.ResolvedPalette) {
 		"extra.layer.surface_overlay":   t.LayerSurfaceOverlay,
 		"extra.border.default":          t.BorderDefault,
 		"extra.border.active":           t.BorderActive,
+		"extra.border.medium":           t.BorderMedium,
 		"extra.status.success":          t.StatusSuccess,
 		"extra.status.warning":          t.StatusWarning,
 		"extra.status.error":            t.StatusError,
 		"extra.status.critical":         t.StatusCritical,
 		"extra.status.info":             t.StatusInfo,
+
+		"fg.dim":      t.FgDim,
+		"fg.dim_muted": t.FgDimMuted,
+		"fg.disabled": t.FgDisabled,
+
+		"bg.conflict":   t.BgConflict,
+		"bg.disk_usage": t.BgDiskUsage,
 	}
 
 	for i, color := range t.Colors {

@@ -28,6 +28,7 @@ $text-primary       : {{ .Config.Palette.TextPrimary }};
 $text-secondary     : {{ .Config.Palette.TextSecondary }};
 $text-muted         : {{ .Config.Palette.TextMuted }};
 $text-link          : {{ .Config.Palette.TextLink }};
+$text-visited       : {{ .Config.Palette.LinkVisited }};
 
 $layer-base         : {{ .Config.Palette.LayerBase }};
 $layer-mantle       : {{ .Config.Palette.LayerMantle }};
@@ -38,12 +39,20 @@ $layer-surface-overlay : {{ .Config.Palette.LayerSurfaceOverlay }};
 
 $border-default     : {{ .Config.Palette.BorderDefault }};
 $border-active      : {{ .Config.Palette.BorderActive }};
+$border-medium      : {{ .Config.Palette.BorderMedium }};
 
 $status-success     : {{ .Config.Palette.StatusSuccess }};
 $status-warning     : {{ .Config.Palette.StatusWarning }};
 $status-error       : {{ .Config.Palette.StatusError }};
 $status-critical    : {{ .Config.Palette.StatusCritical }};
 $status-info        : {{ .Config.Palette.StatusInfo }};
+
+$fg-dim             : {{ .Config.Palette.FgDim }};
+$fg-dim-muted       : {{ .Config.Palette.FgDimMuted }};
+$fg-disabled        : {{ .Config.Palette.FgDisabled }};
+
+$bg-conflict        : {{ .Config.Palette.BgConflict }};
+$bg-disk-usage      : {{ .Config.Palette.BgDiskUsage }};
 
 
 $primary-font   : "{{ .Config.Theme.Theme.Fonts.Primary }}";

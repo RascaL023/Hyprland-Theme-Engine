@@ -15,6 +15,7 @@ type ResolvedPalette struct {
 	TextSecondary string
 	TextMuted     string
 	TextLink      string
+	LinkVisited   string
 
 	LayerBase           string
 	LayerMantle         string
@@ -25,6 +26,7 @@ type ResolvedPalette struct {
 
 	BorderDefault string
 	BorderActive  string
+	BorderMedium  string
 
 	StatusSuccess  string
 	StatusWarning  string
@@ -46,6 +48,13 @@ type ResolvedPalette struct {
 	SyntaxTeal     string
 
 	BgStatusline string
+
+	FgDim      string
+	FgDimMuted string
+	FgDisabled string
+
+	BgConflict  string
+	BgDiskUsage string
 
 	Flat map[string]string
 }
