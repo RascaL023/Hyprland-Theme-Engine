@@ -2,14 +2,16 @@
 
 Dokumen ini adalah acuan saat membuat tema baru. Tujuannya supaya setiap warna punya makna semantic yang konsisten, bukan sekadar warna yang terlihat bagus secara terpisah.
 
-Theme engine ini memakai palette semantic sendiri, lalu beberapa output seperti Neovim/tokyonight akan memetakan warna tersebut ke nama variabel milik tool terkait. Karena itu, urutan terang-gelap dan fungsi tiap field harus dijaga.
+Theme engine ini memakai palette semantic sendiri, lalu output akan memetakan warna tersebut ke variabel milik tool terkait. Karena itu, urutan terang-gelap dan fungsi tiap field harus dijaga.
 
 ## Prinsip Utama
 
 - Jangan isi field berdasarkan nama warna saja. Isi berdasarkan fungsi visualnya.
 - `text.*` adalah warna foreground/text, bukan warna background UI.
 - `layer.*` adalah warna background/surface, bukan warna text.
+- `fg.*` adalah warna foreground UI variants, bukan text konten.
 - `border.*` adalah warna pemisah/outline structural.
+- `bg.*` adalah warna background UI tambahan (bukan surface structural).
 - ANSI `colors[0..15]` dipakai terminal dan juga beberapa adapter UI seperti lualine.
 - Untuk dark theme, warna layer harus bergerak dari gelap ke lebih terang secara bertahap.
 - Jangan pakai `text.muted` sebagai background structural kecuali memang sengaja ingin UI low-contrast.
@@ -36,8 +38,8 @@ Makna tiap field:
 | `layer.mantle` | Background lebih gelap dari base | sidebar, popup, float bg |
 | `layer.base` | Background utama | editor bg, terminal bg |
 | `layer.surface` | Surface halus di atas base | cursorline, subtle highlight |
-| `layer.surface_raised` | Surface lebih terlihat | statusline bg, raised component |
-| `layer.surface_overlay` | Structural muted UI | gutter-like color, inactive/subtle UI |
+| `layer.surface_raised` | Surface lebih terlihat | statusline bg, raised component, dialog bg |
+| `layer.surface_overlay` | Structural muted UI | gutter-like color, inactive/subtle UI, alt bg |
 
 Rule penting:
 
@@ -49,7 +51,7 @@ Untuk dark theme, tanda `<` berarti lebih gelap secara luminance. Untuk light th
 
 ## Text Colors
 
-Text colors dipakai untuk foreground. Jangan pakai warna ini sebagai background structural kecuali ada alasan khusus.
+Text colors dipakai untuk foreground konten. Jangan pakai warna ini sebagai background structural kecuali ada alasan khusus.
 
 | Field | Makna | Rule |
 |---|---|---|
@@ -57,6 +59,7 @@ Text colors dipakai untuk foreground. Jangan pakai warna ini sebagai background 
 | `text.secondary` | Teks sekunder | masih readable, lebih kalem dari primary |
 | `text.muted` | Komentar / disabled-ish text | readable tapi low-emphasis |
 | `text.link` | Link / navigasi / reference | biasanya dekat dengan accent/info |
+| `text.visited` | Visited link | lebih muted/different dari link |
 
 Untuk dark theme:
 
@@ -67,7 +70,7 @@ text.primary > text.secondary > text.muted > layer.surface_overlay
 Catatan penting:
 
 - `text.muted` boleh terang selama masih cocok untuk komentar.
-- `text.muted` jangan dipakai untuk `fg_gutter` Tokyonight karena `fg_gutter` sering dipakai sebagai background lualine section B.
+- `text.muted` jangan dipakai untuk `fg_gutter` Tokyonight karena `fg_gutter` dipakai sebagai background lualine section B.
 
 ## Border Colors
 
@@ -75,8 +78,9 @@ Catatan penting:
 |---|---|---|
 | `border.default` | Border non-active | lebih subtle dari active, masih terlihat di atas surface |
 | `border.active` | Border active/focused | biasanya sama atau dekat dengan accent utama |
+| `border.medium` | Border medium emphasis | antara default dan active |
 
-Untuk dark theme, `border.default` idealnya berada di antara `layer.surface_raised` dan `layer.surface_overlay`, atau setidaknya tidak lebih terang dari text muted.
+Untuk dark theme, `border.default` idealnya berada di antara `layer.surface_raised` dan `layer.surface_overlay`, atau setidaknya tidak lebih terang dari text muted. `border.medium` bisa lebih terang dari default.
 
 ## Accent Colors
 
@@ -147,6 +151,31 @@ Rule penting:
 
 - Status colors harus readable di atas `layer.base`, `layer.surface`, dan `layer.surface_overlay`.
 - `status.critical` biasanya lebih kuat/terang daripada `status.error`.
+
+## Fg Colors
+
+Fg colors adalah foreground variants untuk UI elements, berbeda dengan `text.*` yang untuk konten.
+
+| Field | Makna | Fallback |
+|---|---|---|
+| `fg.dim` | Dim/low-emphasis foreground | `text.muted` |
+| `fg.dim_muted` | Dim muted foreground | `text.muted` |
+| `fg.disabled` | Disabled element foreground | `text.muted` |
+
+Untuk dark theme, nilai ideal:
+
+```text
+fg.dim < text.muted < text.secondary < text.primary
+```
+
+## Bg Colors
+
+Bg colors adalah background variants tambahan untuk UI spesifik (bukan surface structural).
+
+| Field | Makna | Fallback |
+|---|---|---|
+| `bg.conflict` | Conflict/diff marker background | `status.warning` |
+| `bg.disk_usage` | Disk usage meter background | `layer.surface_overlay` |
 
 ## Syntax Colors
 
@@ -230,20 +259,83 @@ Implikasi untuk theme baru:
 - Mode colors juga harus readable sebagai foreground di atas `layer.surface_overlay` untuk section B.
 - Kalau section B tabrakan, cek dulu `layer.surface_overlay` dan ANSI mode colors, bukan langsung custom lualine.
 
+## GTK Integration
+
+Theme engine menghasilkan CSS untuk GTK melalui pipeline:
+
+```text
+source.tmpl (Go template)
+    → render
+    → _source.scss (SCSS variables, generated di output/domain/gtk/scss/source/)
+    → di-@import oleh base.scss (static, di assets/templates/domain/gtk/)
+    → sassc compile
+    → source.css (CSS @define-color rules)
+
+_sfunction.scss (static, di assets/templates/domain/gtk/)
+    → di-@import oleh base.scss
+    → menyediakan utility functions: alpha(), shade(), tint(), blend()
+
+rofi-base.scss (static)
+    → sassc compile
+    → source.rasi (Rasi config untuk Rofi)
+```
+
+### SCSS Utility Functions
+
+| Function | Deskripsi | Contoh |
+|---|---|---|
+| `alpha($color, $a)` | rgba dari hex + opacity | `alpha($accent-primary, 0.2)` → `rgba(139, 164, 176, 0.2)` |
+| `shade($color, $amount)` | Darken | `shade($accent-primary, 8%)` → `#73919f` |
+| `tint($color, $amount)` | Lighten | `tint($accent-primary, 15%)` → `#b9c8cf` |
+| `blend($c1, $c2, $p)` | Mix/warna campuran | `blend($accent-primary, $text-primary, 50%)` → `#a8b7bb` |
+
+File SCSS static (`base.scss`, `rofi-base.scss`, `_function.scss`) terletak di `assets/templates/domain/gtk/` — bukan output. Hanya `_source.scss` yang di-generate di `output/domain/gtk/scss/source/`.
+
+### CSS Output
+
+`source.css` berisi 78+ `@define-color` rules, mencakup:
+
+- **Accent** (9): direct + derived via alpha, shade, tint, blend
+- **Background** (14): direct palette + derived (surface-active, sidebar-hover, menu-selected, etc.)
+- **Foreground** (13): direct palette + derived (bright, alt, muted, invert, osd)
+- **Selection** (2): derived dari accent
+- **Status** (9): direct + derived (hover, strong)
+- **Border** (3): direct + derived (alpha)
+- **Shadow** (4): rgba(0,0,0, X%)
+- **Legacy aliases** (17): untuk backward compatibility dengan waybar dan config lama (`text-primary`, `layer-crust`, `accent-primary`, `status-*`, dll.)
+
+Beberapa CSS variable dihasilkan dari SCSS function:
+
+```css
+@define-color accent-hover      shade(accent-primary, 8%);
+@define-color bg-surface-active tint(layer-surface-overlay, 10%);
+@define-color fg-muted          alpha(text-primary, 0.5);
+@define-color border            alpha(text-primary, 0.12);
+@define-color bg-sidebar-hover  tint(layer-surface-overlay, 8%);
+@define-color accent-focus      alpha(text-secondary, 0.3);
+```
+
+Variable yang tidak bisa di-derive (butuh nilai explicit di palette):
+`fg-dim`, `fg-dim-muted`, `fg-disabled`, `bg-conflict`, `bg-disk-usage`, `border-medium`, `text-visited`
+
 ## Checklist Tema Baru
 
 Sebelum tema dianggap siap:
 
 - `layer.*` punya urutan terang-gelap yang konsisten.
-- `text.primary`, `text.secondary`, `text.muted` readable di atas `layer.base`.
+- `text.primary`, `text.secondary`, `text.muted`, `text.link`, `text.visited` terisi.
 - `text.muted` tidak dipakai sebagai structural background.
-- `border.default` terlihat di atas `layer.surface` / `layer.surface_raised`.
+- `border.default`, `border.active`, `border.medium` terisi.
 - `accent.on_accent` kontras terhadap `accent.primary`.
 - ANSI `colors[0..15]` lengkap dan mengikuti urutan standar.
 - Mode colors punya kontras cukup terhadap `layer.surface_overlay`.
+- `status.*` terisi.
+- `fg.dim`, `fg.dim_muted`, `fg.disabled` terisi (bisa fallback).
+- `bg.conflict`, `bg.disk_usage` terisi (bisa fallback).
 - `syntax` block diisi explicit.
 - `ui.bg_statusline` diisi explicit.
 - Neovim output dicek khusus untuk `fg_gutter`, `dark3`, `dark5`, dan `bg_statusline`.
+- GTK output dicek: `source.css` dan `source.rasi` ter-generate.
 
 ## Contoh Dark Theme Yang Sehat
 
@@ -258,13 +350,24 @@ Sebelum tema dianggap siap:
 },
 "border": {
   "default": "#282727",
-  "active": "#8ba4b0"
+  "active": "#8ba4b0",
+  "medium": "#4a4a49"
 },
 "text": {
   "primary": "#c5c9c5",
   "secondary": "#C8C093",
   "muted": "#a6a69c",
-  "link": "#8ba4b0"
+  "link": "#8ba4b0",
+  "visited": "#7b6f8c"
+},
+"fg": {
+  "dim": "#63635e",
+  "dim_muted": "#7a7a74",
+  "disabled": "#5a5f63"
+},
+"bg": {
+  "conflict": "#635127",
+  "disk_usage": "#50504a"
 },
 "ui": {
   "bg_statusline": "#282727"
