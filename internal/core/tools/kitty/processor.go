@@ -45,8 +45,8 @@ func (KittyProcessor) Resolve(in any, ctx *context.Context) (any, error) {
 		WindowPadding: inp.Window.Padding,
 		WindowMargin: inp.Window.Margin,
 
-		FontSize: inp.FontSize,
-		FontFamily: ctx.Theme.Theme.Fonts.Primary,
+		FontSize: ctx.Theme.Theme.Fonts.Terminal.Size,
+		FontFamily: ctx.Theme.Theme.Fonts.Terminal.Family,
 	}, nil;
 }
 

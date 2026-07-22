@@ -55,6 +55,8 @@ func New(cfg Config) (*Engine, error) {
 		return nil, fmt.Errorf("load theme %s: %w", st.Theme.Name, err)
 	}
 
+	rawTheme.Theme.Fonts.ResolveDefaults()
+
 	return &Engine{
 		apps:  apps,
 		theme: rawTheme,

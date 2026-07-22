@@ -28,11 +28,6 @@ func (AlacrittyProcessor) Resolve(in any, ctx *context.Context) (any, error) {
 		inp = Raw{}
 	}
 
-	fontSize := inp.FontSize
-	if fontSize == 0 {
-		fontSize = ctx.Theme.Theme.Fonts.Size
-	}
-
 	opacity := inp.Opacity
 	if opacity == 0 {
 		opacity = 1.0
@@ -52,8 +47,8 @@ func (AlacrittyProcessor) Resolve(in any, ctx *context.Context) (any, error) {
 
 		CursorShape: cursorShape,
 
-		FontSize:   fontSize,
-		FontFamily: ctx.Theme.Theme.Fonts.Primary,
+		FontSize:   ctx.Theme.Theme.Fonts.Terminal.Size,
+		FontFamily: ctx.Theme.Theme.Fonts.Terminal.Family,
 	}, nil
 }
 

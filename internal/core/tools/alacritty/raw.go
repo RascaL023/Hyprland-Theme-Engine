@@ -13,6 +13,4 @@ type Raw struct {
 			Shape string `json:"shape"`
 		} `json:"style"`
 	} `json:"cursor"`
-
-	FontSize float64 `json:"fontSize"`
 }

@@ -23,8 +23,8 @@ func (FootProcessor) Resolve(in any, ctx *context.Context) (any, error) {
 	inp := in.(Raw);
 
 	return Foot{
-		Font: ctx.Theme.Theme.Fonts.Primary,
-		FontSize: inp.FontSize,
+		Font: ctx.Theme.Theme.Fonts.Terminal.Family,
+		FontSize: ctx.Theme.Theme.Fonts.Terminal.Size,
 		PaddingX: inp.Padding.X,
 		PaddingY: inp.Padding.Y,
 

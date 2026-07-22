@@ -2,12 +2,20 @@
   "theme": {
     "name": "sakura",
     "fonts": {
-      "primary": "FiraCode Nerd Font",
-      "secondary": "Maple Mono Nerd Font",
-      "size": 11.5
+      "system": {
+        "family": "Inter",
+        "size": 11.0
+      },
+      "widget": {
+        "family": "Inter",
+        "size": 11.0
+      },
+      "terminal": {
+        "family": "MapleMono NF",
+        "size": 11.0
+      }
     }
   },
-
   "tools": {
     "cava": {
       "gradients": [
@@ -18,20 +26,15 @@
         "$pl.extra.accent.primary"
       ]
     },
-
     "foot": {
-      "fontSize": 11.5,
       "padding": {
         "x": 14,
         "y": 8
       }
     },
-
     "kitty": {
       "cursorShape": "beam",
       "opacity": 0.45,
-      "fontSize": 11.5,
-
       "tab": {
         "active": {
           "foreground": "$pl.extra.accent.primary",
@@ -41,29 +44,24 @@
           "foreground": "$pl.extra.text.muted",
           "background": "$pl.extra.layer.mantle"
         },
-
         "bar": "powerline",
         "style": "slanted"
       },
-
       "window": {
         "border": {
           "active": "$pl.extra.accent.primary",
           "inactive": "$pl.extra.layer.mantle",
           "width": 1
         },
-
         "margin": 6,
         "padding": 10
       }
     },
-
     "hypr": {
       "gaps": {
         "in": 2,
         "out": 6
       },
-
       "border": {
         "size": 2,
         "active": {
@@ -75,29 +73,24 @@
           "primary": "$pl.extra.layer.crust"
         }
       },
-
       "blur": {
         "option": true,
         "size": 6,
         "passes": 6
       },
-
       "rounding": 10,
-
       "shadow": {
         "option": true,
         "range": 8,
         "renderPower": 2,
         "color": "$pl.extra.layer.crust"
       },
-
       "windowRule": {
         "foot": {
           "opacity": 0.75
         }
       }
     },
-
     "alacritty": {
       "opacity": 0.85,
       "padding": {
@@ -108,8 +101,7 @@
         "style": {
           "shape": "Beam"
         }
-      },
-      "fontSize": 10.5
+      }
     }
   }
 }

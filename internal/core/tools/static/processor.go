@@ -14,6 +14,7 @@ func init() {
 	processor.RegisterProcessor(Processor{name: "nvim"})
 	processor.RegisterProcessor(Processor{name: "yazi"})
 	processor.RegisterProcessor(Processor{name: "starship"})
+	processor.RegisterProcessor(Processor{name: "system"})
 }
 
 func (p Processor) Name() string { return p.name }

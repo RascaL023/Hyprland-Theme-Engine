@@ -2,12 +2,20 @@
   "theme": {
     "name": "kanagawa-dragon",
     "fonts": {
-      "primary": "Maple Mono NF",
-      "secondary": "FiraCode Nerd Font",
-      "size": 11.5
+      "system": {
+        "family": "JetBrainsMono Nerd Font",
+        "size": 11.0
+      },
+      "widget": {
+        "family": "Monocraft Nerd Font",
+        "size": 11.0
+      },
+      "terminal": {
+        "family": "MapleMono NF",
+        "size": 11.0
+      }
     }
   },
-
   "tools": {
     "cava": {
       "gradients": [
@@ -18,20 +26,15 @@
         "$pl.color11"
       ]
     },
-
     "foot": {
-      "fontSize": 11,
       "padding": {
         "x": 25,
         "y": 20
       }
     },
-
     "kitty": {
       "cursorShape": "beam",
       "opacity": 0.9,
-      "fontSize": 10.7,
-
       "tab": {
         "active": {
           "foreground": "$pl.extra.text.secondary",
@@ -41,30 +44,24 @@
           "foreground": "$pl.extra.layer.surface_raised",
           "background": "$pl.extra.text.secondary"
         },
-
         "bar": "powerline",
         "style": "slanted"
       },
-
       "window": {
         "border": {
           "active": "$pl.extra.accent.primary",
           "inactive": "$pl.extra.layer.mantle",
-
           "width": 1
         },
-
         "margin": 6,
         "padding": 10
       }
     },
-
     "hypr": {
       "gaps": {
         "in": 4,
         "out": 7
       },
-
       "border": {
         "size": 1,
         "active": {
@@ -76,29 +73,24 @@
           "primary": "$pl.extra.layer.crust"
         }
       },
-
       "blur": {
         "option": true,
         "size": 4,
         "passes": 4
       },
-
       "rounding": 4,
-
       "shadow": {
         "option": true,
         "range": 20,
         "renderPower": 10,
         "color": "$pl.extra.layer.crust"
       },
-
       "windowRule": {
         "foot": {
           "opacity": 0.9
         }
       }
     },
-
     "alacritty": {
       "opacity": 0.85,
       "padding": {
@@ -109,8 +101,7 @@
         "style": {
           "shape": "Beam"
         }
-      },
-      "fontSize": 10.5
+      }
     }
   }
 }

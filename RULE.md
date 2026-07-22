@@ -259,6 +259,17 @@ Implikasi untuk theme baru:
 - Mode colors juga harus readable sebagai foreground di atas `layer.surface_overlay` untuk section B.
 - Kalau section B tabrakan, cek dulu `layer.surface_overlay` dan ANSI mode colors, bukan langsung custom lualine.
 
+## Font System
+
+Theme-Engine menggunakan sistem font semantik dengan 3 kategori utama, terpusat di `theme.json` pada bagian `theme.fonts`:
+
+1.  **`system`**: Font proporsional untuk UI OS (GTK, Firefox, Nemo).
+2.  **`widget`**: Font untuk elemen desktop seperti Waybar, Eww, Rofi. (Fallback otomatis ke `system` jika kosong).
+3.  **`terminal`**: Font monospace wajib untuk Kitty, Foot, Alacritty, dan Neovim. (Ukuran `size` di sini akan menjadi SSOT bagi semua emulator terminal).
+
+*Override font-size di level masing-masing tool sudah dihapus untuk menjaga kebersihan arsitektur.*
+Baca `FONT_SYSTEM.md` untuk detail lebih lanjut.
+
 ## GTK Integration
 
 Theme engine menghasilkan CSS untuk GTK melalui pipeline:
