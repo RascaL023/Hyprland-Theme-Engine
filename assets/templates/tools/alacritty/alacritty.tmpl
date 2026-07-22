@@ -1,0 +1,58 @@
+# UI conf
+[window]
+opacity = {{ .Opacity }}
+padding.x = {{ .PaddingX }}
+padding.y = {{ .PaddingY }}
+
+[cursor.style]
+shape = "{{ .CursorShape }}"
+
+[font]
+size = {{ .FontSize }}
+
+[font.normal]
+family = "{{ .FontFamily }}"
+style = "Regular"
+
+[font.bold]
+family = "{{ .FontFamily }}"
+style = "Bold"
+
+[font.italic]
+family = "{{ .FontFamily }}"
+style = "Italic"
+
+[font.bold_italic]
+family = "{{ .FontFamily }}"
+style = "Bold Italic"
+
+[colors.primary]
+background = "{{ .Palette.Background }}"
+foreground = "{{ .Palette.Foreground }}"
+
+[colors.cursor]
+cursor = "{{ .Palette.Cursor }}"
+
+[colors.selection]
+text = "{{ .Palette.LayerBase }}"
+background = "{{ .Palette.AccentPrimary }}"
+
+[colors.normal]
+black   = "{{ index .Palette.Colors 0 }}"
+red     = "{{ index .Palette.Colors 1 }}"
+green   = "{{ index .Palette.Colors 2 }}"
+yellow  = "{{ index .Palette.Colors 3 }}"
+blue    = "{{ index .Palette.Colors 4 }}"
+magenta = "{{ index .Palette.Colors 5 }}"
+cyan    = "{{ index .Palette.Colors 6 }}"
+white   = "{{ index .Palette.Colors 7 }}"
+
+[colors.bright]
+black   = "{{ index .Palette.Colors 8 }}"
+red     = "{{ index .Palette.Colors 9 }}"
+green   = "{{ index .Palette.Colors 10 }}"
+yellow  = "{{ index .Palette.Colors 11 }}"
+blue    = "{{ index .Palette.Colors 12 }}"
+magenta = "{{ index .Palette.Colors 13 }}"
+cyan    = "{{ index .Palette.Colors 14 }}"
+white   = "{{ index .Palette.Colors 15 }}"

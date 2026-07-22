@@ -71,6 +71,7 @@ output/                        Hasil render config
 | `cava` | tool processor | `internal/core/tools/cava` | `assets/templates/tools/cava/cava.tmpl` |
 | `foot` | tool processor | `internal/core/tools/foot` | `assets/templates/tools/foot/foot.tmpl` |
 | `kitty` | tool processor | `internal/core/tools/kitty` | `assets/templates/tools/kitty/kitty.tmpl` |
+| `alacritty` | tool processor | `internal/core/tools/alacritty` | `assets/templates/tools/alacritty/alacritty.tmpl` |
 | `hypr` | tool processor | `internal/core/tools/hypr` | `assets/templates/tools/hypr/hypr.tmpl` |
 | `yazi` | template-only | `internal/core/tools/static` | `assets/templates/tools/yazi/theme.tmpl` |
 | `nvim` | template-only | `internal/core/tools/static` | `assets/templates/tools/nvim/colors.tmpl` |
@@ -211,6 +212,7 @@ gtk|assets/templates/domain/gtk/source.tmpl|output/domain/gtk
 cava|assets/templates/tools/cava/cava.tmpl|output/tools/cava/cava_extra
 foot|assets/templates/tools/foot/foot.tmpl|output/tools/foot/ui.ini
 kitty|assets/templates/tools/kitty/kitty.tmpl|output/tools/kitty/ui.conf
+alacritty|assets/templates/tools/alacritty/alacritty.tmpl|output/tools/alacritty/ui.toml
 hypr|assets/templates/tools/hypr/hypr.tmpl|output/tools/hypr/source.conf
 yazi|assets/templates/tools/yazi/theme.tmpl|output/tools/yazi/theme.toml
 nvim|assets/templates/tools/nvim/colors.tmpl|output/tools/nvim/colors.lua
@@ -389,4 +391,4 @@ masih cukup aman karena konvensinya sudah terdokumentasi.
 - Test: coverage fokus untuk loader dan renderer
 - Theme: nocturne, ghostly, kanagawa-wave, kanagawa-dragon,
   kanagawa-dragon-original, dracula, sakura
-- Tools: gtk, cava, foot, kitty, hypr, yazi, nvim, starship
+- Tools: gtk, cava, foot, kitty, alacritty, hypr, yazi, nvim, starship

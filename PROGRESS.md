@@ -33,12 +33,14 @@ Dokumen ini melacak status rilis, fitur yang telah diimplementasikan, serta memb
 - [x] **Atomic Disk Write**: Menulis ke file temp terlebih dahulu lalu melakukan rename agar terhindar dari file konfigurasi korup atau terpotong jika proses mati tengah jalan.
 
 ### B. Implementasi Target & Processor
+
 | Target | Tipe Processor | Status | File Template | Lokasi Output |
 | :--- | :--- | :---: | :--- | :--- |
 | **GTK-CSS** | Domain | [x] Selesai | `assets/templates/domain/gtk/source.tmpl` | `output/domain/gtk/` (menghasilkan CSS & Rasi via `sassc`) |
 | **Cava** | Custom Tool | [x] Selesai | `assets/templates/tools/cava/cava.tmpl` | `output/tools/cava/cava_extra` |
 | **Foot** | Custom Tool | [x] Selesai | `assets/templates/tools/foot/foot.tmpl` | `output/tools/foot/ui.ini` |
 | **Kitty** | Custom Tool | [x] Selesai | `assets/templates/tools/kitty/kitty.tmpl` | `output/tools/kitty/ui.conf` |
+| **Alacritty** | Custom Tool | [x] Selesai | `assets/templates/tools/alacritty/alacritty.tmpl` | `output/tools/alacritty/ui.toml` |
 | **Hypr** | Custom Tool | [x] Selesai | `assets/templates/tools/hypr/hypr.tmpl` | `output/tools/hypr/source.conf` |
 | **Yazi** | Static | [x] Selesai | `assets/templates/tools/yazi/theme.tmpl` | `output/tools/yazi/theme.toml` |
 | **Nvim** | Static | [x] Selesai | `assets/templates/tools/nvim/colors.tmpl` | `output/tools/nvim/colors.lua` |
@@ -52,6 +54,7 @@ Dokumen ini melacak status rilis, fitur yang telah diimplementasikan, serta memb
 | **Zathura** | Static / Custom | [ ] Rencana | - | - |
 
 ### C. Daftar Tema
+
 | Tema | Dark | Light | Theme JSON |
 | :--- | :---: | :---: | :---: |
 | **Nocturne** | [x] | [x] | [x] |

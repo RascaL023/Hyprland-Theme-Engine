@@ -5,6 +5,7 @@ import (
 	_ "theme-engine/internal/core/tools/cava"
 	_ "theme-engine/internal/core/tools/foot"
 	_ "theme-engine/internal/core/tools/kitty"
+	_ "theme-engine/internal/core/tools/alacritty"
 	_ "theme-engine/internal/core/tools/hypr"
 
 	_ "theme-engine/internal/core/tools/static"

@@ -96,6 +96,20 @@
           "opacity": 0.75
         }
       }
+    },
+
+    "alacritty": {
+      "opacity": 0.85,
+      "padding": {
+        "x": 25,
+        "y": 20
+      },
+      "cursor": {
+        "style": {
+          "shape": "Beam"
+        }
+      },
+      "fontSize": 10.5
     }
   }
 }
