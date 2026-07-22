@@ -61,8 +61,9 @@ func New(cfg Config) (*Engine, error) {
 		apps:  apps,
 		theme: rawTheme,
 		ctx: context.Context{
-			Palette: resolvedPalette,
-			Theme:   rawTheme,
+			Palette:   resolvedPalette,
+			Theme:     rawTheme,
+			ThemeType: st.Theme.Type,
 		},
 	}, nil
 }
