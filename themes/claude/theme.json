@@ -1,0 +1,107 @@
+{
+  "theme": {
+    "name": "claude",
+    "fonts": {
+      "system": {
+        "family": "Inter",
+        "size": 11.0
+      },
+      "widget": {
+        "family": "Inter",
+        "size": 11.0
+      },
+      "terminal": {
+        "family": "JetBrainsMono Nerd Font",
+        "size": 11.0
+      }
+    }
+  },
+  "tools": {
+    "cava": {
+      "gradients": [
+        "$pl.extra.layer.crust",
+        "$pl.extra.layer.surface",
+        "$pl.extra.layer.surface_raised",
+        "$pl.extra.accent.secondary",
+        "$pl.extra.accent.primary"
+      ]
+    },
+    "foot": {
+      "padding": {
+        "x": 24,
+        "y": 18
+      }
+    },
+    "kitty": {
+      "cursorShape": "beam",
+      "opacity": 0.92,
+      "tab": {
+        "active": {
+          "foreground": "$pl.extra.accent.primary",
+          "background": "$pl.extra.layer.crust"
+        },
+        "inactive": {
+          "foreground": "$pl.extra.text.muted",
+          "background": "$pl.extra.layer.mantle"
+        },
+        "bar": "powerline",
+        "style": "slanted"
+      },
+      "window": {
+        "border": {
+          "active": "$pl.extra.accent.primary",
+          "inactive": "$pl.extra.border.default",
+          "width": 1
+        },
+        "margin": 6,
+        "padding": 12
+      }
+    },
+    "hypr": {
+      "gaps": {
+        "in": 3,
+        "out": 6
+      },
+      "border": {
+        "size": 2,
+        "active": {
+          "degree": 90,
+          "primary": "$pl.extra.accent.primary",
+          "secondary": "$pl.extra.accent.secondary"
+        },
+        "inactive": {
+          "primary": "$pl.extra.layer.crust"
+        }
+      },
+      "blur": {
+        "option": true,
+        "size": 3,
+        "passes": 2
+      },
+      "rounding": 8,
+      "shadow": {
+        "option": true,
+        "range": 12,
+        "renderPower": 3,
+        "color": "$pl.extra.layer.crust"
+      },
+      "windowRule": {
+        "foot": {
+          "opacity": 0.92
+        }
+      }
+    },
+    "alacritty": {
+      "opacity": 0.92,
+      "padding": {
+        "x": 24,
+        "y": 18
+      },
+      "cursor": {
+        "style": {
+          "shape": "Beam"
+        }
+      }
+    }
+  }
+}
