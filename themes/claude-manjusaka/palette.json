@@ -96,19 +96,19 @@
     },
 
     "light": {
-      "background": "#F5F0EB",
-      "foreground": "#020202",
+      "background": "#E5E0DA",
+      "foreground": "#3D3D3D",
       "cursor": "#C18C7C",
 
       "colors": [
-        "#020202",
+        "#3D3D3D",
         "#8D8479",
         "#C18C7C",
         "#A89F93",
         "#C6B8A8",
         "#BFC0B5",
         "#D1C8B8",
-        "#F5F0EB",
+        "#E5E0DA",
 
         "#635151",
         "#8D8479",
@@ -123,49 +123,49 @@
       "extra": {
         "accent": {
           "primary": "#C18C7C",
-          "secondary": "#A89F93",
-          "on_accent": "#F5F0EB"
+          "secondary": "#D1C8B8",
+          "on_accent": "#E5E0DA"
         },
 
         "text": {
           "primary": "$pl.foreground",
-          "secondary": "#5A4A3A",
-          "muted": "#8A7A6A",
+          "secondary": "#5A5A5A",
+          "muted": "#7A7A7A",
           "link": "#C18C7C",
           "visited": "#8D8479"
         },
 
         "layer": {
-          "base": "#F5F0EB",
-          "mantle": "#EDE8E3",
-          "crust": "#E5E0DB",
-          "surface": "#E8E3DE",
-          "surface_raised": "#D5D0CB",
-          "surface_overlay": "#C5C0BB"
+          "base": "#E5E0DA",
+          "mantle": "#DDD8D2",
+          "crust": "#C8C3BD",
+          "surface": "#EAE5DF",
+          "surface_raised": "#EFEAE4",
+          "surface_overlay": "#DAD5CF"
         },
 
         "border": {
-          "default": "#C5C0BB",
+          "default": "#C8C3BD",
           "active": "#C18C7C",
-          "medium": "#B0ABA6"
+          "medium": "#B5B0AA"
         },
 
         "status": {
           "success": "#BFC0B5",
-          "warning": "#A89F93",
+          "warning": "#C6B8A8",
           "error": "#8D8479",
           "critical": "#635151",
-          "info": "#C6B8A8"
+          "info": "#D1C8B8"
         },
 
         "syntax": {
           "purple":   "#A89890",
           "magenta2": "#C18C7C",
-          "blue0":    "#E0DBD6",
+          "blue0":    "#C8C3BD",
           "blue1":    "#C6B8A8",
           "blue5":    "#8D8479",
           "blue6":    "#D1C8B8",
-          "blue7":    "#D5D0CB",
+          "blue7":    "#D0CBC5",
           "green1":   "#BFC0B5",
           "green2":   "#BFC0B5",
           "orange":   "#C18C7C",
@@ -174,18 +174,18 @@
         },
 
         "fg": {
-          "dim":       "#8A7A6A",
-          "dim_muted": "#8A7A6A",
-          "disabled":  "#BAAFA0"
+          "dim":       "#7A7A7A",
+          "dim_muted": "#7A7A7A",
+          "disabled":  "#AAA5A0"
         },
 
         "bg": {
-          "conflict":   "#E0C8A8",
-          "disk_usage": "#C5C0BB"
+          "conflict":   "#D5C0A0",
+          "disk_usage": "#D0CBC5"
         },
 
         "ui": {
-          "bg_statusline": "#D5D0CB"
+          "bg_statusline": "#D0CBC5"
         }
       }
     }
