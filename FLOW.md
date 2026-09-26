@@ -20,19 +20,26 @@ Sebelum memahami kodenya, pahami filosofi desainnya:
 Berikut peta modul internal agar Anda bisa bernavigasi dengan mudah:
 
 ```txt
-cmd/theme-engine/              # Titik masuk aplikasi (CLI parser)
+cmd/theme-engine/              # Titik masuk aplikasi + wiring eksplisit (tanpa init())
 internal/
- ├── engine/                   # Pipeline utama: orchestrator flow aplikasi
- ├── loader/                   # I/O Loader untuk JSON, State, dan Path Map (path.txt)
- ├── resolver/                 # Engine penyelesai variabel seperti "$pl.extra.layer.base"
- ├── renderer/                 # Template parser, cache, & atomic write dengan skip-unchanged
- ├── processor/                # Pendaftaran (Registry) dan pemanggilan Processor target
- ├── register/                 # Interface kontrak (Parser, Resolver, Renderer) bagi Processor
- └── core/
-      ├── context/             # Context global yang menampung Palette & Theme ter-resolve
-      ├── log/                 # Log helper (Info, Warn, Error)
-      ├── themes/              # Struktur data model (Palette, Theme, State)
-      └── tools/               # Implementasi Processor spesifik per aplikasi / domain
+ ├── app/
+ │   ├── engine/               # Pipeline utama: orchestrator flow aplikasi
+ │   └── ports/                # Interface kontrak Processor (Parser/Resolver/Renderer)
+ ├── domain/
+ │   ├── palette/              # Raw, Resolved, ResolvePalette, flatten
+ │   ├── theme/                # Theme, Fonts + ResolveDefaults
+ │   ├── state/                # State (.state.json)
+ │   ├── vars/                 # VarSource (kontrak Get)
+ │   └── renderctx/            # Context global: Palette & Theme ter-resolve
+ ├── adapters/
+ │   ├── tools/                # Adapter per tool: kitty, foot, alacritty, cava, hypr
+ │   │   └── generic/          # Target template-only: nvim, yazi, starship
+ │   └── platform/             # Domain besar: gtk (sassc), system (dconf)
+ └── infra/
+     ├── loader/               # I/O Loader untuk JSON, State, dan Path Map (path.txt)
+     ├── renderer/             # Template parser, cache, & atomic write dengan skip-unchanged
+     ├── pathenv/              # Expand $WAYBAR/$THEME/$ENV + resolve $pl.*
+     └── log/                  # Log helper (Info, Warn, Error)
 ```
 
 ---
@@ -101,23 +108,23 @@ waybar|assets/templates/waybar/default.tmpl|output/waybar/sources.css
 #### Langkah 3: Load & Resolve Palette (`themes/<tema>/palette.json`)
 1. Membaca data palette kasar (`palette.Raw`).
 2. Menentukan subset varian sesuai tipe aktif (`dark` atau `light`) via `ResolveSelected(type)`.
-3. Menyelesaikan warna referensi internal (seperti `$pl.color5`) ke nilai warna Hex asli menggunakan `resolver.ResolveVar`.
-4. Memanggil `themeconfig.BuildFlattenPalette` untuk meratakan seluruh warna ke dalam `map[string]string` dengan format nama kunci flat (contoh: `"extra.primaryaccent"`). Ini bertujuan agar pencarian warna berikutnya sangat cepat.
+3. Menyelesaikan warna referensi internal (seperti `$pl.color5`) ke nilai warna Hex asli menggunakan `pathenv.ResolveVar`.
+4. Memanggil `palette.BuildFlattenPalette` untuk meratakan seluruh warna ke dalam `map[string]string` dengan format nama kunci flat (contoh: `"extra.accent.primary"`). Ini bertujuan agar pencarian warna berikutnya sangat cepat.
 
 #### Langkah 4: Load Theme Config (`themes/<tema>/theme.json`)
 Membaca file konfigurasi utama tema yang berisi properti font global dan konfigurasi spesifik masing-masing alat/aplikasi dalam representasi `map[string]json.RawMessage`.
 
 #### Langkah 5: Pencarian & Inisialisasi Processor
-Setiap aplikasi (seperti Kitty, Foot) mendaftarkan dirinya secara otomatis ke `processor.Registered` melalui blok `init()` di package-nya masing-masing. Engine mencocokkan nama target dengan processor yang terdaftar.
+Setiap adapter didaftarkan eksplisit di `cmd/theme-engine/wiring.go` (`defaultProcessors()`), tanpa `init()` atau blank-import. Engine mencocokkan nama target dari `path.txt` dengan map processor tersebut.
 
 #### Langkah 6: Pemrosesan Data oleh Processor
-Setiap processor memenuhi interface kontrak `Processor` yang terdiri dari tiga metode utama:
-1. **`Parse(in any) (any, error)`**: Mengonversi sub-JSON mentah (`json.RawMessage`) dari `theme.json` khusus untuk tool tersebut menjadi Go struct representatif tool tersebut (misal `kitty.Raw`).
-2. **`Resolve(in any, ctx *context.Context) (any, error)`**: Menerima struct mentah dan mengembalikan struct siap render. Di langkah ini, nilai bertipe variabel (seperti `"$pl.extra.accent.primary"`) diselesaikan menjadi warna Hex asli dengan memanggil `resolver.ResolveVar` terhadap map warna yang sudah di-*flatten* di Langkah 3.
+Setiap adapter memenuhi interface kontrak `ports.Processor` yang terdiri dari tiga metode utama:
+1. **`Parse(in any) (any, error)`**: Mengonversi sub-JSON mentah (`json.RawMessage`) dari `theme.json` khusus untuk tool tersebut menjadi Go struct model tool tersebut (misal `kitty.Raw` di `model.go`).
+2. **`Resolve(in any, ctx *renderctx.Context) (any, error)`**: Menerima struct mentah dan mengembalikan struct view siap render. Di langkah ini, nilai bertipe variabel (seperti `"$pl.extra.accent.primary"`) diselesaikan menjadi warna Hex asli dengan memanggil `pathenv.ResolveVar` terhadap map warna yang sudah di-*flatten* di Langkah 3.
 3. **`Render(templatePath, outputPath string, data any) error`**: Mengirim data yang sudah matang ke mesin pembuat file.
 
 #### Langkah 7: Template Rendering & Atomic/Skip Write
-Modul `internal/renderer/render.go` menangani penulisan file ke filesystem dengan optimasi tinggi:
+Modul `internal/infra/renderer/renderer.go` menangani penulisan file ke filesystem dengan optimasi tinggi:
 1. **Template Caching**: Template hanya diparse dari disk sekali per path eksekusi, lalu disimpan di cache memori. Eksekusi berikutnya untuk template yang sama langsung menggunakan cache.
 2. **Skip-Unchanged**: Membaca isi file tujuan jika sudah ada. Jika hasil render baru sama persis dengan isi file lama, penulisan dilewati sepenuhnya untuk menghindari SSD/HDD wear-and-tear serta tidak mengganggu utilitas watch-reload eksternal.
 3. **Atomic Write**: Jika konten berubah, engine menulis data ke file temp di folder tujuan, lalu melakukan rename sistem operasi secara instan. Ini menjamin file konfigurasi tidak pernah terputus atau rusak di tengah jalan jika proses tiba-tiba mati.
@@ -128,7 +135,7 @@ Modul `internal/renderer/render.go` menangani penulisan file ke filesystem denga
 
 Bagaimana `$pl.extra.accent.primary` berubah menjadi kode warna hex nyata?
 
-1. Di `internal/resolver/var-resolver.go`, fungsi `ResolveVar(s string, sources ...vars.VarSource)` bertugas menyaring string input.
+1. Di `internal/infra/pathenv/resolve.go`, fungsi `ResolveVar(s string, sources ...vars.VarSource)` bertugas menyaring string input.
 2. Jika string **tidak** diawali `$pl.`, fungsi langsung mengembalikan string tersebut (misal, string `#ffffff` atau string biasa tetap utuh).
 3. Jika string diawali `$pl.`, prefix tersebut dipotong dan sisanya dicari di daftar penyedia variabel (`VarSource`).
 4. Selama resolusi palette mentah, penyedia variabel adalah `RawPaletteVars` yang membaca warna ANSI dari indeks array `colors` (seperti `color0`, `color15`).
@@ -140,23 +147,23 @@ Bagaimana `$pl.extra.accent.primary` berubah menjadi kode warna hex nyata?
 
 Di dalam Theme Engine, terdapat tiga jenis target pemrosesan tergantung kompleksitas kebutuhan aplikasi target:
 
-### A. Generic / Template-Only (Static Processor)
+### A. Generic / Template-Only (Generic Adapter)
 - **Karakteristik**: Aplikasi yang konfigurasinya hanya memerlukan data palette global dan metadata global theme tanpa memerlukan parser konfigurasi khusus sendiri di `theme.json`.
-- **Lokasi**: `internal/core/tools/static/processor.go`
+- **Lokasi**: `internal/adapters/tools/generic/adapter.go`
 - **Contoh target**: `yazi`, `nvim`, `starship`.
-- **Cara Kerja**: Processor ini langsung melewatkan objek Context global (`*context.Context` yang berisi `.Palette` dan `.Theme`) ke dalam template. Semua kustomisasi dilakukan langsung di file `.tmpl` menggunakan sintaks Go template biasa.
+- **Cara Kerja**: Adapter ini langsung melewatkan objek Context global (`*renderctx.Context` yang berisi `.Palette` dan `.Theme`) ke dalam template. Semua kustomisasi dilakukan langsung di file `.tmpl` menggunakan sintaks Go template biasa. Registrasi dilakukan eksplisit di `cmd/theme-engine/wiring.go` via `generic.New(name)`.
 
-### B. Custom Tool Processor
+### B. Custom Tool Adapter
 - **Karakteristik**: Aplikasi yang memerlukan struktur konfigurasi unik di dalam `theme.json` untuk mengontrol perilakunya (seperti `cursorShape` di Kitty atau `gradients` di Cava).
-- **Lokasi**: `internal/core/tools/<nama_tool>/`
+- **Lokasi**: `internal/adapters/tools/<nama_tool>/`
 - **Contoh target**: `kitty`, `foot`, `cava`.
-- **Cara Kerja**: Memiliki Go struct sendiri di file `raw.go` dan `tool.go`. Processor mem-parse sub-JSON milik dirinya dari `theme.json`, me-resolve warna, lalu mengirim objek instansi struct khususnya sendiri ke template.
+- **Cara Kerja**: Memiliki Go struct sendiri di file `model.go` dan `view.go`. Adapter mem-parse sub-JSON milik dirinya dari `theme.json`, me-resolve warna, lalu mengirim objek view khususnya sendiri ke template.
 
-### C. Domain Processor
+### C. Platform Adapter
 - **Karakteristik**: Mengatur cakupan (domain) konfigurasi yang sangat besar dan dinamis, sering kali menghasilkan beberapa file keluaran dan melibatkan proses kompilasi eksternal.
-- **Lokasi**: `internal/core/domain/<nama_domain>/`
-- **Contoh target**: `gtk`.
-- **Cara Kerja**: GTK processor me-render template scss (`_source.scss`), kemudian secara otomatis memanggil command eksternal `sassc` untuk mengompilasi SCSS dasar tersebut menjadi CSS siap pakai (`source.css` untuk GTK/Waybar dan `source.rasi` untuk launcher Rofi).
+- **Lokasi**: `internal/adapters/platform/<nama_domain>/`
+- **Contoh target**: `gtk`, `system`.
+- **Cara Kerja**: GTK adapter me-render template scss (`_source.scss`), kemudian secara otomatis memanggil command eksternal `sassc` untuk mengompilasi SCSS dasar tersebut menjadi CSS siap pakai (`source.css` untuk GTK/Waybar dan `source.rasi` untuk launcher Rofi). System adapter me-render `apply.tmpl` menjadi `apply.sh` (dconf).
 
 ---
 
@@ -172,8 +179,8 @@ Gunakan helper `hex` di template Anda:
 color = {{ hex .Palette.Background }}
 ```
 
-### Akses Data pada Static Processor (Waybar/Hyprland)
-Karena Static Processor meneruskan Context global, Anda mengaksesnya lewat properti kapital:
+### Akses Data pada Generic Adapter (Yazi/Nvim/Starship/System)
+Karena Generic/System adapter meneruskan Context global, Anda mengaksesnya lewat properti kapital:
 ```gotemplate
 # Mengakses warna palette
 foreground_color = {{ .Palette.Foreground }}
@@ -182,7 +189,7 @@ foreground_color = {{ .Palette.Foreground }}
 font_name = {{ .Theme.Theme.Fonts.Primary }}
 ```
 
-### Akses Data pada Custom Tool Processor (Kitty/Foot/Cava)
+### Akses Data pada Custom Tool Adapter (Kitty/Foot/Cava)
 Data diakses langsung lewat properti struct matang yang dibuat oleh processor terkait:
 ```gotemplate
 # Mengakses warna palette (karena disalin ke structnya)
@@ -201,21 +208,21 @@ Gunakan checklist ini jika Anda ingin memperluas Theme Engine di masa depan:
 
 ### Opsi A: Jika target baru cukup dengan Template-Only
 1. Buat template baru di `assets/templates/tools/<nama>/config.tmpl`.
-2. Daftarkan target baru tersebut di `internal/core/tools/static/processor.go` menggunakan fungsi `processor.RegisterProcessor(Processor{name: "nama_tool_baru"})`.
+2. Daftarkan target baru tersebut di `cmd/theme-engine/wiring.go` menggunakan `generic.New("nama_tool_baru")`.
 3. Tambahkan baris pemetaan baru di `config/path.txt`:
    ```txt
    nama_tool_baru|assets/templates/tools/nama/config.tmpl|output/tools/nama/config
    ```
 
 ### Opsi B: Jika target baru butuh konfigurasi khusus di `theme.json`
-1. Buat folder baru di `internal/core/tools/<nama_tool>/`.
+1. Buat folder baru di `internal/adapters/tools/<nama_tool>/`.
 2. Buat tiga file utama:
-   - `raw.go`: Berisi struct JSON pencerminan opsi konfigurasi di `theme.json`.
-   - `<nama_tool>.go`: Berisi struct final siap pakai di template.
-   - `processor.go`: Implementasikan interface `Processor` (metode `Name`, `Parse`, `Resolve`, `Render`) dan panggil registrasinya di fungsi `init()`.
-3. Daftarkan package baru Anda di `cmd/theme-engine/import.go` agar di-import secara blank/side-effect:
+   - `model.go`: Berisi struct JSON pencerminan opsi konfigurasi di `theme.json`.
+   - `view.go`: Berisi struct final siap pakai di template.
+   - `adapter.go`: Implementasikan interface `ports.Processor` (metode `Name`, `Parse`, `Resolve`, `Render`) plus konstruktor `New()`.
+3. Daftarkan adapter baru Anda di `cmd/theme-engine/wiring.go`:
    ```go
-   _ "theme-engine/internal/core/tools/<nama_tool>"
+   procs["nama_tool_baru"] = namatool.New()
    ```
 4. Tambahkan konfigurasi default tool tersebut di `themes/<tema>/theme.json`.
 5. Buat template di `assets/templates/tools/<nama_tool>/` dan daftarkan path pemetaannya di `config/path.txt`.

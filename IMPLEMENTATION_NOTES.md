@@ -231,15 +231,15 @@ Tidak ada perubahan khusus yang perlu dilakukan pada konfigurasi aplikasi. Siste
 ## Cara Mengembangkan Sistem
 
 ### Menambahkan Aplikasi Baru
-1. Buat pemroses (*processor*) baru di direktori `internal/core/tools/.aplikasi_baru/`.
+1. Buat adapter baru di direktori `internal/adapters/tools/<aplikasi_baru>/` (`model.go`, `view.go`, `adapter.go`), atau pakai `generic.New("nama")` untuk template-only.
 2. Tambahkan file template di `assets/templates/tools/aplikasi_baru/`.
-3. Daftarkan aplikasi tersebut ke dalam file `config/path.txt`.
+3. Daftarkan aplikasi tersebut di `cmd/theme-engine/wiring.go` dan `config/path.txt`.
 
 ### Mengubah Skema Palet
-1. Perbarui *struct* `Palette` di `palette/raw.go`.
-2. Perbarui `ResolvedPalette` di `palette/palette.go`.
-3. Pasang logika pemetaan baru pada *resolver* di `palette/resolver.go`.
-4. Sesuaikan fungsi perataan (*flattening*) di `theme/flatter.go`.
+1. Perbarui *struct* `Palette` di `domain/palette/raw.go`.
+2. Perbarui `ResolvedPalette` di `domain/palette/resolved.go`.
+3. Pasang logika pemetaan baru pada *resolver* di `domain/palette/resolver.go`.
+4. Sesuaikan fungsi perataan (*flattening*) di `domain/palette/flatten.go`.
 5. Perbarui seluruh template yang menggunakan variabel terkait.
 
 ---

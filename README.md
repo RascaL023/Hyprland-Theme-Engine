@@ -26,7 +26,7 @@ config/.state.json
 themes/<theme>/palette.json + themes/<theme>/theme.json
         |
         v
-internal/engine
+internal/app/engine
         |
         +--> load path map
         +--> resolve palette variable
