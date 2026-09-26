@@ -36,46 +36,55 @@ internal/engine
 output/<target config>
 ```
 
-CLI sengaja dibuat tipis. Orchestration utama ada di `internal/engine`,
+CLI sengaja dibuat tipis. Orchestration utama ada di `internal/app/engine`,
 sementara setiap target punya parsing dan resolving logic sendiri di
-`internal/core/tools/<tool>`.
+`internal/adapters/tools/<tool>` atau `internal/adapters/platform/<domain>`.
+Wiring processor eksplisit ada di `cmd/theme-engine/wiring.go` (tanpa `init()`).
 
 ## Struktur Project
 
 ```txt
-cmd/theme-engine/              Entrypoint CLI dan import processor
-internal/engine/               Pipeline utama load -> resolve -> render
-internal/loader/               Loader JSON dan path map
-internal/renderer/             Template cache, atomic write, skip unchanged write
-internal/resolver/             Resolver variable, contoh $pl.extra.layer.base
-internal/processor/            Registry processor
-internal/register/             Interface bersama untuk processor
-
-internal/core/themes/          Model data theme, palette, dan state
-internal/core/tools/           Processor spesifik per tool
-internal/core/tools/static/    Target template-only
-internal/core/domain/          Processor domain besar, saat ini GTK
+cmd/theme-engine/              Entrypoint CLI dan wiring processor eksplisit
+internal/app/engine/           Pipeline utama load -> resolve -> render
+internal/app/ports/            Interface Processor (Parser/Resolver/Renderer)
+internal/domain/               Model murni: palette, theme, state, vars, renderctx
+internal/adapters/tools/       Adapter per tool (kitty, foot, alacritty, cava, hypr)
+internal/adapters/tools/generic/ Target template-only (nvim, yazi, starship)
+internal/adapters/platform/    Domain besar: gtk (sassc), system (dconf apply.sh)
+internal/infra/loader/         Loader JSON dan path map
+internal/infra/renderer/       Template cache, atomic write, skip unchanged write
+internal/infra/pathenv/        Expand $WAYBAR/$THEME/$ENV + resolve $pl.*
+internal/infra/log/            Logger
 
 assets/templates/              Template output
-assets/sources/                Script helper dan data warna
 config/                        Config lokal untuk runtime/test
 themes/                        Definisi theme dan palette
-output/                        Hasil render config
+output/                        Hasil render config (golden, jangan diedit manual)
+```
+
+Tiap adapter tool berisi pola seragam:
+
+```txt
+internal/adapters/tools/<tool>/
+  model.go    # bentuk input JSON dari theme.json
+  view.go     # data final yang dikirim ke template
+  adapter.go  # Name(), Parse(), Resolve(), Render() + New()
 ```
 
 ## Target Yang Didukung
 
-| Target | Tipe | Processor | Template |
+| Target | Tipe | Adapter | Template |
 | --- | --- | --- | --- |
-| `gtk` | domain processor | `internal/core/domain/gtk` | `assets/templates/domain/gtk/source.tmpl` |
-| `cava` | tool processor | `internal/core/tools/cava` | `assets/templates/tools/cava/cava.tmpl` |
-| `foot` | tool processor | `internal/core/tools/foot` | `assets/templates/tools/foot/foot.tmpl` |
-| `kitty` | tool processor | `internal/core/tools/kitty` | `assets/templates/tools/kitty/kitty.tmpl` |
-| `alacritty` | tool processor | `internal/core/tools/alacritty` | `assets/templates/tools/alacritty/alacritty.tmpl` |
-| `hypr` | tool processor | `internal/core/tools/hypr` | `assets/templates/tools/hypr/hypr.tmpl` |
-| `yazi` | template-only | `internal/core/tools/static` | `assets/templates/tools/yazi/theme.tmpl` |
-| `nvim` | template-only | `internal/core/tools/static` | `assets/templates/tools/nvim/colors.tmpl` |
-| `starship` | template-only | `internal/core/tools/static` | `assets/templates/tools/starship/starship.tmpl` |
+| `gtk` | platform | `internal/adapters/platform/gtk` | `assets/templates/domain/gtk/source.tmpl` |
+| `system` | platform | `internal/adapters/platform/system` | `assets/templates/domain/system/apply.tmpl` |
+| `cava` | tool | `internal/adapters/tools/cava` | `assets/templates/tools/cava/cava.tmpl` |
+| `foot` | tool | `internal/adapters/tools/foot` | `assets/templates/tools/foot/foot.tmpl` |
+| `kitty` | tool | `internal/adapters/tools/kitty` | `assets/templates/tools/kitty/kitty.tmpl` |
+| `alacritty` | tool | `internal/adapters/tools/alacritty` | `assets/templates/tools/alacritty/alacritty.tmpl` |
+| `hypr` | tool | `internal/adapters/tools/hypr` | `assets/templates/tools/hypr/hypr.tmpl` |
+| `yazi` | template-only | `internal/adapters/tools/generic` | `assets/templates/tools/yazi/theme.tmpl` |
+| `nvim` | template-only | `internal/adapters/tools/generic` | `assets/templates/tools/nvim/colors.tmpl` |
+| `starship` | template-only | `internal/adapters/tools/generic` | `assets/templates/tools/starship/starship.tmpl` |
 
 ## Quick Start
 
@@ -301,10 +310,10 @@ Tambah entry path map:
 dunst|assets/templates/tools/dunst/dunstrc.tmpl|output/tools/dunst/dunstrc
 ```
 
-Register target di `internal/core/tools/static/processor.go`:
+Register target di `cmd/theme-engine/wiring.go`:
 
 ```go
-processor.RegisterProcessor(Processor{name: "dunst"})
+procs["dunst"] = generic.New("dunst")
 ```
 
 Itu sudah cukup untuk template yang hanya butuh `.Palette` dan `.Theme`.
@@ -316,24 +325,24 @@ Pakai ini kalau target butuh config khusus dari `theme.json`.
 Buat folder:
 
 ```txt
-internal/core/tools/dunst/
-  raw.go
-  dunst.go
-  processor.go
+internal/adapters/tools/dunst/
+  model.go
+  view.go
+  adapter.go
 ```
 
 Tanggung jawab setiap file:
 
 | File | Fungsi |
 | --- | --- |
-| `raw.go` | Bentuk input JSON dari `theme.json` |
-| `dunst.go` | Data final yang dikirim ke template |
-| `processor.go` | Logic parse, resolve, dan render |
+| `model.go` | Bentuk input JSON dari `theme.json` |
+| `view.go` | Data final yang dikirim ke template |
+| `adapter.go` | Logic parse, resolve, dan render + `New()` |
 
-Register package di `cmd/theme-engine/import.go`:
+Register adapter di `cmd/theme-engine/wiring.go`:
 
 ```go
-_ "theme-engine/internal/core/tools/dunst"
+procs["dunst"] = dunst.New()
 ```
 
 Tambah config tool ke `themes/<theme>/theme.json`:
@@ -367,21 +376,16 @@ setelah render, bukan dari parsing JSON atau loading path map.
 
 ## Catatan Naming
 
-Sebagian besar naming sengaja dibuat polos:
-
-- `engine` berarti pipeline utama.
-- `loader` berarti loading dari filesystem, JSON, dan path map.
-- `renderer` berarti eksekusi template dan penulisan output.
-- `processor` berarti implementasi renderer untuk satu target.
-- `resolver` berarti resolve variable.
-- `tools` berarti target spesifik aplikasi seperti Kitty atau Cava.
-- `domain` berarti domain config yang lebih luas dan bisa menghasilkan beberapa file,
-  saat ini GTK/SCSS/Rasi/CSS.
-- `static` berarti target template-only tanpa custom JSON parser.
-
-Kalau project ini makin besar, naming pertama yang layak dipertimbangkan adalah
-rename `static` menjadi `templateonly` atau `generic`. Untuk sekarang, `static`
-masih cukup aman karena konvensinya sudah terdokumentasi.
+- `app/engine` berarti pipeline utama load -> resolve -> render.
+- `app/ports` berarti kontrak Processor (Parser/Resolver/Renderer).
+- `domain` berarti model murni tanpa IO: palette, theme, state, vars, renderctx.
+- `adapters/tools` berarti target spesifik aplikasi seperti Kitty atau Cava.
+- `adapters/platform` berarti domain config yang lebih luas (gtk, system).
+- `adapters/tools/generic` berarti target template-only tanpa custom JSON parser (ex-`static`).
+- `infra/loader` berarti loading filesystem, JSON, dan path map.
+- `infra/renderer` berarti eksekusi template dan penulisan output.
+- `infra/pathenv` berarti expand path + resolve variable `$pl.*`.
+- `model.go` = input JSON, `view.go` = data final template, `adapter.go` = Parse/Resolve/Render.
 
 ## Status Saat Ini
 
