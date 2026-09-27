@@ -17,7 +17,6 @@ type Renderer interface {
 }
 
 type Processor interface {
-	Name() string
 	Parser
 	Resolver
 	Renderer

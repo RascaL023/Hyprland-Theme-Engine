@@ -1,6 +1,7 @@
 // Package generic implements template-only targets: no dedicated
 // theme.json schema, the global render context is passed straight
-// to the template.
+// to the template. Target identity comes from the wiring map key,
+// so this processor carries no name of its own.
 package generic
 
 import (
@@ -8,13 +9,9 @@ import (
 	"theme-engine/internal/infra/renderer"
 )
 
-type Processor struct {
-	name string
-}
+type Processor struct{}
 
-func New(name string) Processor { return Processor{name: name} }
-
-func (p Processor) Name() string { return p.name }
+func New() Processor { return Processor{} }
 
 func (Processor) Parse(_ any) (any, error) {
 	return nil, nil

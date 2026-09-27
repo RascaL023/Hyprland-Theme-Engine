@@ -12,8 +12,6 @@ type Processor struct{}
 
 func New() Processor { return Processor{} }
 
-func (Processor) Name() string { return "kitty" }
-
 func (Processor) Parse(in any) (any, error) {
 	var cfg Raw
 	if err := jsonx.Decode(in, &cfg); err != nil {

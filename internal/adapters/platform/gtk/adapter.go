@@ -16,8 +16,6 @@ type Processor struct{}
 
 func New() Processor { return Processor{} }
 
-func (Processor) Name() string { return "gtk" }
-
 func (Processor) Parse(_ any) (any, error) {
 	return nil, nil
 }

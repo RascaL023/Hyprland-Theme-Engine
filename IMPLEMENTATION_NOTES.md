@@ -231,7 +231,7 @@ Tidak ada perubahan khusus yang perlu dilakukan pada konfigurasi aplikasi. Siste
 ## Cara Mengembangkan Sistem
 
 ### Menambahkan Aplikasi Baru
-1. Buat adapter baru di direktori `internal/adapters/tools/<aplikasi_baru>/` (`model.go`, `view.go`, `adapter.go`), atau pakai `generic.New("nama")` untuk template-only.
+1. Buat adapter baru di direktori `internal/adapters/tools/<aplikasi_baru>/` (`model.go`, `view.go`, `adapter.go`), atau pakai `generic.New()` untuk template-only.
 2. Tambahkan file template di `assets/templates/tools/aplikasi_baru/`.
 3. Daftarkan aplikasi tersebut di `cmd/theme-engine/wiring.go` dan `config/path.txt`.
 

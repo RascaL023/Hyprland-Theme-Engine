@@ -24,7 +24,7 @@ func defaultProcessors() map[string]ports.Processor {
 	procs["cava"] = cava.New()
 	procs["hypr"] = hypr.New()
 	for _, name := range genericTargets {
-		procs[name] = generic.New(name)
+		procs[name] = generic.New()
 	}
 
 	return procs

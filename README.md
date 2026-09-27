@@ -68,7 +68,7 @@ Tiap adapter tool berisi pola seragam:
 internal/adapters/tools/<tool>/
   model.go    # bentuk input JSON dari theme.json
   view.go     # data final yang dikirim ke template
-  adapter.go  # Name(), Parse(), Resolve(), Render() + New()
+  adapter.go  # Parse(), Resolve(), Render() + New()
 ```
 
 Helper bersama: `internal/adapters/tools/jsonx/jsonx.go` (`Decode`).
@@ -318,7 +318,7 @@ dunst|assets/templates/tools/dunst/dunstrc.tmpl|output/tools/dunst/dunstrc
 Register target di `cmd/theme-engine/wiring.go`:
 
 ```go
-procs["dunst"] = generic.New("dunst")
+procs["dunst"] = generic.New()
 ```
 
 Itu sudah cukup untuk template yang hanya butuh `.Palette` dan `.Theme`.

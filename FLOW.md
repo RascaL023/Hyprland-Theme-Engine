@@ -151,7 +151,7 @@ Di dalam Theme Engine, terdapat tiga jenis target pemrosesan tergantung kompleks
 - **Karakteristik**: Aplikasi yang konfigurasinya hanya memerlukan data palette global dan metadata global theme tanpa memerlukan parser konfigurasi khusus sendiri di `theme.json`.
 - **Lokasi**: `internal/adapters/tools/generic/adapter.go`
 - **Contoh target**: `yazi`, `nvim`, `starship`.
-- **Cara Kerja**: Adapter ini langsung melewatkan objek Context global (`*renderctx.Context` yang berisi `.Palette` dan `.Theme`) ke dalam template. Semua kustomisasi dilakukan langsung di file `.tmpl` menggunakan sintaks Go template biasa. Registrasi dilakukan eksplisit di `cmd/theme-engine/wiring.go` via `generic.New(name)`.
+- **Cara Kerja**: Adapter ini langsung melewatkan objek Context global (`*renderctx.Context` yang berisi `.Palette` dan `.Theme`) ke dalam template. Semua kustomisasi dilakukan langsung di file `.tmpl` menggunakan sintaks Go template biasa. Registrasi dilakukan eksplisit di `cmd/theme-engine/wiring.go` via `generic.New()`.
 
 ### B. Custom Tool Adapter
 - **Karakteristik**: Aplikasi yang memerlukan struktur konfigurasi unik di dalam `theme.json` untuk mengontrol perilakunya (seperti `cursorShape` di Kitty atau `gradients` di Cava).
@@ -208,7 +208,7 @@ Gunakan checklist ini jika Anda ingin memperluas Theme Engine di masa depan:
 
 ### Opsi A: Jika target baru cukup dengan Template-Only
 1. Buat template baru di `assets/templates/tools/<nama>/config.tmpl`.
-2. Daftarkan target baru tersebut di `cmd/theme-engine/wiring.go` menggunakan `generic.New("nama_tool_baru")`.
+2. Daftarkan target baru tersebut di `cmd/theme-engine/wiring.go` menggunakan `procs["nama_tool_baru"] = generic.New()`.
 3. Tambahkan baris pemetaan baru di `config/path.txt`:
    ```txt
    nama_tool_baru|assets/templates/tools/nama/config.tmpl|output/tools/nama/config
@@ -219,7 +219,7 @@ Gunakan checklist ini jika Anda ingin memperluas Theme Engine di masa depan:
 2. Buat tiga file utama:
    - `model.go`: Berisi struct JSON pencerminan opsi konfigurasi di `theme.json`.
    - `view.go`: Berisi struct final siap pakai di template.
-   - `adapter.go`: Implementasikan interface `ports.Processor` (metode `Name`, `Parse`, `Resolve`, `Render`) plus konstruktor `New()`.
+   - `adapter.go`: Implementasikan interface `ports.Processor` (metode `Parse`, `Resolve`, `Render`) plus konstruktor `New()`.
 3. Daftarkan adapter baru Anda di `cmd/theme-engine/wiring.go`:
    ```go
    procs["nama_tool_baru"] = namatool.New()
