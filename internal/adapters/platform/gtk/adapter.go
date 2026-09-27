@@ -21,10 +21,7 @@ func (Processor) Parse(_ any) (any, error) {
 }
 
 func (Processor) Resolve(_ any, ctx *renderctx.Context) (any, error) {
-	return Gtk{
-		Context: ctx,
-		Config:  ctx,
-	}, nil
+	return Gtk{Context: ctx}, nil
 }
 
 func compileSCSS(src, dst string, loadPaths []string) error {
