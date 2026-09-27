@@ -52,7 +52,10 @@ func New(cfg Config) (*Engine, error) {
 		return nil, fmt.Errorf("load palette: %w", err)
 	}
 
-	resolvedPalette := rawPalette.ResolveSelected(st.Theme.Type)
+	resolvedPalette, err := rawPalette.ResolveSelected(st.Theme.Type)
+	if err != nil {
+		return nil, fmt.Errorf("resolve palette: %w", err)
+	}
 	palette.BuildFlattenPalette(resolvedPalette)
 
 	rawTheme, err := loader.LoadJSON[theme.Theme](filepath.Join(cfg.ThemeDir, st.Theme.Name, "theme.json"))

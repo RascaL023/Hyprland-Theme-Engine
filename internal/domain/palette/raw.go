@@ -84,7 +84,7 @@ type Palette struct {
 	}
 }
 
-func (r *Raw) ResolveSelected(selected string) *ResolvedPalette {
+func (r *Raw) ResolveSelected(selected string) (*ResolvedPalette, error) {
 	switch selected {
 	case "light":
 		return ResolvePalette(&r.Palettes.Light)

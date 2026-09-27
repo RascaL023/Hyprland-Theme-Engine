@@ -1,6 +1,10 @@
 package palette
 
-import "theme-engine/internal/infra/pathenv"
+import (
+	"fmt"
+
+	"theme-engine/internal/infra/pathenv"
+)
 
 func fallback(val, fallback string) string {
 	if val == "" {
@@ -9,7 +13,15 @@ func fallback(val, fallback string) string {
 	return val
 }
 
-func ResolvePalette(raw *Palette) *ResolvedPalette {
+// maxColorIndex is the highest raw.Colors index used by syntax fallbacks
+// (Colors[6]). Checked once up front: a single int compare, no per-field cost.
+const maxColorIndex = 6
+
+func ResolvePalette(raw *Palette) (*ResolvedPalette, error) {
+	if len(raw.Colors) <= maxColorIndex {
+		return nil, fmt.Errorf("palette needs at least %d colors for syntax fallbacks, got %d",
+			maxColorIndex+1, len(raw.Colors))
+	}
 	rp := &ResolvedPalette{
 		Foreground: raw.Foreground,
 		Background: raw.Background,
@@ -75,5 +87,5 @@ func ResolvePalette(raw *Palette) *ResolvedPalette {
 	rp.BgConflict = fallback(rp.BgConflict, rp.StatusWarning)
 	rp.BgDiskUsage = fallback(rp.BgDiskUsage, rp.LayerSurfaceOverlay)
 
-	return rp
+	return rp, nil
 }
