@@ -137,6 +137,22 @@ contrast(colors[5], layer.surface_overlay) >= 3:1
 contrast(colors[1], layer.surface_overlay) >= 3:1
 ```
 
+## Referensi `$pl.` di `palette.json`
+
+Resolver palette bekerja single-pass: field di dalam `extra.*` hanya boleh
+berisi hex literal atau referensi ke base palette, yaitu `foreground`,
+`background`, `cursor`, dan `color0..color15`. Referensi ke sesama `extra.*`
+tidak ter-resolve dan akan bocor sebagai string `$pl...` mentah ke output.
+
+```json
+"border": { "medium": "$pl.color7" }              // OK — base palette
+"border": { "medium": "$pl.extra.layer.surface" } // DILARANG — bocor literal
+```
+
+`theme.json` (level tool) memakai namespace berbeda: `$pl.extra.*`,
+`$pl.fg.*`, `$pl.bg.*`, `$pl.syntax.*`, `$pl.ui.*`, dan `$pl.colorN`.
+Aturan single-pass di atas hanya berlaku untuk isi `palette.json`.
+
 ## Status Colors
 
 | Field | Makna |
