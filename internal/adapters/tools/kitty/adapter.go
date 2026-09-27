@@ -1,8 +1,7 @@
 package kitty
 
 import (
-	"encoding/json"
-
+	"theme-engine/internal/adapters/tools/jsonx"
 	"theme-engine/internal/domain/palette"
 	"theme-engine/internal/domain/renderctx"
 	"theme-engine/internal/infra/pathenv"
@@ -17,12 +16,14 @@ func (Processor) Name() string { return "kitty" }
 
 func (Processor) Parse(in any) (any, error) {
 	var cfg Raw
-	err := json.Unmarshal(in.(json.RawMessage), &cfg)
-	return cfg, err
+	if err := jsonx.Decode(in, &cfg); err != nil {
+		return Raw{}, err
+	}
+	return cfg, nil
 }
 
 func (Processor) Resolve(in any, ctx *renderctx.Context) (any, error) {
-	inp := in.(Raw)
+	inp, _ := in.(Raw)
 	return Kitty{
 		Palette:             ctx.Palette,
 		SelectionBackground: ctx.Palette.AccentPrimary,

@@ -21,7 +21,8 @@ func (Processor) Parse(_ any) (any, error) {
 
 func (Processor) Resolve(_ any, ctx *renderctx.Context) (any, error) {
 	return Gtk{
-		Config: ctx,
+		Context: ctx,
+		Config:  ctx,
 	}, nil
 }
 

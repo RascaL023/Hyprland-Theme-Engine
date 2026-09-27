@@ -1,8 +1,7 @@
 package foot
 
 import (
-	"encoding/json"
-
+	"theme-engine/internal/adapters/tools/jsonx"
 	"theme-engine/internal/domain/renderctx"
 	"theme-engine/internal/infra/renderer"
 )
@@ -15,12 +14,14 @@ func (Processor) Name() string { return "foot" }
 
 func (Processor) Parse(in any) (any, error) {
 	var cfg Raw
-	err := json.Unmarshal(in.(json.RawMessage), &cfg)
-	return cfg, err
+	if err := jsonx.Decode(in, &cfg); err != nil {
+		return Raw{}, err
+	}
+	return cfg, nil
 }
 
 func (Processor) Resolve(in any, ctx *renderctx.Context) (any, error) {
-	inp := in.(Raw)
+	inp, _ := in.(Raw)
 
 	return Foot{
 		Font:     ctx.Theme.Theme.Fonts.Terminal.Family,

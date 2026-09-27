@@ -1,9 +1,9 @@
 package hypr
 
 import (
-	"encoding/json"
 	"strings"
 
+	"theme-engine/internal/adapters/tools/jsonx"
 	"theme-engine/internal/domain/palette"
 	"theme-engine/internal/domain/renderctx"
 	"theme-engine/internal/infra/pathenv"
@@ -18,11 +18,10 @@ func (Processor) Name() string { return "hypr" }
 
 func (Processor) Parse(in any) (any, error) {
 	var cfg Raw
-	if in == nil {
-		return cfg, nil
+	if err := jsonx.Decode(in, &cfg); err != nil {
+		return Raw{}, err
 	}
-	err := json.Unmarshal(in.(json.RawMessage), &cfg)
-	return cfg, err
+	return cfg, nil
 }
 
 func resolveColor(s string, ctx *renderctx.Context) string {

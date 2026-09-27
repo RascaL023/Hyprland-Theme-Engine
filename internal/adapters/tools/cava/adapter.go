@@ -1,9 +1,9 @@
 package cava
 
 import (
-	"encoding/json"
 	"fmt"
 
+	"theme-engine/internal/adapters/tools/jsonx"
 	"theme-engine/internal/domain/palette"
 	"theme-engine/internal/domain/renderctx"
 	"theme-engine/internal/infra/pathenv"
@@ -18,12 +18,14 @@ func (Processor) Name() string { return "cava" }
 
 func (Processor) Parse(in any) (any, error) {
 	var cfg Raw
-	err := json.Unmarshal(in.(json.RawMessage), &cfg)
-	return cfg, err
+	if err := jsonx.Decode(in, &cfg); err != nil {
+		return Raw{}, err
+	}
+	return cfg, nil
 }
 
 func (Processor) Resolve(in any, ctx *renderctx.Context) (any, error) {
-	inp := in.(Raw)
+	inp, _ := in.(Raw)
 	if len(inp.Gradients) < 5 {
 		return nil, fmt.Errorf("expected at least 5 gradients, got %d", len(inp.Gradients))
 	}

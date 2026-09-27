@@ -119,8 +119,8 @@ Setiap adapter didaftarkan eksplisit di `cmd/theme-engine/wiring.go` (`defaultPr
 
 #### Langkah 6: Pemrosesan Data oleh Processor
 Setiap adapter memenuhi interface kontrak `ports.Processor` yang terdiri dari tiga metode utama:
-1. **`Parse(in any) (any, error)`**: Mengonversi sub-JSON mentah (`json.RawMessage`) dari `theme.json` khusus untuk tool tersebut menjadi Go struct model tool tersebut (misal `kitty.Raw` di `model.go`).
-2. **`Resolve(in any, ctx *renderctx.Context) (any, error)`**: Menerima struct mentah dan mengembalikan struct view siap render. Di langkah ini, nilai bertipe variabel (seperti `"$pl.extra.accent.primary"`) diselesaikan menjadi warna Hex asli dengan memanggil `pathenv.ResolveVar` terhadap map warna yang sudah di-*flatten* di Langkah 3.
+1. **`Parse(in any) (any, error)`**: Mengonversi sub-JSON mentah (`json.RawMessage`) dari `theme.json` khusus untuk tool tersebut menjadi Go struct model tool tersebut (misal `kitty.Raw` di `model.go`). Lewat `jsonx.Decode`: `nil` -> zero value, tipe salah -> error.
+2. **`Resolve(in any, ctx *renderctx.Context) (any, error)`**: Menerima struct mentah dan mengembalikan struct view siap render. Missing/bukan `Raw` -> zero `Raw` (tidak panic; `cava` tetap error jika gradients < 5). Di langkah ini, nilai bertipe variabel (seperti `"$pl.extra.accent.primary"`) diselesaikan menjadi warna Hex asli dengan memanggil `pathenv.ResolveVar` terhadap map warna yang sudah di-*flatten* di Langkah 3.
 3. **`Render(templatePath, outputPath string, data any) error`**: Mengirim data yang sudah matang ke mesin pembuat file.
 
 #### Langkah 7: Template Rendering & Atomic/Skip Write
@@ -163,7 +163,7 @@ Di dalam Theme Engine, terdapat tiga jenis target pemrosesan tergantung kompleks
 - **Karakteristik**: Mengatur cakupan (domain) konfigurasi yang sangat besar dan dinamis, sering kali menghasilkan beberapa file keluaran dan melibatkan proses kompilasi eksternal.
 - **Lokasi**: `internal/adapters/platform/<nama_domain>/`
 - **Contoh target**: `gtk`, `system`.
-- **Cara Kerja**: GTK adapter me-render template scss (`_source.scss`), kemudian secara otomatis memanggil command eksternal `sassc` untuk mengompilasi SCSS dasar tersebut menjadi CSS siap pakai (`source.css` untuk GTK/Waybar dan `source.rasi` untuk launcher Rofi). System adapter me-render `apply.tmpl` menjadi `apply.sh` (dconf).
+- **Cara Kerja**: GTK adapter me-render template scss (`_source.scss`), kemudian secara otomatis memanggil command eksternal `sassc` untuk mengompilasi SCSS dasar tersebut menjadi CSS siap pakai (`source.css` untuk GTK/Waybar dan `source.rasi` untuk launcher Rofi). System adapter me-render `apply.tmpl` menjadi `apply.sh` (dconf). View GTK (`Gtk`) embed `*renderctx.Context` plus field legacy `Config`: template lama tetap pakai `.Config.Palette`, template baru bisa langsung `.Palette`.
 
 ---
 

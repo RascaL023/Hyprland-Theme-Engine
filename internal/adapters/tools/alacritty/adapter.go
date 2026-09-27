@@ -1,8 +1,7 @@
 package alacritty
 
 import (
-	"encoding/json"
-
+	"theme-engine/internal/adapters/tools/jsonx"
 	"theme-engine/internal/domain/renderctx"
 	"theme-engine/internal/infra/renderer"
 )
@@ -15,18 +14,14 @@ func (Processor) Name() string { return "alacritty" }
 
 func (Processor) Parse(in any) (any, error) {
 	var cfg Raw
-	if in == nil {
-		return cfg, nil
+	if err := jsonx.Decode(in, &cfg); err != nil {
+		return Raw{}, err
 	}
-	err := json.Unmarshal(in.(json.RawMessage), &cfg)
-	return cfg, err
+	return cfg, nil
 }
 
 func (Processor) Resolve(in any, ctx *renderctx.Context) (any, error) {
-	inp, ok := in.(Raw)
-	if !ok {
-		inp = Raw{}
-	}
+	inp, _ := in.(Raw)
 
 	opacity := inp.Opacity
 	if opacity == 0 {

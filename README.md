@@ -71,6 +71,11 @@ internal/adapters/tools/<tool>/
   adapter.go  # Name(), Parse(), Resolve(), Render() + New()
 ```
 
+Helper bersama: `internal/adapters/tools/jsonx/jsonx.go` (`Decode`).
+Kontrak: `Parse(nil)` -> zero `Raw` tanpa error, tipe non-`json.RawMessage`
+-> error (tidak panic). `Resolve` missing/bukan `Raw` -> zero `Raw`
+(`cava` tetap error bersih jika gradients < 5).
+
 ## Target Yang Didukung
 
 | Target | Tipe | Adapter | Template |
@@ -337,7 +342,7 @@ Tanggung jawab setiap file:
 | --- | --- |
 | `model.go` | Bentuk input JSON dari `theme.json` |
 | `view.go` | Data final yang dikirim ke template |
-| `adapter.go` | Logic parse, resolve, dan render + `New()` |
+| `adapter.go` | Logic parse, resolve, dan render + `New()` (pakai `jsonx.Decode`, nil-safe) |
 
 Register adapter di `cmd/theme-engine/wiring.go`:
 
