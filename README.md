@@ -387,6 +387,10 @@ setelah render, bukan dari parsing JSON atau loading path map.
 - `adapters/tools` berarti target spesifik aplikasi seperti Kitty atau Cava.
 - `adapters/platform` berarti domain config yang lebih luas (gtk, system).
 - `adapters/tools/generic` berarti target template-only tanpa custom JSON parser (ex-`static`).
+- `adapters/platform/system` sengaja pisah dari `generic` walau sama-sama
+  template-only: `generic` untuk `output/tools/*`, `system` untuk
+  `output/domain/system/apply.sh` (script dconf). Duplikasi 3 method
+  disengaja demi kepemilikan yang jelas.
 - `infra/loader` berarti loading filesystem, JSON, dan path map.
 - `infra/renderer` berarti eksekusi template dan penulisan output.
 - `infra/pathenv` berarti expand path + resolve variable `$pl.*`.
