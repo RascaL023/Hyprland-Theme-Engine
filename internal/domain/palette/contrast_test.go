@@ -5,19 +5,44 @@ import (
 	"math"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 
 	"theme-engine/internal/domain/palette"
 )
 
-// contrastPilotThemes is the seed list for the accessibility guard.
-//
-// Only the pilot theme is asserted for now (VISUAL_FIX_PLAN.md Fase 0-2);
-// the remaining themes are migrated and added in Fase 5. New themes should be
-// appended here once their palette passes.
-var contrastPilotThemes = []string{"kanagawa-dragon"}
-
+// contrastVariants are the variants every active theme must ship.
 var contrastVariants = []string{"dark", "light"}
+
+// activeThemes discovers the themes the guard covers.
+//
+// Discovery (instead of a hand-kept list) means a new theme cannot silently
+// skip the guard: dropping themes/<name>/palette.json in is enough to be
+// asserted. "*.bak" directories are backups, not shipped themes.
+func activeThemes(t *testing.T) []string {
+	t.Helper()
+
+	entries, err := os.ReadDir(filepath.Join("..", "..", "..", "themes"))
+	if err != nil {
+		t.Fatalf("read themes dir: %v", err)
+	}
+
+	var themes []string
+	for _, entry := range entries {
+		if !entry.IsDir() || strings.HasSuffix(entry.Name(), ".bak") {
+			continue
+		}
+		if _, err := os.Stat(filepath.Join("..", "..", "..", "themes", entry.Name(), "palette.json")); err != nil {
+			continue
+		}
+		themes = append(themes, entry.Name())
+	}
+
+	if len(themes) < 2 {
+		t.Fatalf("expected at least 2 active themes, found %d: %v", len(themes), themes)
+	}
+	return themes
+}
 
 const (
 	// minUIRatio is the WCAG threshold for UI accents and large text.
@@ -59,8 +84,8 @@ func resolveTheme(t *testing.T, theme, variant string) *palette.ResolvedPalette 
 	return rp
 }
 
-func TestContrastPilotThemes(t *testing.T) {
-	for _, theme := range contrastPilotThemes {
+func TestContrastThemes(t *testing.T) {
+	for _, theme := range activeThemes(t) {
 		for _, variant := range contrastVariants {
 			t.Run(theme+"/"+variant, func(t *testing.T) {
 				rp := resolveTheme(t, theme, variant)
