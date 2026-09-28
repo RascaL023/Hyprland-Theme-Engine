@@ -1,6 +1,6 @@
 # Rencana Perbaikan Bug Visual (Nvim & Lazygit)
 
-Status: **Fase 0, 1 & 2 SELESAI untuk pilot `kanagawa-dragon`. Fase 3+ belum dikerjakan.**
+Status: **Fase 0, 1, 2 & 3 SELESAI untuk pilot `kanagawa-dragon`. Fase 4-5 belum dikerjakan.**
 
 Ringkasan keputusan & analisis performa: lihat **§11** dan **§12**.
 
@@ -189,14 +189,14 @@ Angka pilot (select = `layer.surface_overlay`, teks = `text.primary`):
 | light | 1.35 ❌ | **5.11** ✅ |
 
 Langkah (pola "tool template-only", lihat `ARCHITECTURE.md` §9):
-- [ ] `assets/templates/tools/lazygit/config.tmpl`
-- [ ] `config/path.txt`: `lazygit|assets/templates/tools/lazygit/config.tmpl|output/tools/lazygit/config.yml`
-- [ ] `cmd/theme-engine/wiring.go`: `procs["lazygit"] = generic.New()`
-- [ ] `internal/app/engine/golden_test.go`: `procs["lazygit"] = generic.New()`
-- [ ] Isi tema minimal: `activeBorderColor`, `inactiveBorderColor`,
+- [x] `assets/templates/tools/lazygit/config.tmpl`
+- [x] `config/path.txt`: `lazygit|assets/templates/tools/lazygit/config.tmpl|output/tools/lazygit/config.yml`
+- [x] `cmd/theme-engine/wiring.go`: `genericTargets` ditambah `"lazygit"`
+- [ ] `internal/app/engine/golden_test.go`: tambah `"lazygit"` ke `testProcessors` (**di branch `feature/test/golden`**)
+- [x] Isi tema: `activeBorderColor`, `inactiveBorderColor`,
       `optionsTextColor`, `selectedLineBgColor`, `unstagedChangesColor`,
       `cherryPicked*`, `markedBaseCommit*`, `defaultFgColor`
-- [ ] Render `go run ./cmd/theme-engine lazygit`
+- [x] Render `go run ./cmd/theme-engine lazygit` → `selectedLineBgColor=#393836`, `defaultFgColor=#c5c9c5` (6.99:1)
 - [ ] Deploy: arahkan `output/tools/lazygit/config.yml` ke
       `~/.config/lazygit/config.yml` (via `$MYENV/map` di setup asli)
 
@@ -260,7 +260,7 @@ tema aktif. Ini bisa jadi sumber bug backtick kedua.
 - [x] F0 `contrast.go` + `contrast_test.go`
 - [x] F1 backtick: slot `syntax.terminal_black` (keputusan: Opsi A)
 - [x] F2 lualine B: slot `ui.gutter` + tuning hijau light pilot (keputusan: Opsi 3 + 2)
-- [ ] F3 target lazygit
+- [x] F3 target lazygit
 - [ ] F4 markview globals (di `~/.config/nvim`, sudah diizinkan pemilik)
 - [ ] F5 rollout tema lain (setelah pilot)
 - [ ] Regenerate golden + update dokumentasi
