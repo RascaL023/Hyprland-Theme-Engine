@@ -124,18 +124,26 @@ Rule penting:
 - `colors[0]` harus cocok sebagai terminal black.
 - `colors[7]` harus cocok sebagai terminal white.
 - `colors[8]` adalah bright black, bukan background UI. Jangan diasumsikan sebagai layer color.
+  Tokyonight memang memakai *sebuah* "terminal black" sebagai latar inline code, tapi itu
+  slot `syntax.terminal_black`, bukan `colors[8]` (lihat tabel mapping di bawah).
 - `colors[4]`, `colors[2]`, `colors[3]`, `colors[5]`, `colors[1]`, dan `syntax.green1` dipakai oleh Tokyonight lualine sebagai mode accent.
-- Mode accent harus cukup kontras terhadap `layer.surface_overlay` karena lualine section B memakai `fg_gutter` sebagai background.
+- Mode accent harus cukup kontras terhadap `ui.gutter` karena lualine section B memakai `fg_gutter` sebagai background.
 
-Target praktis untuk lualine section B dark theme:
+Target praktis untuk lualine section B:
 
 ```text
-contrast(colors[4], layer.surface_overlay) >= 3:1
-contrast(colors[2], layer.surface_overlay) >= 3:1
-contrast(colors[3], layer.surface_overlay) >= 3:1
-contrast(colors[5], layer.surface_overlay) >= 3:1
-contrast(colors[1], layer.surface_overlay) >= 3:1
+contrast(colors[4], ui.gutter) >= 3:1
+contrast(colors[2], ui.gutter) >= 3:1
+contrast(colors[3], ui.gutter) >= 3:1
+contrast(colors[5], ui.gutter) >= 3:1
+contrast(colors[1], ui.gutter) >= 3:1
+contrast(syntax.green1, ui.gutter) >= 3:1
 ```
+
+Untuk light theme nilainya sama; yang berubah hanya arah surface-nya
+(light theme dengan accent gelap butuh `ui.gutter` terang, dan sebaliknya).
+Semua aturan di bab ini dijaga otomatis oleh `internal/domain/palette/contrast_test.go`
+(semua tema di `themes/`, dark + light).
 
 ## Referensi `$pl.` di `palette.json`
 
@@ -211,22 +219,46 @@ Syntax block dipakai terutama untuk Neovim/Tokyonight compatibility.
 | `syntax.orange` | orange/warning/string-ish accent |
 | `syntax.red1` | stronger red diagnostic/accent |
 | `syntax.teal` | teal/info accent |
+| `syntax.terminal_black` | Latar inline code (markdown backtick) & Teks samar (ghost text) |
 
 Fallback resolver memang ada, tapi tema baru sebaiknya tetap mengisi `syntax` secara explicit supaya hasil Neovim tidak bergantung pada fallback yang terlalu generik.
 
+Rule penting untuk `syntax.terminal_black`:
+
+- Tokyonight memakai slot ini sebagai **background** untuk `` `inline code` ``
+  (`@markup.raw.markdown_inline = { bg = terminal_black, fg = blue }`), jadi warnanya
+  harus kontras terhadap `colors[4]`.
+- Slot ini juga jadi warna **foreground** untuk ghost text / `DiagnosticUnnecessary`,
+  jadi jangan disamakan persis dengan `layer.base`.
+- Fallback: `layer.surface_overlay`.
+
+```text
+contrast(colors[4], syntax.terminal_black) >= 3:1
+```
+
 ## UI Colors
 
-| Field | Makna |
-|---|---|
-| `ui.bg_statusline` | Background statusline/lualine section C |
+| Field | Makna | Fallback |
+|---|---|---|
+| `ui.bg_statusline` | Background statusline/lualine section C | `layer.surface_raised` |
+| `ui.gutter` | Warna `fg_gutter`: LineNr/indent guide + background lualine section B | `layer.surface_overlay` |
 
 Default yang sehat untuk dark theme:
 
 ```text
 ui.bg_statusline = layer.surface_raised
+ui.gutter        = layer.surface_overlay (atau shade yang lebih gelap bila accent masih gagal 3:1)
 ```
 
 Pastikan `text.secondary` atau `text.primary` tetap kontras saat dipakai di atas `ui.bg_statusline`.
+
+Catatan `ui.gutter`: Tokyonight memakai `fg_gutter` untuk dua peran sekaligus —
+sebagai foreground (nomor baris, indent guide) dan sebagai background (lualine B,
+folded, tabline). Nilai yang terlalu terang membuat lualine B gagal; terlalu gelap
+membuat nomor baris hilang. Ambil shade yang masih ≥3:1 terhadap semua mode accent,
+tapi tetap terpisah jelas dari `layer.base` (praktiknya 1.1–1.4:1 untuk dark theme;
+kalau angkanya nyaris 1.0, nomor baris & indent guide akan hilang).
+Cek angkanya: `python3 tools/contrast_report.py --plan`.
 
 ## Neovim / Tokyonight Mapping
 
@@ -243,9 +275,10 @@ Mapping penting:
 | `fg` | `text.primary` | main foreground |
 | `fg_dark` | `text.secondary` | secondary foreground |
 | `comment` | `text.muted` | comments are muted text |
-| `fg_gutter` | `layer.surface_overlay` | Tokyonight uses this as subtle UI and lualine B background |
+| `fg_gutter` | `ui.gutter` | Tokyonight uses this as LineNr fg, subtle UI, and lualine B background |
 | `dark3` | `layer.surface_overlay` | should match gutter-like low-emphasis UI |
 | `dark5` | `border.default` | darker structural bg |
+| `terminal_black` | `syntax.terminal_black` | inline-code (backtick) background + ghost text fg, bukan ANSI bright black |
 | `bg_statusline` | `ui.bg_statusline` | lualine/statusline bg |
 
 Rule penting:
@@ -272,8 +305,11 @@ Implikasi untuk theme baru:
 
 - `colors.black` di adapter Neovim berasal dari `bg_dark1` / `layer.crust`.
 - Mode colors (`blue`, `green`, `yellow`, `magenta`, `red`, `green1`) harus readable dengan `layer.crust` sebagai foreground section A.
-- Mode colors juga harus readable sebagai foreground di atas `layer.surface_overlay` untuk section B.
-- Kalau section B tabrakan, cek dulu `layer.surface_overlay` dan ANSI mode colors, bukan langsung custom lualine.
+- Mode colors juga harus readable sebagai foreground di atas `ui.gutter` untuk section B.
+- Kalau section B tabrakan, jangan langsung custom lualine: cek dulu `ui.gutter`
+  (turunkan bila mode accent-nya masih pastel/terang), baru lihat ANSI mode colors-nya.
+  Theme yang accent-nya terlalu washed-out akan memaksa `ui.gutter` mendekati hitam —
+  itu tanda accent-nya yang perlu dibereskan, bukan gutter-nya.
 
 ## Font System
 
@@ -360,9 +396,33 @@ Sebelum tema dianggap siap:
 - `fg.dim`, `fg.dim_muted`, `fg.disabled` terisi (bisa fallback).
 - `bg.conflict`, `bg.disk_usage` terisi (bisa fallback).
 - `syntax` block diisi explicit.
-- `ui.bg_statusline` diisi explicit.
-- Neovim output dicek khusus untuk `fg_gutter`, `dark3`, `dark5`, dan `bg_statusline`.
+- `syntax.terminal_black` diisi explicit (kontras ≥3:1 terhadap `colors[4]`).
+- `ui.bg_statusline` dan `ui.gutter` diisi explicit.
+- `ui.gutter` ≥3:1 terhadap `colors[1..5]` dan `syntax.green1`, tapi tetap terpisah dari `layer.base` (≥~1.1:1 untuk dark theme).
+- Neovim output dicek khusus untuk `fg_gutter`, `terminal_black`, `dark3`, `dark5`, dan `bg_statusline`.
+- Cek cepat semua angka di atas: `python3 tools/contrast_report.py --plan --accents`.
 - GTK output dicek: `source.css` dan `source.rasi` ter-generate.
+
+## Alat Bantu: `tools/contrast_report.py`
+
+Script Python (tanpa dependency) yang mengukur tema dengan angka yang **sama**
+dengan guard Go, lalu mengusulkan nilai slot bila ada yang gagal.
+
+```bash
+python3 tools/contrast_report.py                      # audit semua tema (exit 1 bila ada FAIL)
+python3 tools/contrast_report.py harbor --plan        # + usulan ui.gutter / syntax.terminal_black
+python3 tools/contrast_report.py --plan --accents     # + usul perbaikan accent (hue dipertahankan)
+python3 tools/contrast_report.py --json               # output untuk scripting
+```
+
+Cara kerja usulannya: kandidat dibuat dengan menggeser **lightness OKLCH** dari
+`ui.gutter`/`syntax.terminal_black` saat ini, jadi hue dan chroma tema tidak rusak
+(tidak berubah jadi putih pucat). Kandidat diberi skor jarak perseptual (OKLab)
+terhadap warna sekarang, dengan sedikit bonus bila nilainya sudah ada di palet.
+Bila usulannya harus bergerak jauh, script menandai bahwa **accent**-nya yang
+jadi akar masalah dan menyarankan nilai lightness accent yang dibutuhkan.
+
+Alat ini hanya untuk pengembangan — tidak ikut ke binary, tidak menambah biaya render.
 
 ## Contoh Dark Theme Yang Sehat
 
@@ -396,18 +456,23 @@ Sebelum tema dianggap siap:
   "conflict": "#635127",
   "disk_usage": "#50504a"
 },
+"syntax": {
+  "terminal_black": "#393836"
+},
 "ui": {
-  "bg_statusline": "#282727"
+  "bg_statusline": "#282727",
+  "gutter": "#393836"
 }
 ```
 
 Hasil Neovim yang diharapkan:
 
 ```lua
-fg_gutter = "#393836"
-dark3     = "#393836"
-dark5     = "#282727"
-comment   = "#a6a69c"
+fg_gutter         = "#393836"
+dark3             = "#393836"
+dark5             = "#282727"
+comment           = "#a6a69c"
+terminal_black    = "#393836"
 ```
 
 Ini menjaga lualine section B tetap readable tanpa harus membuat custom lualine theme.

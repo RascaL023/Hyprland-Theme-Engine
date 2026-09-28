@@ -1,12 +1,13 @@
 # Rencana Perbaikan Bug Visual (Nvim & Lazygit)
 
-Status: **Fase 0, 1, 2 & 3 SELESAI untuk pilot `kanagawa-dragon`. Fase 4-5 belum dikerjakan.**
+Status: **Fase 0–5 SELESAI.** Semua 6 tema lama + tema baru `harbor` lulus guard
+(dark & light), target `lazygit` aktif, dan alat ukur/usul warna sudah tersedia.
 
 Ringkasan keputusan & analisis performa: lihat **§11** dan **§12**.
 
-Tema pilot: **`kanagawa-dragon` SAJA.**
-Tema lain (`nocturne`, `ghostly`, `sakura`, `kanagawa-wave`, `claude-manjuska`)
-**tidak disentuh** sampai pilot ini lulus semua checklist.
+Tema pilot: **`kanagawa-dragon`** (Fase 1–3), lalu di-rollout ke
+`nocturne`, `ghostly`, `sakura`, `kanagawa-wave`, `claude-manjusaka` (Fase 5).
+Tema baru `harbor` (§8b) dibuat setelah guard aktif, jadi lulus sejak awal.
 
 ---
 
@@ -18,9 +19,25 @@ Tema lain (`nocturne`, `ghostly`, `sakura`, `kanagawa-wave`, `claude-manjuska`)
 | B | Bagian tengah lualine (nama file/tab) kurang kontras | `fg_gutter` dipetakan ke `layer.surface_overlay` (layer **paling terang**), padahal Tokyonight asli `fg_gutter` itu **gelap**. Mode color jadi kehilangan kontras. | `_tokyonight.lua:11` (`b = { bg = c.fg_gutter, fg = c.blue }`), `colors.tmpl:14` |
 | C | Di lazygit, baris yang di-select kurang jelas & tema tidak terasa | **Belum ada target `lazygit` sama sekali** (tidak ada template/path.txt/wiring). `~/.config/lazygit/config.yml` kosong (0 byte), jadi lazygit memakai default: `selectedLineBgColor: [blue]` + `defaultFgColor: [default]`. | `docs/Config.md` (default resmi), `config/path.txt` |
 
-Temuan tambahan (dicatat, belum dikerjakan): `sakura`/`kanagawa-wave`/`ghostly`
-belum mengisi blok `extra.fg`, `extra.bg`, `text.visited`, `border.medium`;
-`sakura` bahkan belum punya `syntax` & `ui`.
+Temuan tambahan saat rollout: `sakura`/`kanagawa-wave`/`ghostly` belum mengisi blok
+`extra.fg`, `extra.bg`, `text.visited`, `border.medium`. Ini **sengaja dibiarkan**:
+resolver sudah punya fallback semantik untuk semua field itu, sehingga menambahkannya
+ hanya akan mengubah output tanpa memperbaiki bug. Yang wajib diisi hanya
+`syntax.terminal_black` dan `ui.gutter` (dua slot baru di dokumen ini).
+`sakura` memang belum punya blok `syntax`/`ui` → ditambahkan minimal (hanya field
+baru + `bg_statusline` yang nilainya sama dengan fallback-nya).
+
+Riset tambahan (bukan penyebab bug, tapi batas desain yang perlu diketahui):
+
+- `fg_gutter` di Tokyonight punya **dua peran**: foreground untuk nomor baris /
+  indent guide, dan background untuk lualine B / folded / tabline. Karena itu
+  `ui.gutter` dijaga ≥3:1 terhadap mode accent **dan** ≥~1.2:1 terhadap `layer.base`.
+- `terminal_black` juga dipakai sebagai **foreground** ghost text
+  (`CmpGhostText`, `DiagnosticUnnecessary`), jadi tidak boleh persis `layer.base`.
+- Tema dengan ANSI accent pastel (`claude-manjusaka/light`, `ghostly/light`,
+  `nocturne/light`) tidak punya nilai terang yang bisa lulus 3:1, sehingga
+  `ui.gutter`-nya **harus gelap**. Itu trade-off palet, bukan bug engine —
+  lihat advisory di §8.
 
 ---
 
@@ -219,51 +236,127 @@ gui:
 
 ---
 
-## 7. Fase 4 — Sisi Nvim: markview (opsional, setelah pilot)
+## 7. Fase 4 — Sisi Nvim: markview (SELESAI, di sisi dotfile)
 
 **Masalah:** `transparent = true` + `Normal.bg = "none"` membuat markview
 (`MarkviewInlineCode`) memakai warna fallback hardcoded `#1E1E2E`, bukan warna
-tema aktif. Ini bisa jadi sumber bug backtick kedua.
+tema aktif. Ini sumber bug backtick kedua (khusus plugin markview; grup
+`@markup.raw.markdown_inline` diperbaiki Fase 1).
 
-- [ ] Verifikasi dulu via `:Inspect` pada backtick: grup mana yang aktif?
-- [ ] Jika `MarkviewInlineCode`: set `vim.g.markview_dark_bg` /
-      `vim.g.markview_light_bg` dari `.Palette` di `lua/core/theme.lua`
-- [ ] Ulangi cek kontras
+Temuan: `vim.g.markview_dark_bg`/`markview_light_bg` **tidak** memengaruhi
+`MarkviewInlineCode` (global itu hanya dipakai `create_pallete` / grup
+`MarkviewPalette*`, sedangkan inline code memakai warna hardcoded
+`#1E1E2E`/`#EFF1F5` bila `Normal.bg` unset). Jadi perlu dua langkah.
+
+- [x] Verifikasi grup aktif pada backtick (`MarkviewInlineCode`)
+- [x] Set `vim.g.markview_dark_bg` / `markview_light_bg` dari `.Palette`
+- [x] Override langsung `MarkviewInlineCode` (`bg = M.colors.terminal_black`,
+      `fg = M.colors.green`) + re-apply lewat autocmd `ColorScheme`
+      (karena `:colorscheme` menghapus highlight group)
+- [x] `luac -p` bersih; runtime dicek: `MarkviewInlineCode` bg `#393836` fg `#8a9a7b` = **3.90:1**
+- [x] Override bertahan setelah `:colorscheme tokyonight` + `markview.highlights.setup()`
+
+Perubahan ini hidup di `~/.dotfile/nvim/lua/core/theme.lua` (config Anda,
+bukan repo engine) — engine tetap benar untuk tool lain lewat Fase 1.
 
 ---
 
-## 8. Fase 5 — Rollout ke Tema Lain (setelah pilot lulus, JANGAN sekarang)
+## 8. Fase 5 — Rollout ke Semua Tema (SELESAI)
 
-- [ ] Terapkan field/nilai yang sama ke `nocturne`, `ghostly`, `sakura`,
-      `kanagawa-wave`, `claude-manjuska`
-- [ ] Lengkapi blok `extra.fg`/`extra.bg`/`text.visited`/`border.medium` yang kurang
-- [ ] Update tabel mapping Tokyonight di `RULE.md` (`terminal_black`, `dark3`,
-      `dark5`, `fg_gutter`, `blue0/blue7`)
-- [ ] Update `ARCHITECTURE.md` §9 dengan target `lazygit`
-- [ ] Update `PROGRESS.md` (daftar target + status tema)
-- [ ] Regenerate golden: `UPDATE_GOLDEN=1 go test ./internal/app/engine/ -run TestGolden`
+Nilai final per tema (hanya slot yang berubah). Guard dijalankan untuk semua:
+
+| Tema | Variant | `syntax.terminal_black` | `ui.gutter` | Catatan |
+|---|---|---|---|---|
+| claude-manjusaka | dark | `#2D2824` | `#2D2824` | = `layer.surface_overlay` |
+| claude-manjusaka | light | `#68635E` | `#3E3A35` | accent pastel → gutter wajib gelap |
+| ghostly | dark | `#363636` | `#272727` | shade dari overlay (dE 0.11 / 0.17) |
+| ghostly | light | `#5B5B5B` | `#565656` | accent pastel → gutter wajib gelap |
+| kanagawa-dragon | dark | `#393836` | `#393836` | = overlay (pilot) |
+| kanagawa-dragon | light | `#e4d794` | `#e4d794` | + `colors[2]` & `green1` digelapkan |
+| kanagawa-wave | dark | `#4B4B64` | `#222237` | shade dari overlay (dE 0.03 / 0.19) |
+| kanagawa-wave | light | `#e4d794` | `#e4d794` | `colors[2]`/`colors[10]`/`green1` disamakan dengan dragon light |
+| nocturne | dark | `#594d80` | `#594d80` | = overlay |
+| nocturne | light | `#EFEAF7` | `#35303b` | tb = `layer.mantle`, gutter gelap |
+| sakura | dark | `#3A3036` | `#3A3036` | = overlay |
+| sakura | light | `#E0D0C6` | `#FFFFFF` | accent kuning `#AD8B55` hanya 2.12:1 → gutter harus nyaris putih |
+
+Kontras minimum yang dicapai: **dark 3.05:1** (`ghostly` backtick), **light 3.05:1**
+(`sakura` backtick) — ambang 3.0, jadi semua punya sedikit ruang (headroom tool +0.05).
+Tidak ada nilai ANSI yang diubah selain dua hijau `kanagawa-*/light` di atas
+(disetujui di Fase 2) — sisanya murni menambah dua slot baru.
+
+- [x] Terapkan kedua slot ke `nocturne`, `ghostly`, `sakura`, `kanagawa-wave`, `claude-manjuska`
+- [x] `sakura`: tambah blok `syntax` + `ui` (minimal, nilai `bg_statusline` sama dengan fallback-nya)
+- [x] Guard diperluas: `contrastPilotThemes` → discovery `themes/*` (semua tema otomatis ikut)
+- [x] `GOCACHE=/tmp/go-build go test ./...` hijau
+- [x] Update tabel mapping Tokyonight di `RULE.md` (`terminal_black`, `fg_gutter` → `ui.gutter`)
+- [x] Update `ARCHITECTURE.md` §9 + §10 (target `lazygit`, guard, tool)
+- [x] Update `PROGRESS.md` (target lazygit, daftar tema, tooling)
+- [ ] Regenerate golden: `UPDATE_GOLDEN=1 go test ./internal/app/engine/ -run TestGolden` (branch `feature/test/golden`)
+
+### Advisory (temuan, BELUM dikerjakan)
+
+Accent ANSI di beberapa tema light terlalu pastel untuk lulus 3:1 di atas surface
+terang, sehingga `ui.gutter` terpaksa mendekati hitam/putih. Kalau ingin surface
+kembali kalem, accent-nya yang perlu digeser (hue boleh dipertahankan):
+
+| Tema | Accent biang | Sekarang | Perlu |
+|---|---|---|---|
+| claude-manjusaka/light | `colors[1..5]` (semua) | L 0.62–0.80 | digelapkan ke L ±0.57 |
+| ghostly/light | `colors[1..5]` (semua) | L 0.74–0.79 | digelapkan ke L ±0.55 |
+| nocturne/light | `colors[1..5]` | L 0.59–0.68 | digelapkan ke L ±0.48 |
+| sakura/light | `colors[3]` kuning `#AD8B55` | L 0.66 | digelapkan ke L ±0.57 |
+| kanagawa-wave/dark | `colors[1]` merah `#C34043` | L 0.56 | diterangkan ke L ±0.75 |
+| ghostly/dark | `colors[1..5]` | L 0.55–0.65 | diterangkan ke L ±0.72 |
+
+Angka ini dihitung dengan `python3 tools/contrast_report.py --plan --accents`.
+Dampak yang wajib dicek sebelum mengubah ANSI: terminal (kitty/foot/alacritty),
+lualine section A (mode accent sebagai background), dan `:Inspect` pada syntax
+highlight. Karena itu rollout ini sengaja tidak menyentuhnya.
+
+## 8b. Tema Baru: `harbor` (SELESAI)
+
+Diminta setelah rollout: tema estetik yang tidak mencolok dan beda dari yang lain.
+`harbor` = biru-slate + teal, satu-satunya tema **dingin** di koleksi
+(ghostly netral abu, nocturne ungu, sakura pink, kanagawa/claude hangat).
+
+- [x] `themes/harbor/palette.json` (dark + light, blok `syntax`/`ui` eksplisit lengkap)
+- [x] `themes/harbor/theme.json` (font sama dengan tema aktif; kitty/hypr/alacritty di-tune: rounding 12, shadow range 10, opacity 0.72)
+- [x] Lulus guard dengan margin nyaman: dark min **4.61:1**, light min **3.27:1**
+- [x] Render dicek: `go run ./cmd/theme-engine nvim` + `lazygit` untuk dark & light
+- [x] Output tema aktif (`kanagawa-dragon/dark`) di-render ulang setelah uji (state `.state.json` otomatis dikembalikan)
+
+Cara memakai: ubah `config/.state.json` → `"name": "harbor"`, lalu render ulang.
 
 ---
 
 ## 9. Verifikasi Akhir
 
 - [x] `GOCACHE=/tmp/go-build go test ./...` hijau semua
-- [x] Contrast test lulus untuk pilot (dark 4.48:1 & light 3.79:1)
-- [ ] `output/` pilot di-review manual
-- [ ] Uji mata di nvim (`colorscheme tokyonight`) + lazygit
+- [x] Guard lulus untuk 6 tema × dark/light + `harbor` (14 variant)
+      — minimum dark 3.05:1, minimum light 3.05:1 (ambang 3.0); teks utama ≥ 6.19:1 (ambang 4.5)
+- [x] `python3 tools/contrast_report.py` exit 0 (tidak ada FAIL di seluruh tema)
+- [x] `output/` dicek: `nvim/colors.lua` & `lazygit/config.yml` untuk `kanagawa-dragon/dark`
+      dan `harbor/dark+light`
+- [x] Semua 11 target render sukses (`go run ./cmd/theme-engine`) tanpa error
+- [ ] Uji mata di nvim (`:Inspect` pada backtick, lualine B) + lazygit (**sisi Anda**)
 - [ ] Regenerate & commit golden (branch `feature/test/golden`)
+- [ ] Deploy `output/tools/lazygit/config.yml` → `~/.config/lazygit/config.yml` (**sisi Anda**)
 
 ---
 
 ## 10. Checklist Master (Ringkas)
 
-- [x] F0 `contrast.go` + `contrast_test.go`
+- [x] F0 `contrast.go` + `contrast_test.go` (discovery semua tema)
 - [x] F1 backtick: slot `syntax.terminal_black` (keputusan: Opsi A)
 - [x] F2 lualine B: slot `ui.gutter` + tuning hijau light pilot (keputusan: Opsi 3 + 2)
 - [x] F3 target lazygit
-- [ ] F4 markview globals (di `~/.config/nvim`, sudah diizinkan pemilik)
-- [ ] F5 rollout tema lain (setelah pilot)
-- [ ] Regenerate golden + update dokumentasi
+- [x] F4 markview globals + override `MarkviewInlineCode` (di `~/.dotfile/nvim`, sudah diizinkan pemilik)
+- [x] F5 rollout semua tema + advisory accent dicatat
+- [x] Tema baru `harbor` (dark + light) lulus guard
+- [x] Tool `tools/contrast_report.py` (audit + planner OKLCH)
+- [x] Update dokumentasi: `RULE.md`, `ARCHITECTURE.md`, `PROGRESS.md`, file ini
+- [ ] Regenerate golden (branch `feature/test/golden`)
 
 ---
 
@@ -318,7 +411,26 @@ Prinsip: **tidak boleh ada kerja tambahan saat render templete.**
 | Template nvim | **Lebih murah**: `{{ index .Palette.Colors 8 }}` (index slice) → `{{ .Palette.SyntaxTerminalBlack }}` (akses field) | Menghilangkan pemanggilan `index`. |
 | Contrast test | **Nol** biaya produksi | File `_test.go` hanya dikompilasi ke test binary, tidak ikut ke `cmd/theme-engine`. |
 | Target `lazygit` | 1 render template biasa | Sama seperti target generic lain; tetap kena cache, skip-unchanged, atomic write. `sassc` (biaya terbesar) tidak tersentuh. |
+| Tema baru `harbor` | **nol** | Tema hanyalah data; jumlah tema tidak menambah kerja per switch (hanya 1 tema aktif yang di-render). |
+| `tools/contrast_report.py` | **nol** di runtime | Python dev-only; tidak dipanggil engine, tidak ikut binary, tidak ada di jalur render. |
 
 Tidak ada loop, komputasi warna, atau pembacaan file tambahan di jalur render.
 Kecepatan switch tetap sama; cost terbesar tetap `sassc` + reload aplikasi
 (`ARCHITECTURE.md` §7).
+
+## 13. Cara Pakai Guard & Tool (operasional)
+
+```bash
+# Guard warna (Go) — otomatis untuk semua tema × dark/light
+GOCACHE=/tmp/go-build go test ./internal/domain/palette/...
+GOCACHE=/tmp/go-build go test ./...        # semua test
+
+# Angka + usulan nilai palet (Python, tanpa dependency)
+python3 tools/contrast_report.py                    # audit semua tema (exit 1 bila ada FAIL)
+python3 tools/contrast_report.py harbor --plan       # usulan ui.gutter & syntax.terminal_black
+python3 tools/contrast_report.py --plan --accents    # + usul perbaikan accent (hue dipertahankan)
+python3 tools/contrast_report.py --snippet           # potongan JSON siap tempel ke palette.json
+```
+
+Catatan: `--plan` memakai headroom +0.05 di atas ambang guard supaya nilai yang
+dipilih tidak menempel persis di batas 3.0.

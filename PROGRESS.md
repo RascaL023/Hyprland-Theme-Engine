@@ -18,6 +18,10 @@ Dokumen ini melacak status rilis, fitur yang telah diimplementasikan, serta memb
   - `border` → kategori baru (default & active)
   - `status` → kategori baru (success, warning, error, critical, info)
 - **[BARU] Ghostly Theme**: Tema ghostly kini sudah memiliki `palette.json` (dark & light) dan `theme.json`.
+- **[BARU] Fix Bug Visual + Accessibility Guard**: `syntax.terminal_black` (latar backtick),
+  `ui.gutter` (lualine section B), dan target `lazygit` baru. Semua tema kini lulus ambang
+  kontras 3:1 / 4.5:1 (detail + angka: `VISUAL_FIX_PLAN.md`).
+- **[BARU] Harbor Theme**: tema biru-slate/teal kalem (dark & light), lulus guard sejak awal.
 
 ---
 
@@ -45,6 +49,7 @@ Dokumen ini melacak status rilis, fitur yang telah diimplementasikan, serta memb
 | **Yazi** | Static | [x] Selesai | `assets/templates/tools/yazi/theme.tmpl` | `output/tools/yazi/theme.toml` |
 | **Nvim** | Static | [x] Selesai | `assets/templates/tools/nvim/colors.tmpl` | `output/tools/nvim/colors.lua` |
 | **Starship** | Static | [x] Selesai | `assets/templates/tools/starship/starship.tmpl` | `output/tools/starship/starship.toml` |
+| **Lazygit** | Static | [x] Selesai | `assets/templates/tools/lazygit/config.tmpl` | `output/tools/lazygit/config.yml` |
 | **Waybar** | Migrated to GTK | [x] Selesai | via `output/domain/gtk/css/source.css` | Config langsung `@import` source.css dari GTK |
 | **Ncmcpp** | Static / Custom | [ ] Rencana | - | - |
 | **Btop** | Static / Custom | [ ] Rencana | - | - |
@@ -61,15 +66,24 @@ Dokumen ini melacak status rilis, fitur yang telah diimplementasikan, serta memb
 | **Ghostly** | [x] | [x] | [x] |
 | **Kanagawa Wave** | [x] | [x] | [x] |
 | **Kanagawa Dragon** | [x] | [x] | [x] |
-| **Custom Kanagawa Wave** | [x] | [x] | [x] |
-| **Custom Kanagawa Dragon** | [x] | [x] | [x] |
-| **Kanagawa Dragon Original** | [x] | [x] | [x] |
-| **Dracula** | [x] | [x] | [x] |
+| **Claude Manjusaka** | [x] | [x] | [x] |
 | **Sakura** | [x] | [x] | [x] |
+| **Harbor** | [x] | [x] | [x] |
+
+Semua tema di atas lulus *accessibility guard* (dark + light), lihat bagian D.
+
+Arsip tidak aktif (folder `*.bak`, diabaikan engine & guard): Custom Kanagawa Wave,
+Custom Kanagawa Dragon, Kanagawa Dragon Original, Dracula, Red Devil.
 
 ### D. Perkakas Pengembangan (Developer Tooling)
 - [x] **Runner Script (`runner.sh`)**: Orkestrator otomatis untuk kompilasi, pengujian, pembersihan, dan penanganan log senyap dengan notifikasi desktop (`notify-send`).
 - [x] **Unit Testing**: Pengujian otomatis untuk penulisan file, render, caching, dan pemetaan path.
+- [x] **Accessibility Guard**: `internal/domain/palette/contrast_test.go` men-assert kontras WCAG
+  (backtick inline code, teks utama, baris terpilih lazygit, lualine section B) untuk **semua**
+  `themes/*` × dark/light. Tema baru otomatis ikut terjaga (discovery dari direktori, `*.bak` dilewati).
+- [x] **Contrast Report Tool**: `tools/contrast_report.py` — audit + usul nilai slot palet
+  (`--plan`, `--accents`, `--json`). Menggunakan rumus yang sama dengan guard Go, dan menggeser
+  warna di ruang OKLCH supaya hue/chroma tema tidak rusak. Dev-only, tidak menambah biaya render.
 
 ---
 
