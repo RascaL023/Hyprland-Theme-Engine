@@ -75,7 +75,8 @@
           "green2":   "#BFC0B5",
           "orange":   "#C18C7C",
           "red1":     "#8D8479",
-          "teal":     "#D1C8B8"
+          "teal":     "#D1C8B8",
+          "terminal_black": "#2D2824"
         },
 
         "fg": {
@@ -90,7 +91,8 @@
         },
 
         "ui": {
-          "bg_statusline": "#201C18"
+          "bg_statusline": "#201C18",
+          "gutter": "#2D2824"
         }
       }
     },
@@ -170,7 +172,8 @@
           "green2":   "#BFC0B5",
           "orange":   "#C18C7C",
           "red1":     "#8D8479",
-          "teal":     "#D1C8B8"
+          "teal":     "#D1C8B8",
+          "terminal_black": "#68635E"
         },
 
         "fg": {
@@ -185,7 +188,8 @@
         },
 
         "ui": {
-          "bg_statusline": "#D0CBC5"
+          "bg_statusline": "#D0CBC5",
+          "gutter": "#3E3A35"
         }
       }
     }

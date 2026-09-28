@@ -73,11 +73,13 @@
           "green2":   "#8E6C77",
           "orange":   "#bca88f",
           "red1":     "#d5a8aa",
-          "teal":     "#9FA0A0"
+          "teal":     "#9FA0A0",
+          "terminal_black": "#363636"
         },
 
         "ui": {
-          "bg_statusline": "#373737"
+          "bg_statusline": "#373737",
+          "gutter": "#272727"
         }
       }
     },
@@ -150,11 +152,13 @@
           "green2":   "#9fb8b0",
           "orange":   "#c9ad89",
           "red1":     "#b88894",
-          "teal":     "#9dc4c4"
+          "teal":     "#9dc4c4",
+          "terminal_black": "#5B5B5B"
         },
 
         "ui": {
-          "bg_statusline": "#d6d6d6"
+          "bg_statusline": "#d6d6d6",
+          "gutter": "#565656"
         }
       }
     }

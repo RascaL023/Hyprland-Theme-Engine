@@ -91,7 +91,8 @@
         },
 
         "ui": {
-          "bg_statusline": "#282727"
+          "bg_statusline": "#282727",
+          "gutter": "#393836"
         }
       }
     },
@@ -187,7 +188,8 @@
         },
 
         "ui": {
-          "bg_statusline": "#d5cea3"
+          "bg_statusline": "#d5cea3",
+          "gutter": "#e4d794"
         }
       }
     }

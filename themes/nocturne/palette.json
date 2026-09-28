@@ -75,7 +75,8 @@
           "green2": "#7ED4AD",
           "orange": "#F0C97A",
           "red1": "#EE8BA6",
-          "teal": "#7DD4D4"
+          "teal": "#7DD4D4",
+          "terminal_black": "#594d80"
         },
 
         "fg": {
@@ -90,7 +91,8 @@
         },
 
         "ui": {
-          "bg_statusline": "#443966"
+          "bg_statusline": "#443966",
+          "gutter": "#594d80"
         }
       }
     },
@@ -170,7 +172,8 @@
           "green2": "#5D9B7A",
           "orange": "#D6A860",
           "red1": "#C75B7A",
-          "teal": "#85C4C4"
+          "teal": "#85C4C4",
+          "terminal_black": "#EFEAF7"
         },
 
         "fg": {
@@ -185,7 +188,8 @@
         },
 
         "ui": {
-          "bg_statusline": "#C8BADC"
+          "bg_statusline": "#C8BADC",
+          "gutter": "#35303b"
         }
       }
     }

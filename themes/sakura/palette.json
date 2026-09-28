@@ -59,6 +59,15 @@
           "error": "#C96A7B",
           "critical": "#E88394",
           "info": "#7A9BB5"
+        },
+
+        "syntax": {
+          "terminal_black": "#3A3036"
+        },
+
+        "ui": {
+          "bg_statusline": "#2D252A",
+          "gutter": "#3A3036"
         }
       }
     },
@@ -122,6 +131,15 @@
           "error": "#B5566A",
           "critical": "#CA7A86",
           "info": "#557A94"
+        },
+
+        "syntax": {
+          "terminal_black": "#E0D0C6"
+        },
+
+        "ui": {
+          "bg_statusline": "#E8DBD2",
+          "gutter": "#FFFFFF"
         }
       }
     }
