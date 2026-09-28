@@ -86,7 +86,8 @@
           "green2":   "#8a9a7b",
           "orange":   "#E6C384",
           "red1":     "#c4746e",
-          "teal":     "#8ea4a2"
+          "teal":     "#8ea4a2",
+          "terminal_black": "#393836"
         },
 
         "ui": {
@@ -181,7 +182,8 @@
           "green2":   "#6f894e",
           "orange":   "#836f4a",
           "red1":     "#c84053",
-          "teal":     "#5e857a"
+          "teal":     "#5e857a",
+          "terminal_black": "#e4d794"
         },
 
         "ui": {

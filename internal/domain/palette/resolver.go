@@ -76,6 +76,11 @@ func ResolvePalette(raw *Palette) (*ResolvedPalette, error) {
 	rp.SyntaxRed1 = fallback(pathenv.ResolveVar(s.Red1, RawPaletteVars{raw}), rp.StatusCritical)
 	rp.SyntaxTeal = fallback(pathenv.ResolveVar(s.Teal, RawPaletteVars{raw}), raw.Colors[6])
 
+	// Tokyonight reuses `terminal_black` as the inline-code background
+	// (@markup.raw.markdown_inline), so it needs a subtle dark surface, not the
+	// ANSI bright-black colour. Fallback keeps older themes unchanged.
+	rp.SyntaxTerminalBlack = fallback(pathenv.ResolveVar(s.TerminalBlack, RawPaletteVars{raw}), rp.LayerSurfaceOverlay)
+
 	rp.BgStatusline = fallback(pathenv.ResolveVar(raw.Extra.UI.BgStatusline, RawPaletteVars{raw}), rp.LayerSurfaceRaised)
 
 	rp.LinkVisited = fallback(pathenv.ResolveVar(raw.Extra.Text.Visited, RawPaletteVars{raw}), rp.AccentSecondary)
