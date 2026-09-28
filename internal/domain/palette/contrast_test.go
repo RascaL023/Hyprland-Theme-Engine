@@ -12,7 +12,7 @@ import (
 
 // contrastPilotThemes is the seed list for the accessibility guard.
 //
-// Only the pilot theme is asserted for now (VISUAL_FIX_PLAN.md Fase 0-1);
+// Only the pilot theme is asserted for now (VISUAL_FIX_PLAN.md Fase 0-2);
 // the remaining themes are migrated and added in Fase 5. New themes should be
 // appended here once their palette passes.
 var contrastPilotThemes = []string{"kanagawa-dragon"}
@@ -25,6 +25,14 @@ const (
 	// minTextRatio is the WCAG threshold for normal body text.
 	minTextRatio = 4.5
 )
+
+type contrastCheck struct {
+	name   string
+	fg     string
+	bg     string
+	min    float64
+	reason string
+}
 
 // resolveTheme loads themes/<theme>/palette.json and runs it through the real
 // resolve + flatten path so the test exercises the same values the renderer
@@ -57,13 +65,7 @@ func TestContrastPilotThemes(t *testing.T) {
 			t.Run(theme+"/"+variant, func(t *testing.T) {
 				rp := resolveTheme(t, theme, variant)
 
-				checks := []struct {
-					name   string
-					fg     string
-					bg     string
-					min    float64
-					reason string
-				}{
+				checks := []contrastCheck{
 					{
 						name:   "nvim inline code (backtick)",
 						fg:     rp.Colors[4],
@@ -85,6 +87,24 @@ func TestContrastPilotThemes(t *testing.T) {
 						min:    minUIRatio,
 						reason: "lazygit draws defaultFgColor over selectedLineBgColor",
 					},
+				}
+
+				// lualine section B draws a mode colour over the gutter surface.
+				for _, m := range []struct{ name, hex string }{
+					{"red", rp.Colors[1]},
+					{"green", rp.Colors[2]},
+					{"yellow", rp.Colors[3]},
+					{"blue", rp.Colors[4]},
+					{"magenta", rp.Colors[5]},
+					{"green1", rp.SyntaxGreen1},
+				} {
+					checks = append(checks, contrastCheck{
+						name:   "lualine section B " + m.name,
+						fg:     m.hex,
+						bg:     rp.BgGutter,
+						min:    minUIRatio,
+						reason: "tokyonight lualine b = { bg = fg_gutter, fg = mode colour }",
+					})
 				}
 
 				for _, c := range checks {

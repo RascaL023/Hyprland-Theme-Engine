@@ -49,6 +49,7 @@ type ResolvedPalette struct {
 	SyntaxTerminalBlack string
 
 	BgStatusline string
+	BgGutter     string
 
 	FgDim      string
 	FgDimMuted string

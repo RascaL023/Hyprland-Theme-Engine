@@ -81,6 +81,7 @@ type Palette struct {
 
 		UI struct {
 			BgStatusline string `json:"bg_statusline"`
+			Gutter       string `json:"gutter"`
 		} `json:"ui"`
 	}
 }

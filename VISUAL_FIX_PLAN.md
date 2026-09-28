@@ -1,6 +1,6 @@
 # Rencana Perbaikan Bug Visual (Nvim & Lazygit)
 
-Status: **Fase 0 & 1 SELESAI untuk pilot `kanagawa-dragon`. Fase 2+ belum dikerjakan.**
+Status: **Fase 0, 1 & 2 SELESAI untuk pilot `kanagawa-dragon`. Fase 3+ belum dikerjakan.**
 
 Ringkasan keputusan & analisis performa: lihat **§11** dan **§12**.
 
@@ -154,24 +154,25 @@ Kesimpulan pilot:
 
 ### Diff output yang diharapkan
 
-Jika opsi 1 dipakai (global, `colors.lua`):
+Slot `ui.gutter` (fallback `layer.surface_overlay`): pilot **tidak** mengisinya,
+jadi `colors.lua` dark tetap `#393836` (tidak ada perubahan output) — mekanisme
+siap dipakai tema lain di Fase 5.
+
+Tuning hijau light pilot (yang benar-benar mengubah output):
 ```diff
--  fg_gutter         = "#393836",
-+  fg_gutter         = "#12120f",
+   colors[2] green
+-  "#6f894e",   # 2.69:1
++  "#677f49",   # 3.07:1
+   syntax.green1 light
+-  "#6e915f",   # 2.46:1
++  "#618054",   # 3.06:1
 ```
-Jika opsi 2 dipakai (palet light pilot):
-```diff
-   "green": "colors[2]",
--  "#6f894e",
-+  "<hijau lebih gelap, mis. #5b7a3d>",
-```
-(nilai final ditentukan sambil menjalankan contrast test sampai lulus)
 
 - [x] **KEPUTUSAN: Opsi 3** — tambah slot `ui.gutter` (fallback `layer.surface_overlay`, sehingga tema lama tidak berubah sampai diisi)
 - [x] **KEPUTUSAN (khusus pilot light): Opsi 2** — geser `colors[2]` & `syntax.green1` variant `light` sampai ≥3:1
-- [ ] Terapkan perubahan pada file yang dipilih
-- [ ] Konfirmasi kontras 6 mode ≥ 3:1 untuk dark **dan** light pilot
-- [ ] Cek `:Inspect` grup `StatusLine` / lualine B
+- [x] Terapkan perubahan pada file yang dipilih
+- [x] Konfirmasi kontras 6 mode ≥ 3:1 untuk dark **dan** light pilot (dark min 3.39, light min 3.06)
+- [ ] Cek `:Inspect` grup `StatusLine` / lualine B (**perlu dicek di sisi Anda**)
 
 ---
 
