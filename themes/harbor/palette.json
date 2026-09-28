@@ -1,0 +1,197 @@
+{
+  "palettes": {
+    "dark": {
+      "background": "#161c22",
+      "foreground": "#c9d3dc",
+      "cursor": "#8fb8d0",
+
+      "colors": [
+        "#10151a",
+        "#d08f8f",
+        "#93b89b",
+        "#d9c08a",
+        "#8fb8d0",
+        "#c0a3c0",
+        "#8cc0bb",
+        "#c9d3dc",
+
+        "#6b7885",
+        "#e0a0a0",
+        "#a8cdae",
+        "#ecd9a8",
+        "#a6cbe0",
+        "#d4b8d4",
+        "#a3d3cd",
+        "#e2e9ef"
+      ],
+
+      "extra": {
+        "accent": {
+          "primary": "#8fb8d0",
+          "secondary": "#7fb0a6",
+          "on_accent": "#0e1216"
+        },
+
+        "text": {
+          "primary": "$pl.foreground",
+          "secondary": "#a7b3bf",
+          "muted": "#7c8894",
+          "link": "#8ab4d8",
+          "visited": "#a68fc7"
+        },
+
+        "layer": {
+          "base": "#161c22",
+          "mantle": "#12171c",
+          "crust": "#0e1216",
+          "surface": "#1c232a",
+          "surface_raised": "#232b34",
+          "surface_overlay": "#2d3742"
+        },
+
+        "border": {
+          "default": "#2d3742",
+          "active": "#8fb8d0",
+          "medium": "#46525f"
+        },
+
+        "status": {
+          "success": "#86b39a",
+          "warning": "#ccb37f",
+          "error": "#cc8f8f",
+          "critical": "#dd8d8d",
+          "info": "#8ab4d8"
+        },
+
+        "syntax": {
+          "purple":   "#a9a0c9",
+          "magenta2": "#cf9fb5",
+          "blue0":    "#1c232a",
+          "blue1":    "#a6cbe0",
+          "blue5":    "#8fb8d0",
+          "blue6":    "#8cc0bb",
+          "blue7":    "#232b34",
+          "green1":   "#a8cdae",
+          "green2":   "#93b89b",
+          "orange":   "#d9c08a",
+          "red1":     "#cc8f8f",
+          "teal":     "#8cc0bb",
+          "terminal_black": "#2d3742"
+        },
+
+        "fg": {
+          "dim":       "#7c8894",
+          "dim_muted": "#8b96a3",
+          "disabled":  "#5b6673"
+        },
+
+        "bg": {
+          "conflict":   "#66501f",
+          "disk_usage": "#3b4653"
+        },
+
+        "ui": {
+          "bg_statusline": "#232b34",
+          "gutter": "#2d3742"
+        }
+      }
+    },
+
+    "light": {
+      "background": "#f0f4f7",
+      "foreground": "#22303c",
+      "cursor": "#3f7fa3",
+
+      "colors": [
+        "#22303c",
+        "#a4474f",
+        "#3f7a55",
+        "#8a6a2f",
+        "#2f6d94",
+        "#6b5b8a",
+        "#2f7a80",
+        "#dfe6ec",
+
+        "#6b7d8c",
+        "#c05a62",
+        "#468a5c",
+        "#a8843f",
+        "#3f87b3",
+        "#8574a8",
+        "#3f949a",
+        "#ffffff"
+      ],
+
+      "extra": {
+        "accent": {
+          "primary": "#2f6d94",
+          "secondary": "#2f7a80",
+          "on_accent": "#f0f4f7"
+        },
+
+        "text": {
+          "primary": "$pl.foreground",
+          "secondary": "#3c4c5a",
+          "muted": "#6b7d8c",
+          "link": "#2f6d94",
+          "visited": "#6b5b8a"
+        },
+
+        "layer": {
+          "base": "#f0f4f7",
+          "mantle": "#e6ecf1",
+          "crust": "#dfe6ec",
+          "surface": "#e9eff4",
+          "surface_raised": "#dde5ec",
+          "surface_overlay": "#cfd9e2"
+        },
+
+        "border": {
+          "default": "#b9c6d2",
+          "active": "#2f6d94",
+          "medium": "#a8b7c5"
+        },
+
+        "status": {
+          "success": "#3f7a55",
+          "warning": "#8a6a2f",
+          "error": "#a4474f",
+          "critical": "#b8555d",
+          "info": "#2f6d94"
+        },
+
+        "syntax": {
+          "purple":   "#6b5b8a",
+          "magenta2": "#8574a8",
+          "blue0":    "#e9eff4",
+          "blue1":    "#3f87b3",
+          "blue5":    "#2f6d94",
+          "blue6":    "#2f7a80",
+          "blue7":    "#dde5ec",
+          "green1":   "#43805f",
+          "green2":   "#3f7a55",
+          "orange":   "#8a6a2f",
+          "red1":     "#a4474f",
+          "teal":     "#2f7a80",
+          "terminal_black": "#cfd9e2"
+        },
+
+        "fg": {
+          "dim":       "#6b7d8c",
+          "dim_muted": "#7a8b99",
+          "disabled":  "#a8b7c5"
+        },
+
+        "bg": {
+          "conflict":   "#e6d2a8",
+          "disk_usage": "#c3ceda"
+        },
+
+        "ui": {
+          "bg_statusline": "#dde5ec",
+          "gutter": "#cfd9e2"
+        }
+      }
+    }
+  }
+}
