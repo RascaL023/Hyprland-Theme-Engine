@@ -268,7 +268,7 @@ Nilai final per tema (hanya slot yang berubah). Guard dijalankan untuk semua:
 | Tema | Variant | `syntax.terminal_black` | `ui.gutter` | Catatan |
 |---|---|---|---|---|
 | claude-manjusaka | dark | `#2D2824` | `#2D2824` | = `layer.surface_overlay` |
-| claude-manjusaka | light | `#68635E` | `#3E3A35` | accent pastel → gutter wajib gelap |
+| claude-manjusaka | light | `#C8C2BA` | `#CFC9C2` | REVISI §8c: rezim day, ANSI diganti set gelap |
 | ghostly | dark | `#363636` | `#272727` | shade dari overlay (dE 0.11 / 0.17) |
 | ghostly | light | `#5B5B5B` | `#565656` | accent pastel → gutter wajib gelap |
 | kanagawa-dragon | dark | `#393836` | `#393836` | = overlay (pilot) |
@@ -283,7 +283,8 @@ Nilai final per tema (hanya slot yang berubah). Guard dijalankan untuk semua:
 Kontras minimum yang dicapai: **dark 3.05:1** (`ghostly` backtick), **light 3.05:1**
 (`sakura` backtick) — ambang 3.0, jadi semua punya sedikit ruang (headroom tool +0.05).
 Tidak ada nilai ANSI yang diubah selain dua hijau `kanagawa-*/light` di atas
-(disetujui di Fase 2) — sisanya murni menambah dua slot baru.
+(disetujui di Fase 2) dan revisi `claude-manjusaka/light` di §8c — sisanya
+murni menambah dua slot baru.
 
 - [x] Terapkan kedua slot ke `nocturne`, `ghostly`, `sakura`, `kanagawa-wave`, `claude-manjuska`
 - [x] `sakura`: tambah blok `syntax` + `ui` (minimal, nilai `bg_statusline` sama dengan fallback-nya)
@@ -302,7 +303,7 @@ kembali kalem, accent-nya yang perlu digeser (hue boleh dipertahankan):
 
 | Tema | Accent biang | Sekarang | Perlu |
 |---|---|---|---|
-| claude-manjusaka/light | `colors[1..5]` (semua) | L 0.62–0.80 | digelapkan ke L ±0.57 |
+| ~~claude-manjusaka/light~~ | ~~`colors[1..5]`~~ | — | SELESAI, lihat §8c |
 | ghostly/light | `colors[1..5]` (semua) | L 0.74–0.79 | digelapkan ke L ±0.55 |
 | nocturne/light | `colors[1..5]` | L 0.59–0.68 | digelapkan ke L ±0.48 |
 | sakura/light | `colors[3]` kuning `#AD8B55` | L 0.66 | digelapkan ke L ±0.57 |
@@ -327,6 +328,38 @@ Diminta setelah rollout: tema estetik yang tidak mencolok dan beda dari yang lai
 - [x] Output tema aktif (`kanagawa-dragon/dark`) di-render ulang setelah uji (state `.state.json` otomatis dikembalikan)
 
 Cara memakai: ubah `config/.state.json` → `"name": "harbor"`, lalu render ulang.
+
+---
+
+## 8c. Revisi: `claude-manjusaka/light` — Rezim "Day" (SELESAI)
+
+Tema terang manjusaka semula menyalin ANSI accent dari varian dark (pale,
+L 0.62–0.80), sehingga direktori `ls`, teks fastfetch, dan elemen terminal loyo
+di atas kertas `#E5E0DA` (2.0–2.6:1). Rezim lama (`ui.gutter` gelap `#3E3A35`)
+juga memaksa accent tetap pale agar lulus 3:1 di lualine B — secara matematis
+rezim itu menutup ANSI di bawah 3:1 terhadap background.
+
+Solusi: pindah ke rezim seperti tokyonight-day (pola yang sama dengan
+`sakura/light`). Hue wallpaper dipertahankan, lightness diganti:
+
+- ANSI darks 1–6 → versi gelap kaya hue (rust/moss/ochre/slate/mauve/teal),
+  3.7–4.7:1 di atas kertas: `#A64B33 #58703F #8E6226 #46647E #92586B #3F7570`.
+- ANSI brights 9–14 → versi terang dari darks untuk emphasis (2.7–3.3:1):
+  `#C0664A #6F8752 #B78741 #5D7C99 #AA6E80 #4E948D`.
+- `ui.gutter` `#3E3A35` → `#CFC9C2` (strip kertas hangat; LineNr 1.25:1 vs base
+  — justru lebih terlihat — dan lualine B jadi strip terang berisi accent gelap).
+- `syntax.terminal_black` `#68635E` → `#C8C2BA` (backtick 3.51:1, ghost text
+  tetap samar 1.35:1 vs kertas).
+- `accent.primary` `#C18C7C` → `#A64B33`, `on_accent` → tinta `#1A1A1A`
+  (kanji wallpaper = tinta di atas rust; 3.05:1).
+- `text.secondary/muted`, `status.*`, `syntax.*`, `border.*`, `fg.*` dipetakan
+  ke set baru. **Varian dark tidak disentuh sama sekali.**
+
+Hasil: lualine B min 3.26:1, backtick 3.51:1, lazygit select 7.45:1 — semua
+≥ ambang. Referensi hue: anchor varian dark + wallpaper Manjusaka.jpg. pywal
+(`wal -i ~/Pictures/Wallpaper/Manjusaka.jpg -l`) dicoba sebagai pembanding
+tapi hasilnya ungu/biru (bg `#181323`, color01 `#877CC8`) — tidak mewakili
+wallpaper, jadi tidak dipakai sebagai acuan.
 
 ---
 
