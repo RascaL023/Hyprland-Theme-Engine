@@ -2,4 +2,6 @@
 **/output/**
 **/*.bak
 .private/
+__pycache__/
+*.pyc
 **/palette-generator/*.json
