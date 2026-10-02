@@ -1,7 +1,9 @@
 package cava
 
 import (
+	"errors"
 	"fmt"
+	"os/exec"
 
 	"theme-engine/internal/adapters/tools/jsonx"
 	"theme-engine/internal/domain/palette"
@@ -39,4 +41,18 @@ func (Processor) Resolve(in any, ctx *renderctx.Context) (any, error) {
 
 func (Processor) Render(templatePath, outputPath string, data any) error {
 	return renderer.Render(templatePath, outputPath, data)
+}
+
+// Reload sends SIGUSR2 to cava, which reloads colours only —
+// the same as pressing "c" inside cava. Our cava output is
+// gradient colours 1–5, exactly what SIGUSR2 refreshes.
+// pkill exits 1 when no cava process matches; that is a
+// no-op, not a failure.
+func (Processor) Reload(_ string, _ *renderctx.Context) error {
+	err := exec.Command("pkill", "-SIGUSR2", "cava").Run()
+	var ee *exec.ExitError
+	if errors.As(err, &ee) && ee.ExitCode() == 1 {
+		return nil
+	}
+	return err
 }

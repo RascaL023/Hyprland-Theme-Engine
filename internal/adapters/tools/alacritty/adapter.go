@@ -45,6 +45,9 @@ func (Processor) Resolve(in any, ctx *renderctx.Context) (any, error) {
 	}, nil
 }
 
+// Render writes the config in place: Alacritty live-reloads
+// its config (live_config_reload, on by default) via inotify
+// on the file's inode, which a temp+rename write breaks.
 func (Processor) Render(templatePath, outputPath string, data any) error {
-	return renderer.Render(templatePath, outputPath, data)
+	return renderer.RenderInPlace(templatePath, outputPath, data)
 }

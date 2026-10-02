@@ -15,6 +15,8 @@ kerja runtime dibuat sekecil mungkin, dan tool baru gampang ditambahkan.
 - Processor khusus untuk tool yang butuh config sendiri
 - Processor template-only untuk target sederhana seperti Starship, Yazi, dan Nvim
 - Atomic write supaya file config tidak pernah setengah tertulis
+- Hot reload: fase apply setelah render mengirim config baru ke tool yang sedang berjalan
+- CLI `set-theme <nama>` dan mode `watch` (polling stdlib, tanpa dependensi)
 - Config lokal tersedia, jadi repo bisa dites tanpa file eksternal
 
 ## Cara Kerja
@@ -88,7 +90,7 @@ Kontrak: `Parse(nil)` -> zero `Raw` tanpa error, tipe non-`json.RawMessage`
 | `alacritty` | tool | `internal/adapters/tools/alacritty` | `assets/templates/tools/alacritty/alacritty.tmpl` |
 | `hypr` | tool | `internal/adapters/tools/hypr` | `assets/templates/tools/hypr/hypr.tmpl` |
 | `yazi` | template-only | `internal/adapters/tools/generic` | `assets/templates/tools/yazi/theme.tmpl` |
-| `nvim` | template-only | `internal/adapters/tools/generic` | `assets/templates/tools/nvim/colors.tmpl` |
+| `nvim` | template-only + reload | `internal/adapters/tools/nvim` | `assets/templates/tools/nvim/colors.tmpl` |
 | `starship` | template-only | `internal/adapters/tools/generic` | `assets/templates/tools/starship/starship.tmpl` |
 
 ## Quick Start
@@ -104,6 +106,19 @@ Render satu target:
 ```bash
 go run ./cmd/theme-engine kitty
 go run ./cmd/theme-engine hyprland
+```
+
+Ganti tema aktif (update `.state.json` + render semua target):
+
+```bash
+go run ./cmd/theme-engine set-theme harbor
+go run ./cmd/theme-engine set-theme harbor --type light
+```
+
+Watch template/tema/map, render ulang otomatis saat berubah:
+
+```bash
+go run ./cmd/theme-engine watch
 ```
 
 Atau pakai wrapper:
@@ -144,6 +159,93 @@ Contoh:
 THEME_ENGINE_MAP="$MYENV/map" go run ./cmd/theme-engine
 ```
 
+## Hot Reload
+
+Setelah render sukses, engine menjalankan fase **apply** yang memberitahu
+tool yang sedang berjalan bahwa config-nya baru saja berubah. Fase ini
+opsional dan non-fatal: tool tidak terinstal atau mekanismenya tidak
+aktif hanya menghasilkan warning, render tetap sukses.
+
+Fase apply aktif otomatis untuk map eksternal (`$THEME_ENGINE_MAP` /
+`$MYENV/map`) dan mati untuk `config/` lokal (dev/test). Atur manual:
+
+```bash
+THEME_ENGINE_APPLY=1 go run ./cmd/theme-engine   # selalu apply
+THEME_ENGINE_APPLY=0 go run ./cmd/theme-engine   # selalu matikan
+```
+
+Mekanisme per tool:
+
+| Tool | Cara apply | Otomatis? |
+| --- | --- | --- |
+| `hypr` | `hyprctl reload` | Ya (juga inotify saat save in-place) |
+| `alacritty` | live config reload — engine menulis **in-place** (bukan rename) | Ya |
+| `kitty` | `kitty @ set-colors -a` (remote control) | Tidak — butuh `allow_remote_control yes` |
+| `cava` | `pkill -SIGUSR2 cava` (reload warna saja) | Tidak — sinyal |
+| `foot` | OSC 10/11/12 + 4;N ke semua `/dev/pts/*` (set_term_colors) | Ya — foot tidak punya live reload (issue #1653) |
+| `nvim` | `nvim --server $NVIM_LISTEN_ADDRESS --remote-send :colorscheme` | Tidak — butuh nvim `--listen` |
+| `starship`, `yazi`, `rofi` | baca config saat startup/prompt | Ya, inherent |
+| `lazygit` | restart instance | Tidak ada IPC |
+| GTK apps / waybar | restart app; waybar: `"reload_style_on_change": true` | Tidak |
+
+Trade-off: `alacritty` ditulis in-place (`RenderInPlace`) karena
+Alacritty mem-watch config per inode via inotify — write temp+rename
+memutus watcher (alacritty#5355). Risiko crash mid-write diterima untuk
+file config sekecil ini.
+
+### `tools/set_term` — set_term_colors mandiri
+
+Script standalone (`tools/set_term`, Python 3, nol dependensi) yang
+meng-apply palette ke semua terminal berjalan via OSC — berguna setelah
+mengedit `palette.json` secara manual atau dari keybind, tanpa jalan
+engine. Memakai lookup map-dir yang sama (`$THEME_ENGINE_MAP` →
+`config/` → `$MYENV/map`) dan resolve `$pl.` yang sama dengan Go —
+`internal/adapters/tools/foot/set_term_test.go` men-assert output
+`--dry-run`-nya identik dengan `oscSequence` engine untuk semua tema ×
+varian. `.state.json` hanya dibaca untuk default; tema + varian
+eksplisit jalan tanpa map dir:
+
+```bash
+python3 tools/set_term                     # tema aktif dari .state.json
+python3 tools/set_term harbor --variant dark
+python3 tools/set_term --dry-run           # print sequence, tidak menulis
+```
+
+`tools/set_term.sh` adalah twin bash-nya — palette di-parse dengan
+awk/sed (tanpa python/jq), API sama. Berisi fungsi `set_term_colors`
+(memakai `FG`, `BG`, `CURSOR`, `COLOR0..COLOR15`) yang bisa di-`source`
+ke `.bashrc`; menjalankannya (bukan sourcing) memakai CLI yang sama:
+
+```bash
+tools/set_term.sh harbor --variant dark    # API sama dengan versi python
+source tools/set_term.sh                   # hanya definisikan fungsi
+set_term_colors                            # terapkan FG/BG/CURSOR/COLOR0..15
+```
+
+Untuk tool baru, tambahkan metode ke adapter-nya:
+
+```go
+func (Processor) Reload(outputPath string, ctx *renderctx.Context) error {
+	// kirim config baru ke instance yang berjalan
+}
+```
+
+Engine otomatis memanggilnya lewat interface `ports.Reloader` —
+adapter tanpa `Reload` dilewati tanpa error.
+
+## Watch Mode
+
+`theme-engine watch` polling (stdlib `os.Stat`, tanpa fsnotify) direktori
+`assets/templates/`, `themes/<aktif>/`, dan map directory setiap 500ms.
+Perubahan di-debounce 300ms (save beruntun editor di-coalesce), template
+cache di-clear, lalu semua target di-render ulang. Error saat tema sedang
+diedit (JSON invalid) hanya di-log — watching terus jalan. SIGINT/SIGTERM
+keluar bersih.
+
+```bash
+go run ./cmd/theme-engine watch
+```
+
 ## Runner Script
 
 `runner.sh` adalah wrapper tipis untuk pemakaian harian, terminal, dan tombol
@@ -158,6 +260,7 @@ Mode utama:
 ./runner.sh build-run [target]
 ./runner.sh test
 ./runner.sh clean
+./runner.sh set-term [theme]  # apply palette ke terminal berjalan (tools/set_term)
 ```
 
 Shorthand ini juga valid:
@@ -190,6 +293,14 @@ Untuk path cepat di tombol/keybind, build dulu sekali lalu panggil mode `run`:
 ```bash
 ./runner.sh build
 ./runner.sh run hyprland
+```
+
+Mode `set-term` tidak perlu build — langsung pakai Python:
+
+```bash
+./runner.sh set-term              # tema aktif
+./runner.sh set-term harbor       # tema tertentu
+./runner.sh set-term --dry-run    # print sequence, tidak menulis
 ```
 
 ### `config/.state.json`
@@ -400,8 +511,10 @@ setelah render, bukan dari parsing JSON atau loading path map.
 
 - Render semua target: jalan
 - Render target spesifik: jalan
+- Hot reload (fase apply per tool): jalan
+- `set-theme` dan mode `watch`: jalan
 - Config lokal: tersedia di `config/`
-- Test: coverage fokus untuk loader dan renderer
+- Test: coverage fokus untuk loader, renderer, foot OSC, kitty colour extraction, set-theme
 - Theme: nocturne, ghostly, kanagawa-wave, kanagawa-dragon,
   kanagawa-dragon-original, dracula, sakura
 - Tools: gtk, cava, foot, kitty, alacritty, hypr, yazi, nvim, starship

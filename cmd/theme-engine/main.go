@@ -15,6 +15,7 @@ const (
 	ExitParseFail = 4
 	ExitResolve   = 5
 	ExitRender    = 6
+	ExitUsage     = 7
 )
 
 func fail(code int, msg string, args ...any) {
@@ -23,9 +24,21 @@ func fail(code int, msg string, args ...any) {
 }
 
 func main() {
+	args := os.Args[1:]
+	if len(args) > 0 {
+		switch args[0] {
+		case "set-theme":
+			runSetTheme(args[1:])
+			return
+		case "watch":
+			runWatch()
+			return
+		}
+	}
+
 	target := ""
-	if len(os.Args) > 1 {
-		target = os.Args[1]
+	if len(args) > 0 {
+		target = args[0]
 	}
 
 	app, err := engine.New(engine.Config{

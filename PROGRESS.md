@@ -22,6 +22,9 @@ Dokumen ini melacak status rilis, fitur yang telah diimplementasikan, serta memb
   `ui.gutter` (lualine section B), dan target `lazygit` baru. Semua tema kini lulus ambang
   kontras 3:1 / 4.5:1 (detail + angka: `VISUAL_FIX_PLAN.md`).
 - **[BARU] Harbor Theme**: tema biru-slate/teal kalem (dark & light), lulus guard sejak awal.
+- **[BARU] Hot Reload & CLI**: fase apply pasca-render untuk tool yang berjalan
+  (hypr/kitty/cava/foot/nvim/alacritty), CLI `set-theme`, mode `watch`
+  (polling stdlib). Detail: `HOT_RELOAD_PLAN.md`.
 
 ---
 
@@ -35,6 +38,8 @@ Dokumen ini melacak status rilis, fitur yang telah diimplementasikan, serta memb
 - [x] **Template Caching**: Parsing template hanya sekali per path eksekusi.
 - [x] **Skip-Unchanged Writes**: Hanya menulis file jika isi hasil render berbeda dengan file di disk (mengurangi SSD wear dan meminimalkan trigger hot-reload eksternal).
 - [x] **Atomic Disk Write**: Menulis ke file temp terlebih dahulu lalu melakukan rename agar terhindar dari file konfigurasi korup atau terpotong jika proses mati tengah jalan.
+- [x] **In-Place Write (Alacritty)**: `RenderInPlace` menulis langsung ke file (O_TRUNC) agar inotify watcher Alacritty (per inode) tetap hidup.
+- [x] **Hot Reload Apply Phase**: Setelah render, engine memanggil `Reload()` pada adapter yang mengimplementasikan `ports.Reloader` — non-fatal (Warn) dan otomatis mati di map lokal `config/`.
 
 ### B. Implementasi Target & Processor
 
@@ -80,10 +85,17 @@ Custom Kanagawa Dragon, Kanagawa Dragon Original, Dracula, Red Devil.
 - [x] **Unit Testing**: Pengujian otomatis untuk penulisan file, render, caching, dan pemetaan path.
 - [x] **Accessibility Guard**: `internal/domain/palette/contrast_test.go` men-assert kontras WCAG
   (backtick inline code, teks utama, baris terpilih lazygit, lualine section B) untuk **semua**
-  `themes/*` × dark/light. Tema baru otomatis ikut terjaga (discovery dari direktori, `*.bak` dilewati).
-- [x] **Contrast Report Tool**: `tools/contrast_report.py` — audit + usul nilai slot palet
-  (`--plan`, `--accents`, `--json`). Menggunakan rumus yang sama dengan guard Go, dan menggeser
-  warna di ruang OKLCH supaya hue/chroma tema tidak rusak. Dev-only, tidak menambah biaya render.
+  `themes/*` × dark/light. Tema baru otomatis ikut terjaga (discovery dari direktori, `*.bak` dilewati).- [x] **Contrast Report Tool**: `tools/contrast_report.py` — audit + usul nilai slot
+  palet (`--plan`, `--accents`, `--json`). Menggunakan rumus yang sama dengan guard Go, dan
+  menggeser warna di ruang OKLCH supaya hue/chroma tema tidak rusak. Dev-only, tidak menambah biaya render.
+- [x] **Set Term Tool**: `tools/set_term` — `set_term_colors` mandiri: apply palette
+  aktif ke semua terminal berjalan via OSC 10/11/12 + 4;N tanpa jalan engine
+  (map-dir lookup + resolve `$pl.` sama dengan engine). Test diferensial di
+  `internal/adapters/tools/foot/set_term_test.go` mengunci output `--dry-run`
+  agar identik dengan engine untuk semua tema × varian; tema + varian eksplisit
+  tidak butuh `.state.json`. Twin bash `tools/set_term.sh` (parse awk/sed,
+  tanpa python/jq) bisa dijalankan sebagai CLI atau di-`source` untuk fungsi
+  `set_term_colors` di `.bashrc`.
 
 ---
 
@@ -104,11 +116,13 @@ Jika Anda ingin melanjutkan coding sekarang, pilih salah satu dari tugas terarah
   1. Tambahkan pengecekan format hex warna (misal, memastikan warna diawali dengan `#` dan memiliki 6 digit hex yang valid).
   2. Implementasikan parser error reporter yang menunjukkan letak file dan baris yang bermasalah.
 
-### 🎯 Prioritas 3: CLI Flag Interaktif & Mode Watch (Hot Reload)
-- **Tujuan**: Mempermudah penggantian tema lewat terminal dan melakukan render ulang secara otomatis saat file template diubah.
-- **Langkah-Langkah**:
-  1. Tambahkan argument parsing yang lebih kaya di `cmd/theme-engine/main.go` (misal, command `theme-engine set-theme <nama_tema>` untuk mengedit `.state.json` otomatis).
-  2. Gunakan library pembaca perubahan file filesystem (seperti `fsnotify`) untuk mengimplementasikan mode `--watch` atau `watch` command.
+### ✅ Prioritas 3: CLI Flag Interaktif & Mode Watch (Hot Reload) — SELESAI
+- **Terimplementasi**:
+  1. `theme-engine set-theme <nama> [--type dark|light]` — update `.state.json` atomic + render semua target (`cmd/theme-engine/settheme.go`).
+  2. `theme-engine watch` — polling stdlib (500ms, debounce 300ms) tanpa fsnotify agar proyek tetap nol-dependensi (`cmd/theme-engine/watch.go`).
+  3. Fase **apply** setelah render: `ports.Reloader` optional, dipanggil engine dengan Warn non-fatal (`internal/app/engine/engine.go`).
+  4. Reload per tool: `hyprctl reload`, alacritty write in-place, `kitty @ set-colors -a`, `pkill -SIGUSR2 cava`, foot via OSC sequence ke `/dev/pts/*`, nvim `--remote-send`.
+- Detail mekanisme & trade-off: `HOT_RELOAD_PLAN.md` dan `README.md` §Hot Reload.
 
 ---
 
@@ -121,6 +135,15 @@ Jalankan file tanpa melakukan kompilasi terlebih dahulu (sangat cocok saat menge
 ```bash
 ./runner.sh dev          # Render semua target
 ./runner.sh dev kitty    # Hanya render target kitty
+```
+
+### Menerapkan Warna ke Terminal Berjalan (set_term)
+Setelah mengedit `palette.json` secara manual, atau dari keybind,
+terapkan palette ke semua terminal yang berjalan tanpa render ulang:
+```bash
+./runner.sh set-term              # tema aktif dari .state.json
+./runner.sh set-term harbor       # tema tertentu
+./runner.sh set-term --dry-run    # print OSC sequence saja
 ```
 
 ### Menjalankan Tes Unit (Unit Testing)

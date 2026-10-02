@@ -23,10 +23,11 @@ type Config struct {
 }
 
 type Engine struct {
-	apps       map[string]*loader.ToolMap
-	theme      *theme.Theme
-	ctx        renderctx.Context
-	processors map[string]ports.Processor
+	apps        map[string]*loader.ToolMap
+	theme       *theme.Theme
+	ctx         renderctx.Context
+	processors  map[string]ports.Processor
+	applyEnabled bool
 }
 
 func New(cfg Config) (*Engine, error) {
@@ -66,13 +67,15 @@ func New(cfg Config) (*Engine, error) {
 	rawTheme.Theme.Fonts.ResolveDefaults()
 
 	return &Engine{
-		apps:       apps,
-		theme:      rawTheme,
-		processors: cfg.Processors,
+		apps:         apps,
+		theme:        rawTheme,
+		processors:   cfg.Processors,
+		applyEnabled: applyEnabled(cfg.MapDir),
 		ctx: renderctx.Context{
 			Palette:   resolvedPalette,
 			Theme:     rawTheme,
 			ThemeType: st.Theme.Type,
+			ThemeName: st.Theme.Name,
 		},
 	}, nil
 }
@@ -124,6 +127,14 @@ func (e *Engine) Run(name string) error {
 		return fmt.Errorf("render %s: %w", name, err)
 	}
 
+	if e.applyEnabled {
+		if r, ok := proc.(ports.Reloader); ok {
+			if err := r.Reload(paths.OutputPath, &e.ctx); err != nil {
+				log.Warn("reload %s: %v", name, err)
+			}
+		}
+	}
+
 	log.Info("Success rendering %s", name)
 	return nil
 }
@@ -142,4 +153,32 @@ func DefaultMapDir() string {
 	}
 
 	return "config"
+}
+
+// applyEnabled decides whether the post-render apply phase runs.
+// THEME_ENGINE_APPLY=1 forces it on, =0 forces it off, and the
+// default (auto) enables it only when the map directory is an
+// external deployment ($THEME_ENGINE_MAP / $MYENV), not the
+// local config/ used for dev and tests.
+func applyEnabled(mapDir string) bool {
+	switch pathenv.Env("THEME_ENGINE_APPLY") {
+	case "1":
+		return true
+	case "0":
+		return false
+	default: // "auto"
+		return !isLocalMapDir(mapDir)
+	}
+}
+
+func isLocalMapDir(mapDir string) bool {
+	abs, err := filepath.Abs(mapDir)
+	if err != nil {
+		return false
+	}
+	local, err := filepath.Abs("config")
+	if err != nil {
+		return false
+	}
+	return abs == local
 }

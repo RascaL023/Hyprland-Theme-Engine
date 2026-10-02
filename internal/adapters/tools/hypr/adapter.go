@@ -1,6 +1,7 @@
 package hypr
 
 import (
+	"os/exec"
 	"strings"
 
 	"theme-engine/internal/adapters/tools/jsonx"
@@ -62,4 +63,13 @@ func (Processor) Resolve(in any, ctx *renderctx.Context) (any, error) {
 
 func (Processor) Render(templatePath, outputPath string, data any) error {
 	return renderer.Render(templatePath, outputPath, data)
+}
+
+// Reload asks Hyprland to re-read its config. Hyprland
+// inotify-watches the file it was launched with, so a plain
+// save is usually enough; this also covers atomic (rename)
+// writes and is the documented manual mechanism (hyprctl
+// reload). Idempotent — safe to call on every render.
+func (Processor) Reload(_ string, _ *renderctx.Context) error {
+	return exec.Command("hyprctl", "reload").Run()
 }

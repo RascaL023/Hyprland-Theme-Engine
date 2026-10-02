@@ -9,4 +9,5 @@ type Context struct {
 	Palette   *palette.ResolvedPalette
 	Theme     *theme.Theme
 	ThemeType string
+	ThemeName string
 }

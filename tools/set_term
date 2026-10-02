@@ -1,0 +1,208 @@
+#!/usr/bin/env python3
+"""Apply a theme palette to every running terminal (set_term_colors).
+
+Foot has no live config reload (codeberg.org/dnkl/foot/issues/1653),
+but its emulator — like alacritty, kitty and xterm — honours OSC
+sequences at runtime. Data written to a pty slave is delivered to
+the emulator that owns it, so every accessible terminal session
+picks up the new colours without a restart. This is the standalone
+form of the foot adapter's Reload: run it after editing a palette
+by hand, or from a keybind, without going through the engine.The palette is read from ``themes/<name>/palette.json``. The
+default theme/variant comes from ``.state.json`` (same map-dir
+lookup as the engine: ``$THEME_ENGINE_MAP``, local ``config/``,
+``$MYENV/map``) — but only when not given explicitly, so an
+explicit ``theme --variant`` pair works with no map dir at all.
+``$pl.`` references are resolved the same way the Go resolver
+does.
+
+Usage:
+    python3 tools/set_term                     # active theme from .state.json
+    python3 tools/set_term harbor              # explicit theme
+    python3 tools/set_term --variant dark
+    python3 tools/set_term --map-dir "$MYENV/map"
+    python3 tools/set_term --dry-run           # print the sequence, write nothing
+
+Sessions owned by another user are skipped (EACCES). With no
+terminal sessions at all this is a no-op.
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import sys
+
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+THEMES_DIR = os.path.join(REPO_ROOT, "themes")
+
+
+# ------------------------------------------------------------------ sequence
+
+
+def build_sequence(foreground: str, background: str, cursor: str,
+                   colors: list[str]) -> str:
+    """OSC 10 (foreground), OSC 11 (background), OSC 12 (cursor)
+    and OSC 4;N for every palette entry. ESC \\ (ST) terminates
+    each sequence."""
+    parts = [
+        "\x1b]10;%s\x1b\\" % foreground,
+        "\x1b]11;%s\x1b\\" % background,
+        "\x1b]12;%s\x1b\\" % cursor,
+    ]
+    for index, color in enumerate(colors):
+        parts.append("\x1b]4;%d;%s\x1b\\" % (index, color))
+    return "".join(parts)
+
+
+# ------------------------------------------------------------------ palette
+
+
+def resolve_var(value: str, raw: dict) -> str:
+    """Single-pass ``$pl.`` resolution, same contract as the Go
+    resolver: ``palette.json`` may only reference the base palette
+    (foreground, background, cursor, color0..color15)."""
+    if not isinstance(value, str) or not value.startswith("$pl."):
+        return value
+    key = value[4:]
+    if key == "foreground":
+        return raw.get("foreground", "")
+    if key == "background":
+        return raw.get("background", "")
+    if key == "cursor":
+        return raw.get("cursor", "")
+    if key.startswith("color"):
+        index = int(key[5:])
+        colors = raw.get("colors", [])
+        if 0 <= index < len(colors):
+            return resolve_var(colors[index], raw)
+    return value
+
+
+def default_map_dir() -> str:
+    """Same lookup order as engine.DefaultMapDir()."""
+    path = os.environ.get("THEME_ENGINE_MAP")
+    if path:
+        return path
+    if os.path.isfile(os.path.join("config", "path.txt")):
+        return "config"
+    myenv = os.environ.get("MYENV")
+    if myenv:
+        return os.path.join(myenv, "map")
+    return "config"
+
+
+def load_state(map_dir: str) -> dict:
+    path = os.path.join(map_dir, ".state.json")
+    with open(path, encoding="utf-8") as handle:
+        state = json.load(handle)
+    theme = state.get("theme", {})
+    if not theme.get("name"):
+        raise ValueError(f"{path}: no active theme")
+    return theme
+
+
+def load_palette(theme: str, variant: str) -> tuple[str, str, str, list[str]]:
+    path = os.path.join(THEMES_DIR, theme, "palette.json")
+    with open(path, encoding="utf-8") as handle:
+        data = json.load(handle)
+
+    variants = data.get("palettes", {})
+    if variant not in variants:
+        raise KeyError(f"{theme} has no '{variant}' palette")
+    raw = variants[variant]
+
+    colors = [resolve_var(c, raw) for c in raw.get("colors", [])]
+    return (
+        resolve_var(raw.get("foreground", ""), raw),
+        resolve_var(raw.get("background", ""), raw),
+        resolve_var(raw.get("cursor", ""), raw),
+        colors,
+    )
+
+
+# ------------------------------------------------------------------ apply
+
+
+def is_digits(name: str) -> bool:
+    return bool(name) and all("0" <= c <= "9" for c in name)
+
+
+def apply_sequence(sequence: str) -> tuple[int, int]:
+    """Write the sequence to every numeric pty slave. Returns
+    (updated, skipped). Unwritable ptys (another user's session)
+    are expected and skipped silently."""
+    updated = 0
+    skipped = 0
+    try:
+        entries = os.listdir("/dev/pts")
+    except OSError as error:
+        raise OSError(f"list /dev/pts: {error}") from error
+
+    for name in entries:
+        if not is_digits(name):
+            continue
+        try:
+            with open(os.path.join("/dev/pts", name), "wb") as pty:
+                pty.write(sequence.encode())
+            updated += 1
+        except OSError:
+            skipped += 1
+    return updated, skipped
+
+
+# ------------------------------------------------------------------ cli
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+    parser.add_argument("theme", nargs="?",
+                        help="theme name (default: active theme from .state.json)")
+    parser.add_argument("--variant", choices=("dark", "light"),
+                        help="palette variant (default: active variant from .state.json)")
+    parser.add_argument("--map-dir", default=default_map_dir(),
+                        help="map directory holding .state.json")
+    parser.add_argument("--dry-run", action="store_true",
+                        help="print the OSC sequence, write nothing")
+    args = parser.parse_args(argv)
+
+    # .state.json is only the source of the defaults: an explicit
+    # theme and variant make the tool usable without any map dir.
+    state = {}
+    if args.theme is None or args.variant is None:
+        try:
+            state = load_state(args.map_dir)
+        except (OSError, ValueError) as error:
+            print(f"set_term: {error}", file=sys.stderr)
+            return 1
+
+    theme = args.theme or state.get("name", "")
+    variant = args.variant or state.get("type") or "dark"
+
+    try:
+        foreground, background, cursor, colors = load_palette(theme, variant)
+    except (OSError, KeyError, ValueError) as error:
+        print(f"set_term: {error}", file=sys.stderr)
+        return 1
+
+    sequence = build_sequence(foreground, background, cursor, colors)
+
+    if args.dry_run:
+        sys.stdout.write(sequence)
+        return 0
+
+    try:
+        updated, skipped = apply_sequence(sequence)
+    except OSError as error:
+        print(f"set_term: {error}", file=sys.stderr)
+        return 1
+
+    print(f"set_term: {theme}/{variant} -> {updated} terminal(s) updated"
+          + (f", {skipped} skipped (permission)" if skipped else ""))
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

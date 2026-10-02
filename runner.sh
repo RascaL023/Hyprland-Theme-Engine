@@ -53,6 +53,7 @@ notify_error() {
     4) msg="Config / parse error" ;;
     5) msg="Resolve error" ;;
     6) msg="Render error" ;;
+    7) msg="Usage error" ;;
     10) msg="Build failed" ;;
     127) msg="Binary not found. Run: ./runner.sh build" ;;
     *) msg="Unknown error ($code)" ;;
@@ -71,6 +72,7 @@ Usage:
   ./runner.sh build-run [target]
   ./runner.sh test
   ./runner.sh clean
+  ./runner.sh set-term [theme]
 
 Modes:
   run        Run compiled binary. Best for keybinds/buttons.
@@ -79,12 +81,19 @@ Modes:
   build-run  Build then run compiled binary.
   test       Run go test ./...
   clean      Delete compiled binary.
+  set-term   Apply the active palette to running terminals
+             (tools/set_term — OSC sequences, no engine run).
+
+The binary also accepts subcommands (passed through by run/dev):
+  theme-engine set-theme <name> [--type dark|light]
+  theme-engine watch
 
 Compatibility aliases:
   run-bin, run-raw, build-bin
 
 Environment:
   THEME_ENGINE_MAP      Override config map directory.
+  THEME_ENGINE_APPLY    auto, 1, or 0. Post-render apply phase. Default: auto.
   THEME_ENGINE_NOTIFY   auto, 1, or 0. Default: auto.
   VERBOSE               Print logs even without a terminal.
 EOF
@@ -134,6 +143,11 @@ run_tests() {
   go test ./...
 }
 
+run_set_term() {
+  log "[set-term] tools/set_term $*"
+  python3 tools/set_term "$@"
+}
+
 mode="${1:-run}"
 if [[ "$#" -gt 0 ]]; then
   shift
@@ -154,6 +168,9 @@ case "$mode" in
     ;;
   test)
     run_tests
+    ;;
+  set-term)
+    run_set_term "$@"
     ;;
   clean)
     log "[clean] $BINARY"
