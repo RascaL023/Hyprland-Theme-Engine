@@ -9,12 +9,13 @@ import (
 	"theme-engine/internal/adapters/tools/generic"
 	"theme-engine/internal/adapters/tools/hypr"
 	"theme-engine/internal/adapters/tools/kitty"
+	"theme-engine/internal/adapters/tools/lazygit"
 	"theme-engine/internal/adapters/tools/nvim"
 	"theme-engine/internal/app/ports"
 )
 
 func defaultProcessors() map[string]ports.Processor {
-	genericTargets := []string{"yazi", "starship", "lazygit"}
+	genericTargets := []string{"yazi", "starship"}
 
 	procs := make(map[string]ports.Processor, 10)
 	procs["gtk"] = gtk.New()
@@ -25,6 +26,7 @@ func defaultProcessors() map[string]ports.Processor {
 	procs["cava"] = cava.New()
 	procs["hypr"] = hypr.New()
 	procs["nvim"] = nvim.New()
+	procs["lazygit"] = lazygit.New()
 	for _, name := range genericTargets {
 		procs[name] = generic.New()
 	}

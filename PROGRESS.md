@@ -24,7 +24,11 @@ Dokumen ini melacak status rilis, fitur yang telah diimplementasikan, serta memb
 - **[BARU] Harbor Theme**: tema biru-slate/teal kalem (dark & light), lulus guard sejak awal.
 - **[BARU] Hot Reload & CLI**: fase apply pasca-render untuk tool yang berjalan
   (hypr/kitty/cava/foot/nvim/alacritty), CLI `set-theme`, mode `watch`
-  (polling stdlib). Detail: `HOT_RELOAD_PLAN.md`.
+  (polling stdlib). `system` (gsettings): engine menjalankan `apply.sh` —
+  `dconf write` berlaku live ke GTK apps berjalan via xsettings daemon.
+  `lazygit`: mustahil hot reload (config dibaca saat startup, tanpa IPC —
+  issue #1158/#4602), adapter khusus dengan Reload no-op terdokumentasi.
+  Detail: `HOT_RELOAD_PLAN.md`.
 
 ---
 
@@ -54,7 +58,8 @@ Dokumen ini melacak status rilis, fitur yang telah diimplementasikan, serta memb
 | **Yazi** | Static | [x] Selesai | `assets/templates/tools/yazi/theme.tmpl` | `output/tools/yazi/theme.toml` |
 | **Nvim** | Static | [x] Selesai | `assets/templates/tools/nvim/colors.tmpl` | `output/tools/nvim/colors.lua` |
 | **Starship** | Static | [x] Selesai | `assets/templates/tools/starship/starship.tmpl` | `output/tools/starship/starship.toml` |
-| **Lazygit** | Static | [x] Selesai | `assets/templates/tools/lazygit/config.tmpl` | `output/tools/lazygit/config.yml` |
+| **Lazygit** | Static + reload (no-op) | [x] Selesai | `assets/templates/tools/lazygit/config.tmpl` | `output/tools/lazygit/config.yml` |
+| **System** | Domain (dconf apply) | [x] Selesai | `assets/templates/domain/system/apply.tmpl` | `output/domain/system/apply.sh` — `Reload` menjalankannya (gsettings live) |
 | **Waybar** | Migrated to GTK | [x] Selesai | via `output/domain/gtk/css/source.css` | Config langsung `@import` source.css dari GTK |
 | **Ncmcpp** | Static / Custom | [ ] Rencana | - | - |
 | **Btop** | Static / Custom | [ ] Rencana | - | - |
@@ -120,8 +125,7 @@ Jika Anda ingin melanjutkan coding sekarang, pilih salah satu dari tugas terarah
 - **Terimplementasi**:
   1. `theme-engine set-theme <nama> [--type dark|light]` — update `.state.json` atomic + render semua target (`cmd/theme-engine/settheme.go`).
   2. `theme-engine watch` — polling stdlib (500ms, debounce 300ms) tanpa fsnotify agar proyek tetap nol-dependensi (`cmd/theme-engine/watch.go`).
-  3. Fase **apply** setelah render: `ports.Reloader` optional, dipanggil engine dengan Warn non-fatal (`internal/app/engine/engine.go`).
-  4. Reload per tool: `hyprctl reload`, alacritty write in-place, `kitty @ set-colors -a`, `pkill -SIGUSR2 cava`, foot via OSC sequence ke `/dev/pts/*`, nvim `--remote-send`.
+  3. Fase **apply** setelah render: `ports.Reloader` optional, dipanggil engine dengan Warn non-fatal (`internal/app/engine/engine.go`).   4. Reload per tool: `hyprctl reload`, alacritty write in-place, `kitty @ set-colors -a`, `pkill -SIGUSR2 cava`, foot via OSC sequence ke `/dev/pts/*`, nvim `--remote-send`, `system` menjalankan `apply.sh` (dconf live), `lazygit` no-op terdokumentasi.
 - Detail mekanisme & trade-off: `HOT_RELOAD_PLAN.md` dan `README.md` §Hot Reload.
 
 ---

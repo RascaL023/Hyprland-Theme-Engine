@@ -41,7 +41,9 @@ internal/domain/
 internal/adapters/
   tools/           # Adapter per tool: kitty, foot, alacritty, cava, hypr
     <tool>/          # model.go (input JSON) + view.go (data template) + adapter.go
-    generic/         # Template-only: nvim, yazi, starship, lazygit (tanpa schema khusus)
+    generic/         # Template-only: yazi, starship (tanpa schema khusus)
+    nvim/            # generic + Reload (:colorscheme via --remote-send)
+    lazygit/         # generic + Reload no-op (config dibaca saat startup)
     jsonx/           # Decode: Parse nil-safe, anti-panic
   platform/
     gtk/             # view.go (Gtk{*Context}) + adapter.go (render + sassc)
@@ -111,7 +113,9 @@ Aturan defensif (semua adapter):
 Dua jenis adapter khusus:
 
 * `generic` (`adapters/tools/generic/adapter.go`): template-only, teruskan
-  `*renderctx.Context` mentah ke template. Dipakai `nvim`, `yazi`, `starship`, `lazygit`.
+  `*renderctx.Context` mentah ke template. Dipakai `yazi`, `starship`;
+  `nvim` dan `lazygit` embed generic lalu menambah `Reload` (pola yang
+  sama: `generic.Processor` + metode Reload tambahan).
 * `platform/gtk` (`adapters/platform/gtk/adapter.go`): satu-satunya dengan
   `Render` kustom — render `source.tmpl` → `_source.scss`, lalu `sassc`
   compile ke `css/source.css` + `rasi/source.rasi` (dengan `MkdirAll` +
@@ -183,8 +187,11 @@ Template-only (cukup warna global):
 2. `config/path.txt`: `<nama>|assets/...|output/...`
 3. `wiring.go`: `procs["<nama>"] = generic.New()`
 
-Contoh yang sudah lewat jalur ini: `lazygit`
-(`assets/templates/tools/lazygit/config.tmpl` → `output/tools/lazygit/config.yml`).
+Contoh yang sudah lewat jalur ini: `starship`
+(`assets/templates/tools/starship/starship.tmpl`). `lazygit` dulu lewat jalur
+ini, kini punya adapter sendiri (`internal/adapters/tools/lazygit`) karena
+Reload-nya perlu didokumentasikan sebagai no-op (riset: tidak ada mekanisme
+reload config lazygit — issue #1158/#4602).
 Untuk nvim, warna `fg_gutter` dan `terminal_black` di `colors.tmpl` adalah target
 kontras yang dijaga test — lihat `RULE.md` bab mapping Tokyonight.
 

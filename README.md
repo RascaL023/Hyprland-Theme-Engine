@@ -92,6 +92,7 @@ Kontrak: `Parse(nil)` -> zero `Raw` tanpa error, tipe non-`json.RawMessage`
 | `yazi` | template-only | `internal/adapters/tools/generic` | `assets/templates/tools/yazi/theme.tmpl` |
 | `nvim` | template-only + reload | `internal/adapters/tools/nvim` | `assets/templates/tools/nvim/colors.tmpl` |
 | `starship` | template-only | `internal/adapters/tools/generic` | `assets/templates/tools/starship/starship.tmpl` |
+| `lazygit` | template-only + reload (no-op) | `internal/adapters/tools/lazygit` | `assets/templates/tools/lazygit/config.tmpl` |
 
 ## Quick Start
 
@@ -185,7 +186,8 @@ Mekanisme per tool:
 | `foot` | OSC 10/11/12 + 4;N ke semua `/dev/pts/*` (set_term_colors) | Ya — foot tidak punya live reload (issue #1653) |
 | `nvim` | `nvim --server $NVIM_LISTEN_ADDRESS --remote-send :colorscheme` | Tidak — butuh nvim `--listen` |
 | `starship`, `yazi`, `rofi` | baca config saat startup/prompt | Ya, inherent |
-| `lazygit` | restart instance | Tidak ada IPC |
+| `system` (dconf/gsettings) | engine menjalankan `apply.sh` — `dconf write` berlaku **live** ke GTK apps berjalan via xsettings daemon | Ya |
+| `lazygit` | restart instance — Reload no-op terdokumentasi (config dibaca saat startup, tanpa IPC: issue #1158/#4602) | Tidak |
 | GTK apps / waybar | restart app; waybar: `"reload_style_on_change": true` | Tidak |
 
 Trade-off: `alacritty` ditulis in-place (`RenderInPlace`) karena

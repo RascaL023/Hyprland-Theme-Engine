@@ -35,10 +35,10 @@ Yang belum ada:
 | **Nvim** | `nvim` → `colors.lua` | `:colorscheme <nama>` di instance berjalan; `nvim --server <addr> --remote-send` | Instance baru: ya | Instance berjalan perlu `--listen <addr>`; nama colorscheme = nama file lua |
 | **Starship** | `starship` → `starship.toml` | Stateless — baca config setiap render prompt | **Ya, inherent** | Tidak perlu tindakan apa pun |
 | **Yazi** | `yazi` → `theme.toml` | Dibaca saat startup; yazi TUI berumur pendek | **Ya** (per jalankan) | Tidak perlu tindakan apa pun |
-| **Lazygit** | `lazygit` → `config.yml` | Dibaca saat startup saja (issue #1158) | Tidak | Restart instance diperlukan; tidak ada IPC reload |
+| **Lazygit** | `lazygit` → `config.yml` | Dibaca saat startup saja (issue #1158, #4602) | Tidak | Restart instance diperlukan; tidak ada IPC reload — adapter khusus dengan Reload **no-op terdokumentasi** |
 | **GTK** | `gtk` → `source.css` + `source.rasi` | `gtk.css` dibaca saat app start; tidak ada live reload bawaan (GNOME/gtk#3409) | Tidak | Cara pakai: restart GTK apps. **Waybar** (yang `@import` css ini): set `"reload_style_on_change": true` di waybar config → auto-watch css + imports |
 | **Rofi** | via `source.rasi` | Dibaca saat launch (on-demand) | **Ya** (per launch) | Tidak perlu tindakan apa pun |
-| **System (dconf)** | `system` → `apply.sh` | `dconf write` langsung berlaku untuk app gsettings-aware | **Ya** (saat script dijalankan) | Menjalankan `apply.sh` sudah menjadi apply-nya sendiri |
+| **System (dconf)** | `system` → `apply.sh` | `dconf write` langsung berlaku untuk app gsettings-aware (live via xsettings daemon) | **Ya** | Terimplementasi: `Reload` menjalankan `apply.sh` hasil render (script `set -e` agar kegagalan dconf tidak disembunyikan) |
 
 Sumber: wiki.hyprland.org (Configuring), alacritty.org/config-alacritty.html,
 sw.kovidgoyal.net/kitty/remote-control, github.com/karlstav/cava (README),
@@ -122,6 +122,8 @@ if e.applyEnabled {
 | `kitty` | atomic | `Reload` → filter baris warna dari output → temp file → `kitty @ set-colors -a <tmp>` |
 | `cava` | atomic | `Reload` → `pkill -SIGUSR2 cava` (no-match = no-op) |
 | `nvim` | atomic | `Reload` → jika `$NVIM_LISTEN_ADDRESS` ada: `nvim --server <addr> --remote-send "<cmd>colorscheme <nama><cr>"` |
+| `system` | atomic | `Reload` → jalankan `apply.sh` hasil render (`dconf write` live via xsettings daemon) |
+| `lazygit` | atomic | `Reload` → no-op terdokumentasi (riset: tidak ada mekanisme, issue #1158/#4602) |
 | lainnya | atomic | tanpa Reloader (perilaku §2) |
 
 `RenderInPlace` baru di `renderer.go`: reuse cache + buffer + compare, tapi
@@ -213,8 +215,12 @@ karena bukan key di `path.txt`).
 - **Alacritty**: pastikan `live_config_reload = true` (sudah default) dan
   output engine benar-benar file yang di-watch (atau `import`-nya — watch
   untuk file import tergantung versi, issue #5852).
-- **Foot / Lazygit / GTK apps**: restart wajib — tidak ada mekanisme live
-  reload di tool tersebut (bukan keterbatasan engine).
+- **Foot / Lazygit / GTK apps (css)**: restart wajib — tidak ada mekanisme
+  live reload di tool tersebut (bukan keterbatasan engine). Lazygit punya
+  adapter khusus dengan Reload no-op yang mencatat riset ini di kode.
+- **GTK apps (gsettings)**: tidak perlu restart untuk pengaturan yang
+  ditulis `apply.sh` (font, cursor, color-scheme) — `dconf write`
+  berlaku live via xsettings daemon; engine menjalankan script-nya.
 
 ---
 
@@ -240,3 +246,45 @@ karena bukan key di `path.txt`).
 5. `set-theme` CLI.
 6. `watch` mode polling.
 7. Test + dokumentasi.
+
+---
+
+## 9. Tambahan (2026-10): lazygit & system (gsettings)
+
+Target tanpa mekanisme Reload yang tersisa dituntaskan:
+
+**`system` (gsettings/dconf)** — terimplementasi.
+`Reload` (`internal/adapters/platform/system/adapter.go`)
+menjalankan `apply.sh` hasil render via `bash <path>`
+(renderer menulis mode 0600, jadi tidak dieksekusi
+langsung). `dconf write` berlaku live ke GTK apps
+yang sedang berjalan: settings daemon mengambil
+perubahan lewat D-Bus dan mendorong XSETTINGS
+updates — font, cursor size, dan color-scheme
+(`prefer-dark`/`prefer-light`) berganti tanpa
+restart aplikasi. Script idempoten, aman dijalankan
+tiap render. Template ditambah `set -e` supaya
+kegagalan `dconf` (key ditolak, dconf tidak
+terinstal) mengubah exit code — tanpa itu `echo`
+penutup menyembunyikan kegagalan dan Reload
+melaporkan sukses palsu. Stderr ditangkap dan
+disertakan dalam error (engine Warn non-fatal).
+Test: `internal/adapters/platform/system/adapter_test.go`
+(eksekusi script via marker file, error saat output
+hilang).
+
+**`lazygit` (config file)** — mustahil, didokumentasikan.
+Riset: lazygit membaca `config.yml` **hanya saat
+startup** (issue #1158, ditutup 2021; #4602, 2025)
+dan tidak punya IPC atau sinyal untuk membaca ulang
+config. SIGHUP tidak ditangani TUI — mengirimnya
+akan membunuh proses dan kehilangan pekerjaan
+pengguna. Karena itu `internal/adapters/tools/lazygit`
+adalah adapter khusus (embed `generic.Processor`,
+ikuti pola `nvim`) dengan `Reload` **no-op** yang
+mencatat kesimpulan riset di kode: instance baru
+membaca config hasil render, instance berjalan
+perlu restart manual. Reload mengembalikan `nil`
+agar fase apply tidak mem-warning setiap render.
+Test: `internal/adapters/tools/lazygit/adapter_test.go`.
+`wiring.go`: `lazygit` keluar dari `genericTargets`.
