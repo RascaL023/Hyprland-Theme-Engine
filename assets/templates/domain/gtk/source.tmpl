@@ -1,60 +1,60 @@
-$foreground     : {{ .Config.Palette.Foreground }};
-$background     : {{ .Config.Palette.Background }};
+$foreground     : {{ .Palette.Foreground }};
+$background     : {{ .Palette.Background }};
 
-$black          : {{ index .Config.Palette.Colors 0 }};
-$red            : {{ index .Config.Palette.Colors 1 }};
-$green          : {{ index .Config.Palette.Colors 2 }};
-$yellow         : {{ index .Config.Palette.Colors 3 }};
-$blue           : {{ index .Config.Palette.Colors 4 }};
-$magenta        : {{ index .Config.Palette.Colors 5 }};
-$cyan           : {{ index .Config.Palette.Colors 6 }};
-$white          : {{ index .Config.Palette.Colors 7 }};
+$black          : {{ index .Palette.Colors 0 }};
+$red            : {{ index .Palette.Colors 1 }};
+$green          : {{ index .Palette.Colors 2 }};
+$yellow         : {{ index .Palette.Colors 3 }};
+$blue           : {{ index .Palette.Colors 4 }};
+$magenta        : {{ index .Palette.Colors 5 }};
+$cyan           : {{ index .Palette.Colors 6 }};
+$white          : {{ index .Palette.Colors 7 }};
 
-$black-bright   : {{ index .Config.Palette.Colors 8 }};
-$red-bright     : {{ index .Config.Palette.Colors 9 }};
-$green-bright   : {{ index .Config.Palette.Colors 10 }};
-$yellow-bright  : {{ index .Config.Palette.Colors 11 }};
-$blue-bright    : {{ index .Config.Palette.Colors 12 }};
-$magenta-bright : {{ index .Config.Palette.Colors 13 }};
-$cyan-bright    : {{ index .Config.Palette.Colors 14 }};
-$white-bright   : {{ index .Config.Palette.Colors 15 }};
-
-
-$accent-primary     : {{ .Config.Palette.AccentPrimary }};
-$accent-secondary   : {{ .Config.Palette.AccentSecondary }};
-$accent-on          : {{ .Config.Palette.AccentOn }};
-
-$text-primary       : {{ .Config.Palette.TextPrimary }};
-$text-secondary     : {{ .Config.Palette.TextSecondary }};
-$text-muted         : {{ .Config.Palette.TextMuted }};
-$text-link          : {{ .Config.Palette.TextLink }};
-$text-visited       : {{ .Config.Palette.LinkVisited }};
-
-$layer-base         : {{ .Config.Palette.LayerBase }};
-$layer-mantle       : {{ .Config.Palette.LayerMantle }};
-$layer-crust        : {{ .Config.Palette.LayerCrust }};
-$layer-surface      : {{ .Config.Palette.LayerSurface }};
-$layer-surface-raised  : {{ .Config.Palette.LayerSurfaceRaised }};
-$layer-surface-overlay : {{ .Config.Palette.LayerSurfaceOverlay }};
-
-$border-default     : {{ .Config.Palette.BorderDefault }};
-$border-active      : {{ .Config.Palette.BorderActive }};
-$border-medium      : {{ .Config.Palette.BorderMedium }};
-
-$status-success     : {{ .Config.Palette.StatusSuccess }};
-$status-warning     : {{ .Config.Palette.StatusWarning }};
-$status-error       : {{ .Config.Palette.StatusError }};
-$status-critical    : {{ .Config.Palette.StatusCritical }};
-$status-info        : {{ .Config.Palette.StatusInfo }};
-
-$fg-dim             : {{ .Config.Palette.FgDim }};
-$fg-dim-muted       : {{ .Config.Palette.FgDimMuted }};
-$fg-disabled        : {{ .Config.Palette.FgDisabled }};
-
-$bg-conflict        : {{ .Config.Palette.BgConflict }};
-$bg-disk-usage      : {{ .Config.Palette.BgDiskUsage }};
+$black-bright   : {{ index .Palette.Colors 8 }};
+$red-bright     : {{ index .Palette.Colors 9 }};
+$green-bright   : {{ index .Palette.Colors 10 }};
+$yellow-bright  : {{ index .Palette.Colors 11 }};
+$blue-bright    : {{ index .Palette.Colors 12 }};
+$magenta-bright : {{ index .Palette.Colors 13 }};
+$cyan-bright    : {{ index .Palette.Colors 14 }};
+$white-bright   : {{ index .Palette.Colors 15 }};
 
 
-$font-system   : "{{ .Config.Theme.Theme.Fonts.System.Family }}";
-$font-widget   : "{{ .Config.Theme.Theme.Fonts.Widget.Family }}";
-$font-terminal : "{{ .Config.Theme.Theme.Fonts.Terminal.Family }}";
+$accent-primary     : {{ .Palette.AccentPrimary }};
+$accent-secondary   : {{ .Palette.AccentSecondary }};
+$accent-on          : {{ .Palette.AccentOn }};
+
+$text-primary       : {{ .Palette.TextPrimary }};
+$text-secondary     : {{ .Palette.TextSecondary }};
+$text-muted         : {{ .Palette.TextMuted }};
+$text-link          : {{ .Palette.TextLink }};
+$text-visited       : {{ .Palette.LinkVisited }};
+
+$layer-base         : {{ .Palette.LayerBase }};
+$layer-mantle       : {{ .Palette.LayerMantle }};
+$layer-crust        : {{ .Palette.LayerCrust }};
+$layer-surface      : {{ .Palette.LayerSurface }};
+$layer-surface-raised  : {{ .Palette.LayerSurfaceRaised }};
+$layer-surface-overlay : {{ .Palette.LayerSurfaceOverlay }};
+
+$border-default     : {{ .Palette.BorderDefault }};
+$border-active      : {{ .Palette.BorderActive }};
+$border-medium      : {{ .Palette.BorderMedium }};
+
+$status-success     : {{ .Palette.StatusSuccess }};
+$status-warning     : {{ .Palette.StatusWarning }};
+$status-error       : {{ .Palette.StatusError }};
+$status-critical    : {{ .Palette.StatusCritical }};
+$status-info        : {{ .Palette.StatusInfo }};
+
+$fg-dim             : {{ .Palette.FgDim }};
+$fg-dim-muted       : {{ .Palette.FgDimMuted }};
+$fg-disabled        : {{ .Palette.FgDisabled }};
+
+$bg-conflict        : {{ .Palette.BgConflict }};
+$bg-disk-usage      : {{ .Palette.BgDiskUsage }};
+
+
+$font-system   : "{{ .Theme.Theme.Fonts.System.Family }}";
+$font-widget   : "{{ .Theme.Theme.Fonts.Widget.Family }}";
+$font-terminal : "{{ .Theme.Theme.Fonts.Terminal.Family }}";
