@@ -9,6 +9,7 @@ import (
 	"theme-engine/internal/adapters/tools/generic"
 	"theme-engine/internal/adapters/tools/hypr"
 	"theme-engine/internal/adapters/tools/kitty"
+	"theme-engine/internal/adapters/tools/firefox"
 	"theme-engine/internal/app/ports"
 )
 
@@ -23,6 +24,7 @@ func defaultProcessors() map[string]ports.Processor {
 	procs["alacritty"] = alacritty.New()
 	procs["cava"] = cava.New()
 	procs["hypr"] = hypr.New()
+	procs["firefox"] = firefox.New()
 	for _, name := range genericTargets {
 		procs[name] = generic.New()
 	}

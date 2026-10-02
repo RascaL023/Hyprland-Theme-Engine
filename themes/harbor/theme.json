@@ -102,6 +102,32 @@
           "shape": "Beam"
         }
       }
+    },
+    "firefox": {
+      "wallpaper": "",
+      "special": {
+        "background": "$pl.extra.layer.base",
+        "foreground": "$pl.extra.text.primary",
+        "cursor": "$pl.extra.accent.primary"
+      },
+      "colors": {
+        "color0": "$pl.extra.layer.base",
+        "color1": "$pl.color1",
+        "color2": "$pl.color2",
+        "color3": "$pl.color3",
+        "color4": "$pl.color4",
+        "color5": "$pl.color5",
+        "color6": "$pl.color6",
+        "color7": "$pl.color7",
+        "color8": "$pl.color8",
+        "color9": "$pl.color9",
+        "color10": "$pl.color10",
+        "color11": "$pl.color11",
+        "color12": "$pl.color12",
+        "color13": "$pl.color13",
+        "color14": "$pl.color14",
+        "color15": "$pl.color15"
+      }
     }
   }
 }
