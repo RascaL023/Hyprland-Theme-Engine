@@ -1,8 +1,8 @@
 {
   "version": 1,
   "theme": {
-    "name": "kanagawa-dragon",
-    "type": "dark"
+    "name": "claude-manjusaka",
+    "type": "light"
   },
   "waybar": "default"
 }

@@ -76,7 +76,16 @@ func ResolvePalette(raw *Palette) (*ResolvedPalette, error) {
 	rp.SyntaxRed1 = fallback(pathenv.ResolveVar(s.Red1, RawPaletteVars{raw}), rp.StatusCritical)
 	rp.SyntaxTeal = fallback(pathenv.ResolveVar(s.Teal, RawPaletteVars{raw}), raw.Colors[6])
 
+	// Tokyonight reuses `terminal_black` as the inline-code background
+	// (@markup.raw.markdown_inline), so it needs a subtle dark surface, not the
+	// ANSI bright-black colour. Fallback keeps older themes unchanged.
+	rp.SyntaxTerminalBlack = fallback(pathenv.ResolveVar(s.TerminalBlack, RawPaletteVars{raw}), rp.LayerSurfaceOverlay)
+
 	rp.BgStatusline = fallback(pathenv.ResolveVar(raw.Extra.UI.BgStatusline, RawPaletteVars{raw}), rp.LayerSurfaceRaised)
+
+	// Tokyonight's fg_gutter backs lualine section B and the gutter UI, so it is
+	// a subtle surface of its own rather than the brightest layer.
+	rp.BgGutter = fallback(pathenv.ResolveVar(raw.Extra.UI.Gutter, RawPaletteVars{raw}), rp.LayerSurfaceOverlay)
 
 	rp.LinkVisited = fallback(pathenv.ResolveVar(raw.Extra.Text.Visited, RawPaletteVars{raw}), rp.AccentSecondary)
 	rp.BorderMedium = fallback(pathenv.ResolveVar(raw.Extra.Border.Medium, RawPaletteVars{raw}), rp.BorderDefault)

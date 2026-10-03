@@ -52,8 +52,10 @@ func BuildFlattenPalette(t *ResolvedPalette) {
 	t.Flat["syntax.orange"] = t.SyntaxOrange
 	t.Flat["syntax.red1"] = t.SyntaxRed1
 	t.Flat["syntax.teal"] = t.SyntaxTeal
+	t.Flat["syntax.terminal_black"] = t.SyntaxTerminalBlack
 
 	t.Flat["ui.bg_statusline"] = t.BgStatusline
+	t.Flat["ui.gutter"] = t.BgGutter
 }
 
 func itoa(n int) string {

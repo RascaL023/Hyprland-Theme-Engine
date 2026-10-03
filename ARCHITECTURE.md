@@ -41,7 +41,7 @@ internal/domain/
 internal/adapters/
   tools/           # Adapter per tool: kitty, foot, alacritty, cava, hypr
     <tool>/          # model.go (input JSON) + view.go (data template) + adapter.go
-    generic/         # Template-only: nvim, yazi, starship (tanpa schema khusus)
+    generic/         # Template-only: nvim, yazi, starship, lazygit (tanpa schema khusus)
     jsonx/           # Decode: Parse nil-safe, anti-panic
   platform/
     gtk/             # view.go (Gtk{*Context}) + adapter.go (render + sassc)
@@ -111,7 +111,7 @@ Aturan defensif (semua adapter):
 Dua jenis adapter khusus:
 
 * `generic` (`adapters/tools/generic/adapter.go`): template-only, teruskan
-  `*renderctx.Context` mentah ke template. Dipakai `nvim`, `yazi`, `starship`.
+  `*renderctx.Context` mentah ke template. Dipakai `nvim`, `yazi`, `starship`, `lazygit`.
 * `platform/gtk` (`adapters/platform/gtk/adapter.go`): satu-satunya dengan
   `Render` kustom — render `source.tmpl` → `_source.scss`, lalu `sassc`
   compile ke `css/source.css` + `rasi/source.rasi` (dengan `MkdirAll` +
@@ -183,6 +183,11 @@ Template-only (cukup warna global):
 2. `config/path.txt`: `<nama>|assets/...|output/...`
 3. `wiring.go`: `procs["<nama>"] = generic.New()`
 
+Contoh yang sudah lewat jalur ini: `lazygit`
+(`assets/templates/tools/lazygit/config.tmpl` → `output/tools/lazygit/config.yml`).
+Untuk nvim, warna `fg_gutter` dan `terminal_black` di `colors.tmpl` adalah target
+kontras yang dijaga test — lihat `RULE.md` bab mapping Tokyonight.
+
 Butuh config khusus:
 
 1. `internal/adapters/tools/<nama>/{model.go,view.go,adapter.go}` + `New()`
@@ -196,6 +201,11 @@ go test ./...                                   # semua
 GOCACHE=/tmp/go-build go test ./...            # bila cache Go tak bisa ditulis
 ./runner.sh test
 ```
+
+Guard khusus warna: `internal/domain/palette/contrast_test.go` meng-assert ambang
+WCAG (3:1 UI / 4.5:1 teks) untuk setiap tema × variant. Angka yang sama bisa
+dilihat tanpa menjalankan Go lewat `python3 tools/contrast_report.py`
+(tool dev-only di `tools/`; helper `--plan`/`--accents` untuk memilih nilai palet).
 
 Coverage saat ini fokus pada `infra/loader` (expand path map, komentar,
 malformed line) dan `infra/renderer` (buat parent dir, skip-unchanged via

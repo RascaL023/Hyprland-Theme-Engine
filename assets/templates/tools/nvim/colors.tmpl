@@ -8,7 +8,7 @@ return {
   -- Foreground / text
   fg                = "{{ .Palette.TextPrimary }}",
   fg_dark           = "{{ .Palette.TextSecondary }}",
-  fg_gutter         = "{{ .Palette.LayerSurfaceOverlay }}",
+  fg_gutter         = "{{ .Palette.BgGutter }}",
   comment           = "{{ .Palette.TextMuted }}",
 
   -- Dark variants
@@ -24,7 +24,7 @@ return {
   magenta           = "{{ index .Palette.Colors 5 }}",
   cyan              = "{{ index .Palette.Colors 6 }}",
   white             = "{{ index .Palette.Colors 7 }}",
-  terminal_black    = "{{ index .Palette.Colors 8 }}",
+  terminal_black    = "{{ .Palette.SyntaxTerminalBlack }}",
 
   -- Syntax highlighting colours (from palette syntax block)
   purple            = "{{ .Palette.SyntaxPurple }}",

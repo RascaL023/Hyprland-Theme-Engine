@@ -13,7 +13,7 @@ import (
 )
 
 func defaultProcessors() map[string]ports.Processor {
-	genericTargets := []string{"nvim", "yazi", "starship"}
+	genericTargets := []string{"nvim", "yazi", "starship", "lazygit"}
 
 	procs := make(map[string]ports.Processor, 10)
 	procs["gtk"] = gtk.New()

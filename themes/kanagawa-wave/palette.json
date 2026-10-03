@@ -73,11 +73,13 @@
           "green2":   "#76946A",
           "orange":   "#E6C384",
           "red1":     "#E82424",
-          "teal":     "#7AA89F"
+          "teal":     "#7AA89F",
+          "terminal_black": "#4B4B64"
         },
 
         "ui": {
-          "bg_statusline": "#363646"
+          "bg_statusline": "#363646",
+          "gutter": "#222237"
         }
       }
     },
@@ -90,7 +92,7 @@
       "colors": [
         "#545464",
         "#c84053",
-        "#6f894e",
+        "#677f49",
         "#77713f",
         "#4d699b",
         "#766b90",
@@ -99,7 +101,7 @@
 
         "#8a8980",
         "#d7474b",
-        "#6e915f",
+        "#618054",
         "#836f4a",
         "#5d57a3",
         "#a09cac",
@@ -151,15 +153,17 @@
           "blue5":    "#4d699b",
           "blue6":    "#5e857a",
           "blue7":    "#8a8980",
-          "green1":   "#6e915f",
+          "green1":   "#618054",
           "green2":   "#6f894e",
           "orange":   "#836f4a",
           "red1":     "#c84053",
-          "teal":     "#5e857a"
+          "teal":     "#5e857a",
+          "terminal_black": "#e4d794"
         },
 
         "ui": {
-          "bg_statusline": "#d5cea3"
+          "bg_statusline": "#d5cea3",
+          "gutter": "#e4d794"
         }
       }
     }
