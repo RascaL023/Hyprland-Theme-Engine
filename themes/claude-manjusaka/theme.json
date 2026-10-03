@@ -102,6 +102,33 @@
           "shape": "Beam"
         }
       }
+    },
+    "firefox": {
+      "wallpaper": "",
+
+      "special": {
+          "background": "$pl.extra.layer.base",
+          "foreground": "$pl.extra.text.secondary",
+          "cursor": "$pl.extra.accent.primary"
+      },
+      "colors": {
+          "color0": "$pl.extra.layer.base",
+          "color1": "#8D8479",
+          "color2": "$pl.extra.accent.primary",
+          "color3": "#A89F93",
+          "color4": "#C6B8A8",
+          "color5": "#BFC0B5",
+          "color6": "$pl.extra.accent.secondary",
+          "color7": "#bfbfbf",
+          "color8": "#635151",
+          "color9": "#8D8479",
+          "color10": "$pl.extra.accent.primary",
+          "color11": "#A89F93",
+          "color12": "#C6B8A8",
+          "color13": "#BFC0B5",
+          "color14": "$pl.extra.accent.secondary",
+          "color15": "#bfbfbf"
+      }
     }
   }
 }

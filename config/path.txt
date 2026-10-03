@@ -9,3 +9,4 @@ alacritty|assets/templates/tools/alacritty/alacritty.tmpl|output/tools/alacritty
 nvim|assets/templates/tools/nvim/colors.tmpl|output/tools/nvim/colors.lua
 lazygit|assets/templates/tools/lazygit/config.tmpl|output/tools/lazygit/config.yml
 system|assets/templates/domain/system/apply.tmpl|output/domain/system/apply.sh
+firefox|assets/templates/tools/firefox/colors.tmpl|/home/rascal/.cache/wal/colors.json
